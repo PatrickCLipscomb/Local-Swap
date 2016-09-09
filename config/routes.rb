@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  root :to => 'firstmodels#index'
-  resources :firstmodels do
-    resources :secondmodels
+  root :to => 'categories#index'
+  resources :categories do
+    resources :products
   end
-  resources :secondmodels do
-    resources :thirdmodels
+  resources :products do
+    resources :reviews
   end
 end

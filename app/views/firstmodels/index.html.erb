@@ -1,9 +1,0 @@
-<h1>firstmodel Page</h1>
-<hr>
-<ul class="list-group well">
-  <% @firstmodels.each do |firstmodel| %>
-    <li class="list-group-item"><strong><%= firstmodel.name %></strong> <%= link_to "firstmodel Page", firstmodel_path(firstmodel), :class => "btn btn-info btn-sm pull-right" %></li>
-  <% end %>
-</ul>
-<hr>
-<%= link_to "Add a firstmodel", new_firstmodel_path, :class => "btn-lg"%>

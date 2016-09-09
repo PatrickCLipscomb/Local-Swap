@@ -1,0 +1,10 @@
+<h1><%= @review.name %> Page</h1>
+
+
+<%= link_to "Edit", edit_product_review_path(@review) %> |
+
+<%= link_to "Delete", product_review_path(@review), :data => {:confirm => "You Sure?", :method => 'delete'} %> |
+
+<hr>
+
+<%= link_to "Back to product", product_path(@product) %>

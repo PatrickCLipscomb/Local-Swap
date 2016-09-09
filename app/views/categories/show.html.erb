@@ -1,0 +1,18 @@
+<h1><%= @category.name %> Page</h1>
+
+<ul class="list-group well">
+  <% @category.products.each do |product| %>
+  <li class="list-group-item"><strong><%= product.name %></strong> <%= link_to "View product", category_product_path(@category, product), :class => "btn btn-info btn-sm pull-right"%></li>
+  <% end %>
+</ul>
+
+<div class="btn-group">
+  <%= link_to "Edit", edit_category_path(@category), :class => "btn btn-primary" %>
+  <%= link_to "Delete", category_path(@category), :class => "btn btn-primary", :data => {:confirm => "You Sure?", :method => 'delete'} %>
+  <%= link_to "Add a product", new_category_product_path(@category), :class => "btn btn-primary" %>
+</div>
+
+
+<hr>
+
+<%= link_to "Back to Homepage", categories_path %>
