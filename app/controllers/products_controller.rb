@@ -33,7 +33,8 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @category = @product.category
     if @product.delete
-      flash[:notice] = "Product deleted"
+      @product.reviews.each { |review| review.destroy }
+      flash[:notice] = "Product and associated reviews deleted"
       redirect_to category_path(@category)
     else
       flash[:alert] = "Product failed to delete"
@@ -41,6 +42,6 @@ class ProductsController < ApplicationController
   end
   private
   def product_params
-    params.require(:product).permit(:name, :price, :category_id)
+    params.require(:product).permit(:name, :price, :image, :category_id)
   end
 end

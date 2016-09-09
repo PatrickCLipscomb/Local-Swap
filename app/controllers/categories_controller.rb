@@ -25,8 +25,10 @@ class CategoriesController < ApplicationController
     @category = @category.update(category_params)
   end
   def destroy
-    if @category.delete
-      flash[:notice] = "Category deleted"
+    @category = Category.find(params[:id])
+    if @category.destroy
+      @category.products.each { |product| product.destroy }
+      flash[:notice] = "Category and associated products deleted"
       redirect_to categories_path
     else
       flash[:alert] = "Category failed to delete"

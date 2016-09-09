@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <%= yield(:navbar) %>
     <%= flash[:notice] %>
     <%= flash[:alert] %>
     <div class="container">

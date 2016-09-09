@@ -1,9 +1,10 @@
-<h1>category Page</h1>
+<h1>Category Page</h1>
 <hr>
+<br>
 <ul class="list-group well">
   <% @categories.each do |category| %>
-    <li class="list-group-item"><strong><%= category.name %></strong> <%= link_to "category Page", category_path(category), :class => "btn btn-info btn-sm pull-right" %></li>
+    <li class="list-group-item"><%= link_to category.name, category_path(category) %></li>
   <% end %>
 </ul>
 <hr>
-<%= link_to "Add a category", new_category_path, :class => "btn-lg"%>
+<%= link_to "Add a category", new_category_path, :class => "btn btn-success btn-lg"%>

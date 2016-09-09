@@ -1,5 +1,18 @@
 <h1><%= @product.name %> Page</h1>
 
+<div class="btn-group">
+  <% unless @product.id == @product.category.products.first.id %>
+    <%= link_to 'Previous Product', @product.previous, :class => "btn btn-primary" %>
+  <% end %>
+  <% unless @product.id == @product.category.products.last.id %>
+    <%= link_to 'Next Product', @product.next, :class => "btn btn-primary" %>
+  <% end %>
+</div>
+<br>
+
+<img src=<%= @product.image %> alt="" />
+
+<br><br>
 <ul class="list-group well">
   <% @product.reviews.each do |review| %>
   <li class="list-group-item"><strong><%= review.name %></strong> <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm pull-right"%></li>
