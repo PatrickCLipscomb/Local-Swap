@@ -14,10 +14,10 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
+  gem 'capybara'
   gem 'launchy'
   gem 'pry'
   gem 'shoulda-matchers'
-  gem 'capybara'
 end
 
 group :development do
