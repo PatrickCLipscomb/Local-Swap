@@ -28,19 +28,6 @@ describe "the delete category process" do
     category = Category.create(:name => "Tester" )
     visit category_path(category)
     click_link 'Delete'
-    expect(page).to have_content 'Are you sure?'
-  end
-end
-
-describe "the edit product process" do
-  it "edits a product" do
-    product = Product.create(:name => "Tester" )
-    visit product_path(product)
-    click_link 'Edit'
-    fill_in 'Name', :with => 'Chips'
-    fill_in 'Price', :with => '4'
-    fill_in 'Image', :with => 'None'
-    click_on 'Update Product'
-    expect(page).to have_content 'product updated successfully'
+    expect(page).to have_content 'Category and associated products deleted'
   end
 end
