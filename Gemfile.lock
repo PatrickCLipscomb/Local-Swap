@@ -42,6 +42,7 @@ GEM
     arel (7.1.1)
     autoprefixer-rails (6.4.1)
       execjs
+    bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -135,6 +136,8 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     rspec-core (3.5.3)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -198,6 +201,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.5)
   bootstrap-sass (~> 3.3.6)
   byebug
   capybara
@@ -210,6 +214,7 @@ DEPENDENCIES
   pry
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  record_tag_helper (~> 1.0)
   rspec-rails
   sass-rails (~> 5.0)
   shoulda-matchers

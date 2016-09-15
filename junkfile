@@ -1,0 +1,10 @@
+<% if @user.errors.any? %>
+<div class="error_messages">
+  <h2>Form is Invalid</h2>
+  <ul>
+    <% @user.errors.full_message.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

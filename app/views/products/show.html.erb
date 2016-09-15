@@ -1,13 +1,13 @@
-<h1><%= @product.name %> Page</h1>
+<h1><%= @product.name.titleize %> Page</h1>
 
-<div class="btn-group">
+<% content_for(:navbar) do %>
   <% unless @product.id == @product.category.products.first.id %>
     <%= link_to 'Previous Product', @product.previous, :class => "btn btn-primary" %>
   <% end %>
   <% unless @product.id == @product.category.products.last.id %>
     <%= link_to 'Next Product', @product.next, :class => "btn btn-primary" %>
   <% end %>
-</div>
+<% end %>
 <br>
 
 <img src=<%= @product.image %> alt="" />
@@ -15,7 +15,9 @@
 <br><br>
 <ul class="list-group well">
   <% @product.reviews.each do |review| %>
-  <li class="list-group-item"><strong><%= review.name %></strong> <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm pull-right"%></li>
+    <%= content_tag_for(:div, review) do %>
+      <li class="list-group-item"><strong><%= review.name %></strong> <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm pull-right"%> <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => 'delete', :class => "btn btn-danger btn-sm pull-right" %> </li>
+    <% end %>
   <% end %>
 </ul>
 

@@ -31,10 +31,14 @@ class CategoriesController < ApplicationController
     if @category.destroy
       @category.products.each { |product| product.destroy }
       flash[:notice] = "Category and associated products deleted"
+      respond_to do |format|
+        format.js
+      end
       redirect_to categories_path
     else
       flash[:alert] = "Category failed to delete"
     end
+
   end
   private
   def category_params
