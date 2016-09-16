@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, :excpet => [:show]
   def show
     @product = Product.find(params[:id])
     @category = @product.category

@@ -9,13 +9,22 @@
   </head>
 
   <body>
-    <%= link_to "Sign Up", new_user_path %>
     <div class="btn-group">
       <%= yield(:navbar) %>
     </div>
+    <p class="notice"><%= flash[:notice] %></p>
+    <p class="alert"><%= flash[:alert] %></p>
+    <div class="container jumbotron">
+    <% if user_signed_in? %>
+      <h4>Logged in as <strong><%= current_user.email %></strong></h4>
 
-    <%= flash[:notice] %>
-    <%= flash[:alert] %>
+      <%= link_to 'Edit Profile', edit_user_registration_path %> |
+      <%= link_to 'Logout', destroy_user_session_path, :method => 'delete' %>
+    <% else %>
+      <%= link_to "Sign Up", new_user_registration_path %> |
+      <%= link_to "Login", new_user_session_path %>
+    <% end %>
+    </div>
     <div class="container">
       <%= yield %>
     </div>

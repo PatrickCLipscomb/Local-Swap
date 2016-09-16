@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, :excpet => [:show]
   def show
     @review = Review.find(params[:id])
     @product = @review.product
