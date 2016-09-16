@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, :excpet => [:show]
+  before_action :authenticate_user!, :except => [:show]
   def show
     @product = Product.find(params[:id])
     @category = @product.category
@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
   def create
     @category = Category.find(params[:category_id])
     @product = @category.products.new(product_params)
+    @product.update(user_id: current_user.id)
     if @product.save
       flash[:notice] = "Product saved successfully"
       redirect_to category_path(@category)

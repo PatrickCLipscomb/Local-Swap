@@ -21,7 +21,8 @@
       <h4>Logged in as <strong><%= current_user.user_name.capitalize %></strong></h4>
       <%= image_tag(current_user.avatar.url(:thumb)) %>
       <%= link_to 'Edit Profile', edit_user_registration_path %> |
-      <%= link_to 'Logout', destroy_user_session_path, :method => 'delete' %>
+      <%= link_to 'Logout', destroy_user_session_path, :method => 'delete' %> |
+      <%= link_to current_user.user_name.capitalize + "Page", user_path(current_user) %>
     <% else %>
       <%= link_to "Sign Up", new_user_registration_path %> |
       <%= link_to "Login", new_user_session_path %>

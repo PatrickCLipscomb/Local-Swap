@@ -1,15 +1,18 @@
 <h1><%= @category.name.titleize %> Page</h1>
-<img src=<%= @category.image %> alt="" />
+<%= image_tag(@category.image.url(:medium)) %>
 <br><br>
 <ul class="list-group well">
   <% @category.products.each do |product| %>
-  <li class="list-group-item"><%= link_to product.name, category_product_path(@category, product)%></li>
+  <li class="list-group-item" align="middle">
+    <%= link_to product.name, category_product_path(@category, product)%><br>
+    <%= image_tag(product.image.url(:thumb)) %>
+  </li>
   <% end %>
 </ul>
 
 <div class="btn-group">
-  <%= link_to "Edit", edit_category_path(@category), :class => "btn btn-primary" %>
-  <%= link_to "Delete", category_path(@category), :class => "btn btn-primary", :data => {:confirm => "You Sure?", :method => 'delete'} %>
+  <%= link_to "Edit Category", edit_category_path(@category), :class => "btn btn-primary" %>
+  <%= link_to "Delete Category", category_path(@category), :class => "btn btn-danger", :data => {:confirm => "You Sure?", :method => 'delete'} %>
   <%= link_to "Add a product", new_category_product_path(@category), :class => "btn btn-primary" %>
 </div>
 

@@ -10,7 +10,7 @@
 <% end %>
 <br>
 
-<img src=<%= @product.image %> alt="" />
+<%= image_tag(@product.image.url(:medium)) %>
 
 <br><br>
 <ul class="list-group well">
