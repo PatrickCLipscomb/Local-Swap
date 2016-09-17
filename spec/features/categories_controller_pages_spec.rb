@@ -2,10 +2,14 @@ require 'rails_helper'
 
 describe "the add a category process" do
   it "adds a new category" do
+    user = FactoryGirl.create(:user)
     visit categories_path
+    click_on 'Login'
+    fill_in 'Email', :with => 'frank@frank.frank'
+    fill_in 'Password', :with => 'password'
+    click_on 'Log in'
     click_link 'Add a category'
     fill_in 'Name', :with => 'Chips'
-    fill_in 'Image', :with => 'None'
     click_on 'Create Category'
     expect(page).to have_content 'Category saved successfully'
   end
@@ -13,11 +17,16 @@ end
 
 describe "the edit category process" do
   it "edits a category" do
-    category = Category.create(:name => "Tester" )
-    visit category_path(category)
-    click_link 'Edit'
+    user = FactoryGirl.create(:user)
+    category = FactoryGirl.create(:category)
+    visit categories_path
+    click_on 'Login'
+    fill_in 'Email', :with => 'frank@frank.frank'
+    fill_in 'Password', :with => 'password'
+    click_on 'Log in'
+    click_link 'Bratwurst'
+    click_link 'Edit Category'
     fill_in 'Name', :with => 'Chips'
-    fill_in 'Image', :with => 'None'
     click_on 'Update Category'
     expect(page).to have_content 'Chips'
   end
@@ -25,9 +34,15 @@ end
 
 describe "the delete category process" do
   it "deletes a category" do
-    category = Category.create(:name => "Tester" )
-    visit category_path(category)
-    click_link 'Delete'
+    user = FactoryGirl.create(:user)
+    category = FactoryGirl.create(:category)
+    visit categories_path
+    click_on 'Login'
+    fill_in 'Email', :with => 'frank@frank.frank'
+    fill_in 'Password', :with => 'password'
+    click_on 'Log in'
+    click_link 'Bratwurst'
+    click_link 'Delete Category'
     expect(page).to have_content 'Category and associated products deleted'
   end
 end
