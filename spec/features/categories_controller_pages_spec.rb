@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "the add a category process" do
   it "adds a new category" do
     user = FactoryGirl.create(:user)
-    visit categories_path
+    visit '/categories'
     click_on 'Login'
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'

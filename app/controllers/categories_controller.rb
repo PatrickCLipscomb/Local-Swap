@@ -16,7 +16,10 @@ class CategoriesController < ApplicationController
     @category = Category.create(category_params)
     if @category
       flash[:notice] = "Category saved successfully"
-      redirect_to categories_path
+      respond_to do |format|
+        format.html { redirect_to categories_path }
+        format.js
+      end
     else
       flash[:alert] = "Category failed to save"
       render :new
