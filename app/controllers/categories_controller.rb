@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
+  skip_before_filter :verify_authenticity_token, :only => [:index]
   def index
     @categories = Category.all
   end
@@ -13,14 +14,13 @@ class CategoriesController < ApplicationController
     @category = Category.new
   end
   def create
-    @category = Category.create(category_params)
-    if @category
+    @category = Category.new(category_params)
+    if @category.save
       flash[:notice] = "Category saved successfully"
-      # respond_to do |format|
-      #   format.html { redirect_to categories_path }
-      #   format.js
-      # end
-      redirect_to categories_path
+      respond_to do |format|
+        format.html { redirect_to categories_path }
+        format.js
+      end
     else
       flash[:alert] = "Category failed to save"
       render :new
