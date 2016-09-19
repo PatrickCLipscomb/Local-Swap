@@ -1,5 +1,31 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, :excpet => [:show]
+  def upvote
+    review = Review.find(params[:id])
+    user = review.user
+    current_vote = review.votes.to_i
+    if !(review.has_voted.include?(user.id))
+      review.update(votes: current_vote + 1, has_voted: review.has_voted.push(user.id))
+      review.save
+      redirect_to category_product_path(review.product.category, review.product)
+    else
+      flash[:notice] = user.user_name + "has already voted"
+      redirect_to category_product_path(review.product.category, review.product)
+    end
+  end
+  def downvote
+    review = Review.find(params[:id])
+    user = review.user
+    current_vote = review.votes.to_i
+    if !(review.has_voted.include?(user.id))
+      review.update(votes: current_vote - 1, has_voted: review.has_voted.push(user.id))
+      review.save
+      redirect_to category_product_path(review.product.category, review.product)
+    else
+      flash[:alert] = user.user_name + "has already voted"
+      redirect_to category_product_path(review.product.category, review.product)
+    end
+  end
   def show
     @review = Review.find(params[:id])
     @product = @review.product

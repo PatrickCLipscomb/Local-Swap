@@ -16,7 +16,22 @@
 <ul class="list-group well">
   <% @product.reviews.each do |review| %>
     <%= content_tag_for(:div, review) do %>
-      <li class="list-group-item"><strong><%= review.name %></strong> <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm pull-right"%> <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => 'delete', :class => "btn btn-danger btn-sm pull-right" %> </li>
+      <li class="list-group-item clearfix">
+        <strong><%= review.name %></strong>
+        <span class="pull-right">
+          <%= button_to upvote_product_review_path(@product, review), :class => "btn btn-success" do %>
+            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+          <% end %>
+          <%= button_to downvote_product_review_path(@product, review), :class => "btn btn-danger" do %>
+            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+          <% end %>
+        </span>
+        <span class="pull-right">
+          <h4>Votes: <%= review.votes %></h4>
+        </span>
+        <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm pull-right"%>
+        <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => 'delete', :class => "btn btn-danger btn-sm pull-right" %>
+      </li>
     <% end %>
   <% end %>
 </ul>

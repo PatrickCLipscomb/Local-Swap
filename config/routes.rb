@@ -5,7 +5,12 @@ Rails.application.routes.draw do
     resources :products
   end
   resources :products do
-    resources :reviews
+    resources :reviews do
+      member do
+        post 'upvote'
+        post 'downvote'
+      end
+    end
   end
   resources :users, only: :show
 end
