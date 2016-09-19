@@ -19,12 +19,10 @@
       <li class="list-group-item clearfix">
         <strong><%= review.name %></strong>
         <span class="pull-right">
-          <h4>Votes: <%= review.votes %></h4>
-        </span>
-        <span class="pull-right">
           <%= button_to upvote_product_review_path(@product, review), :class => "btn btn-success" do %>
             <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
           <% end %>
+          <h4><%= review.votes %></h4>
           <%= button_to downvote_product_review_path(@product, review), :class => "btn btn-danger" do %>
             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
           <% end %>
@@ -41,7 +39,7 @@
 </ul>
 
 <div class="btn-group">
-  <%= link_to "Edit", edit_product_path(@product), :class => "btn btn-primary" %>
+  <%= link_to "Edit Product", edit_product_path(@product), :class => "btn btn-primary" %>
   <%= link_to "Delete", product_path(@product), :class => "btn btn-primary", :data => {:confirm => "You Sure?", :method => 'delete'} %>
   <%= link_to "Add a review", new_product_review_path(@product), :class => "btn btn-primary" %>
 </div>
