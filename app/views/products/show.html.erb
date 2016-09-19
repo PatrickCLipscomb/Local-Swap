@@ -19,6 +19,9 @@
       <li class="list-group-item clearfix">
         <strong><%= review.name %></strong>
         <span class="pull-right">
+          <h4>Votes: <%= review.votes %></h4>
+        </span>
+        <span class="pull-right">
           <%= button_to upvote_product_review_path(@product, review), :class => "btn btn-success" do %>
             <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
           <% end %>
@@ -26,11 +29,12 @@
             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
           <% end %>
         </span>
-        <span class="pull-right">
-          <h4>Votes: <%= review.votes %></h4>
+        <span align="middle">
+          <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm"%>
+          <% if current_user && review.user.id == current_user.id %>
+            <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => 'delete', :class => "btn btn-danger btn-sm" %>
+          <% end %>
         </span>
-        <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm pull-right"%>
-        <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => 'delete', :class => "btn btn-danger btn-sm pull-right" %>
       </li>
     <% end %>
   <% end %>
