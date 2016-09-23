@@ -19,6 +19,7 @@ gem 'remotipart', '~> 1.2'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
+  gem 'poltergeist'
   gem 'capybara'
   gem 'launchy'
   gem 'pry'
@@ -26,6 +27,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'simplecov', require: false
   gem "letter_opener", :group => :development
+  gem 'database_cleaner'
 end
 
 group :development do

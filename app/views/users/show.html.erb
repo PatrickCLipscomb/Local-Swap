@@ -1,5 +1,9 @@
 <div class="row container">
+    <h4>Post a product you would like to trade</h4>
+    <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link", remote: true %></h4>
+
   <div class="col-sm-6">
+    <h4>Products posted by <%= current_user.user_name.capitalize %></h4>
     <ul class="list-group well">
         <%= content_tag_for(:li, current_user.products.each, class: "list-group-item") do |product| %>
         <%= link_to product.name, category_product_path(product.category, product)%><br>
@@ -8,6 +12,7 @@
     </ul>
   </div>
   <div class="col-sm-6">
+    <h4>Reviews written by <%= current_user.user_name.capitalize %></h4>
     <ul class="list-group well">
         <%= content_tag_for(:li, current_user.reviews.each, class: "list-group-item") do |review| %>
         <%= link_to review.name, product_review_path(review.product, review)%><br>

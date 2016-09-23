@@ -11,7 +11,7 @@ describe "the add a category process" do
     click_link 'Add a category'
     fill_in 'Name', :with => 'Chips'
     click_on 'Create Category'
-    expect(page).to have_content 'Category saved successfully'
+    expect(page).to have_content 'Chips'
   end
 end
 
@@ -24,7 +24,7 @@ describe "the edit category process" do
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    click_link 'Bratwurst'
+    first('#categories').click_link('Bratwurst')
     click_link 'Edit Category'
     fill_in 'Name', :with => 'Chips'
     click_on 'Update Category'
@@ -41,7 +41,7 @@ describe "the delete category process" do
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    click_link 'Bratwurst'
+    first('#categories').click_link('Bratwurst')
     click_link 'Delete Category'
     expect(page).to have_content 'Category and associated products deleted'
   end

@@ -1,7 +1,7 @@
-<h1>Category Page</h1>
+<% if current_user && current_user.user_name == 'Admin' %>
+<h1>Admin Landing Page</h1>
 <hr>
 <br>
-<% if current_user && current_user.user_name == 'Admin' %>
 <div class="row">
   <div class="col-sm-6">
     <%= link_to "Add a category", new_category_path, :class => "btn btn-success btn-lg",  :id => 'new_category_link', remote: true %>
@@ -25,6 +25,62 @@
   </div>
 
 </div>
+<hr>
+<h1>A list of our products by Category</h1>
+<% @categories.each do |category| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <h4><%= category.name %></h4>
+      <h4><%= link_to "View All Products for " + category.name, category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+    </div>
+    <div class="col-sm-9">
+      <% category.products.limit(5).each do |product| %>
+      <span class="well product-homepage">
+        <%= link_to product.name, category_product_path(category, product)%><br>
+        <%= image_tag(product.image.url(:thumb), :class => "products-homepage") %>
+      </span>
+      <% end %>
+    </div>
+  </div>
+  <hr>
 <% end %>
-
+<% elsif current_user %>
+<h1>A list of our products by Category</h1>
+<% @categories.each do |category| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <h4><%= category.name %></h4>
+      <h4><%= link_to "View All Products for " + category.name, category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+    </div>
+    <div class="col-sm-9">
+      <% category.products.limit(5).each do |product| %>
+      <span class="well product-homepage">
+        <%= link_to product.name, category_product_path(category, product)%><br>
+        <%= image_tag(product.image.url(:thumb), :class => "products-homepage") %>
+      </span>
+      <% end %>
+    </div>
+  </div>
+  <hr>
+<% end %>
+<% else %>
+<h1>A list of our products by Category</h1>
+<% @categories.each do |category| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <h4><%= category.name %></h4>
+      <h4><%= link_to "View All Products for " + category.name, category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+    </div>
+    <div class="col-sm-9">
+      <% category.products.limit(5).each do |product| %>
+      <span class="well product-homepage">
+        <%= link_to product.name, category_product_path(category, product)%><br>
+        <%= image_tag(product.image.url(:thumb), :class => "products-homepage") %>
+      </span>
+      <% end %>
+    </div>
+  </div>
+  <hr>
+<% end %>
+<% end %>
 <hr>
