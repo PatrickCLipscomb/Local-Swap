@@ -3,6 +3,7 @@ class CategoriesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:index]
   def index
     @categories = Category.all
+    @products = Product.all
   end
   def show
     @category = Category.find(params[:id])

@@ -9,16 +9,20 @@ class ProductsController < ApplicationController
     @category = @product.category
   end
   def new
-    @category = Category.find(params[:category_id])
-    @product = @category.products.new
+    # @category = Category.find(params[:category_id])
+    # @product = @category.products.new
+    @product = Product.new
   end
   def create
     @category = Category.find(params[:category_id])
     @product = @category.products.new(product_params)
     @product.update(user_id: current_user.id)
     if @product.save
+      respond_to do |format|
+        format.html {redirect_to category_path(@category)}
+        format.js
+      end
       flash[:notice] = "Product saved successfully"
-      redirect_to category_path(@category)
     else
       flash[:alert] = "Product failed to save"
       render :new

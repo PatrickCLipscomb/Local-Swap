@@ -1,12 +1,25 @@
-<%= form_for [@category, @product] do |f| %>
+<%= form_for @product, remote: true do |f| %>
+<% @categories = Category.all %>
 <div class="field">
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
+<br>
+<div class="field">
+  <h5>Please select the Product's Category</h5>
+  <% @categories.each do |category| %>
+    <span class="cat-radio">
+      <%= radio_button_tag(:category_id, category.id) %>
+      <%= label_tag(:category, category.name) %>
+    </span>
+  <% end %>
+</div>
+<br>
 <div class="field">
   <%= f.label :price %>
   <%= f.number_field :price %>
 </div>
+<br>
 <div class="field">
   <%= f.label :image %>
   <%= f.file_field :image %>
