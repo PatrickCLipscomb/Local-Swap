@@ -5,12 +5,9 @@ Rails.application.routes.draw do
     resources :products
   end
   resources :products do
-    resources :reviews do
-      member do
-        post 'upvote'
-        post 'downvote'
-      end
-    end
+    resources :reviews
   end
+  match "/upvote/:id" => "reviews#upvote", :via => :post, :as => :upvote
+  match "/downvote/:id" => "reviews#downvote", :via => :post, :as => :downvote
   resources :users, only: :show
 end

@@ -1,30 +1,34 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, :excpet => [:show]
   def upvote
-    review = Review.find(params[:id])
-    user = review.user
-    current_vote = review.votes.to_i
-    if !(review.has_voted.include?(user.id))
-      review.update(votes: current_vote + 1, has_voted: review.has_voted.push(user.id))
-      review.save
-      redirect_to category_product_path(review.product.category, review.product)
-    else
-      flash[:notice] = user.user_name + "has already voted"
-      redirect_to category_product_path(review.product.category, review.product)
-    end
+    @review = Review.find(params[:id])
+    # if !(review.has_voted.include?(user.id))
+      if @review.update(votes: @review.votes.to_i + 1, has_voted: @review.has_voted.push(@review.user.id))
+        respond_to do |format|
+          format.html {redirect_to category_product_path(@review.product.category, @review.product)}
+          format.js
+        end
+      end
+      # for when user should only vote once
+    # else
+    #   flash[:notice] = user.user_name + "has already voted"
+    #   redirect_to category_product_path(review.product.category, review.product)
+    # end
   end
   def downvote
-    review = Review.find(params[:id])
-    user = review.user
-    current_vote = review.votes.to_i
-    if !(review.has_voted.include?(user.id))
-      review.update(votes: current_vote - 1, has_voted: review.has_voted.push(user.id))
-      review.save
-      redirect_to category_product_path(review.product.category, review.product)
-    else
-      flash[:alert] = user.user_name + "has already voted"
-      redirect_to category_product_path(review.product.category, review.product)
-    end
+    @review = Review.find(params[:id])
+    # if !(review.has_voted.include?(user.id))
+      if @review.update(votes: @review.votes.to_i - 1, has_voted: @review.has_voted.push(@review.user.id))
+        respond_to do |format|
+          format.html {redirect_to category_product_path(@review.product.category, @review.product)}
+          format.js
+        end
+      end
+        # for when user should only vote once
+    # else
+      # flash[:alert] = user.user_name + "has already voted"
+      # redirect_to category_product_path(review.product.category, review.product)
+    # end
   end
   def show
     @review = Review.find(params[:id])
@@ -41,10 +45,12 @@ class ReviewsController < ApplicationController
   def create
     @product = Product.find(params[:product_id])
     @review = @product.reviews.new(review_params)
-    @review.update(user_id: current_user.id)
-    if @review.save
+    if @review.update(user_id: current_user.id)
+      respond_to do |format|
+        format.html {redirect_to product_path(@product)}
+        format.js
+      end
       flash[:notice] = "Review saved successfully"
-      redirect_to product_path(@product)
     else
       flash[:alert] = "Review failed to save"
       render :new

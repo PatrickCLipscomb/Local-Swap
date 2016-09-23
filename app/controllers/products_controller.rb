@@ -18,11 +18,11 @@ class ProductsController < ApplicationController
     @product = @category.products.new(product_params)
     @product.update(user_id: current_user.id)
     if @product.save
+      flash[:notice] = "Product saved successfully"
       respond_to do |format|
         format.html {redirect_to category_path(@category)}
         format.js
       end
-      flash[:notice] = "Product saved successfully"
     else
       flash[:alert] = "Product failed to save"
       render :new

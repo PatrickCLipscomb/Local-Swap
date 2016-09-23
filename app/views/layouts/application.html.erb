@@ -69,13 +69,15 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="btn-group">
+    <div class="btn-group container">
       <%= yield(:navbar) %>
     </div>
-    <div class="container" align="middle">
-      <p class="notice"><%= flash[:notice] %></p>
-      <p class="alert"><%= flash[:alert] %></p>
-    </div>
+    <% if flash[:notice] || flash[:alert] %>
+      <div class="container" align="middle">
+        <p class="notice"><%= flash[:notice] %></p>
+        <p class="alert"><%= flash[:alert] %></p>
+      </div>
+    <% end %>
     <div class="container">
       <%= yield %>
     </div>

@@ -1,47 +1,53 @@
-<h1><%= @product.name.titleize %> Page</h1>
+<div class="row">
+  <div class="col-sm-6">
 
-<% content_for(:navbar) do %>
-  <% unless @product.id == @product.category.products.first.id %>
-    <%= link_to 'Previous Product', @product.previous, :class => "btn btn-primary" %>
-  <% end %>
-  <% unless @product.id == @product.category.products.last.id %>
-    <%= link_to 'Next Product', @product.next, :class => "btn btn-primary" %>
-  <% end %>
-<% end %>
-<br>
-
-<%= image_tag(@product.image.url(:medium)) %>
+    <% content_for(:navbar) do %>
+      <% unless @product.id == @product.category.products.first.id %>
+        <%= link_to 'Previous Product', @product.previous, :class => "btn btn-primary" %>
+      <% end %>
+      <% unless @product.id == @product.category.products.last.id %>
+        <%= link_to 'Next Product', @product.next, :class => "btn btn-primary" %>
+      <% end %>
+    <% end %>
+    <h1><%= @product.name.titleize %> Page</h1>
+    <br>
+    <%= image_tag(@product.image.url(:medium)) %>
+  </div>
+  <div class="col-sm-6">
+    <%= link_to "Write a review", new_product_review_path(@product), :class => "btn btn-success", :id => "add_review_link", remote: true %>
+  </div>
+</div>
 
 <br><br>
-<ul class="list-group well">
-  <% @product.reviews.each do |review| %>
-    <%= content_tag_for(:div, review) do %>
+<ul class="list-group well" id="review-list">
+  <% @product.reviews.order('id desc').each do |review| %>
       <li class="list-group-item clearfix">
-        <strong><%= review.name %></strong>
+        <em>Review: </em><strong><%= review.content %></strong>
         <span class="pull-right">
-          <%= button_to upvote_product_review_path(@product, review), :class => "btn btn-success" do %>
+          <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
             <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
           <% end %>
-          <h4><%= review.votes %></h4>
-          <%= button_to downvote_product_review_path(@product, review), :class => "btn btn-danger" do %>
+          <h4 id="<%=review.id.to_s%>-votes"><%= review.votes %></h4>
+          <%= link_to downvote_path(review), :method => "post", remote: true, :class => "btn btn-danger" do %>
             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
           <% end %>
         </span>
-        <span align="middle">
-          <%= link_to "View review", product_review_path(@product, review), :class => "btn btn-info btn-sm"%>
-          <% if current_user && review.user.id == current_user.id %>
-            <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => 'delete', :class => "btn btn-danger btn-sm" %>
+        <br><br><br><br>
+        <span align="pull-left li-bottom">
+          <%= link_to review.name.capitalize + " Page", product_review_path(@product, review), :class => "btn btn-info btn-sm"%>
+          <% if current_user %>
+            <% if current_user.user_name == "Admin" || review.user.id == current_user.id %>
+              <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => "delete", :class => "btn btn-danger btn-sm" %>
+            <% end %>
           <% end %>
         </span>
       </li>
-    <% end %>
   <% end %>
 </ul>
 
 <div class="btn-group">
   <%= link_to "Edit Product", edit_product_path(@product), :class => "btn btn-primary" %>
   <%= link_to "Delete", product_path(@product), :class => "btn btn-primary", :data => {:confirm => "You Sure?", :method => 'delete'} %>
-  <%= link_to "Add a review", new_product_review_path(@product), :class => "btn btn-primary" %>
 </div>
 
 <hr>
