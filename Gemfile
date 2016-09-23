@@ -28,6 +28,7 @@ group :development, :test do
   gem 'simplecov', require: false
   gem "letter_opener", :group => :development
   gem 'database_cleaner'
+  gem 'faker', git: 'git@github.com:stympy/faker.git'
 end
 
 group :development do
