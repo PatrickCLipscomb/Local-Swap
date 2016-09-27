@@ -1,4 +1,12 @@
+
+
 <div class="row container">
+  <h1>Welcome to the User page for <%= current_user.user_name.capitalize %></h1>
+  <span class="product-homepage">
+    <h3><%= current_user.user_name.capitalize %>'s Registered Location</h3>
+    <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{current_user.latitude},#{current_user.longitude}&zoom=12&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:#{current_user.user_name}%7C#{current_user.latitude},#{current_user.longitude}" %>
+  </span>
+  <br><br><hr>
     <h4>Post a product you would like to trade</h4>
     <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link", remote: true %></h4>
 

@@ -87,6 +87,7 @@ GEM
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
     ffi (1.9.14)
+    geocoder (1.4.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
+  geocoder
   jbuilder (~> 2.5)
   jquery-rails
   launchy
@@ -276,4 +278,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.12.5
+   1.13.1

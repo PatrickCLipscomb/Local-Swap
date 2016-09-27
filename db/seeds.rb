@@ -6,14 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-10.times do
-  Category.create(name: Faker::Commerce.department)
-end
-
-50.times do
-  Product.create(name: Faker::Commerce.product_name, price: rand(50), category_id: rand(10))
-end
-
-100.times do
-  Review.create(name: Faker::Commerce.color, content: Faker::Company.catch_phrase, rating: rand(5), product_id: rand(50))
-end
+# 10.times do
+#   Category.create(name: Faker::Commerce.department)
+# end
+#
+# 50.times do
+#   Product.create(name: Faker::Commerce.product_name, price: rand(50), category_id: rand(10))
+# end
+#
+# 100.times do
+#   Review.create(name: Faker::Commerce.color, content: Faker::Company.catch_phrase, rating: rand(5), product_id: rand(50))
+# end
