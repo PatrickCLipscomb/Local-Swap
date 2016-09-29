@@ -1,16 +1,19 @@
 
 <h1>Google Maps</h1>
-<div style='width: 1200px;'>
-  <div id="multi-markers" style='width: 700px; height: 400px;'></div>
+<div style='width: 1200px;' class="row">
+  <div id="multi-markers" style='width: 700px; height: 400px;' class="col-sm-8"></div>
+  <div class="col-sm-4">
+    <ul class="list-group" id="users_list">
+      <% @users.each do |user| %>
+      <li class="list-item-group">
+        <p><%= link_to user.user_name, show_prod_path(user), :method => "post", :class => "btn btn-info", remote: true%></p>
+        <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+      </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
-<ul class="list-group" id="users_list">
-  <% @users.each do |user| %>
-  <li class="list-item-group">
-    <p><%= link_to user.user_name, show_prod_path(user), :method => "post", :class => "btn btn-info", remote: true%></p>
-    <ul id="<%=user.id.to_s%>_user_prod"></ul>
-  </li>
-  <% end %>
-</ul>
+
 <script type="text/javascript">
 buildMap(<%=raw @hash.to_json %>);
 </script>

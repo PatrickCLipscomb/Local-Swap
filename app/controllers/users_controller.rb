@@ -3,10 +3,6 @@ class UsersController < ApplicationController
 
   def show_prod
     @user = User.find(params[:id])
-    @products_array = []
-    @user.products.each do |prod|
-      @products_array.push(prod.name)
-    end
     @users = User.all
     @categories = Category.all
     respond_to do |format|
