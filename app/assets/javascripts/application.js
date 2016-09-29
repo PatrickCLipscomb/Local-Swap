@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require turbolinks
-//= require_tree .
 //= require bootstrap-sprockets
+//= require underscore
+//= require gmaps/google
+//= require_tree .

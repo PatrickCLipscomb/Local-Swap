@@ -28,8 +28,9 @@ group :development, :test do
   gem 'simplecov', require: false
   gem "letter_opener", :group => :development
   gem 'database_cleaner'
-  # gem 'faker', git: 'git@github.com:stympy/faker.git'
   gem 'geocoder'
+  gem 'gmaps4rails'
+  gem 'underscore-rails'
 end
 
 group :development do

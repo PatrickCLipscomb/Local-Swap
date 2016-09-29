@@ -4,6 +4,13 @@ class CategoriesController < ApplicationController
   def index
     @categories = Category.all
     @products = Product.all
+    @users = User.all
+    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      marker.infowindow user.user_name
+      marker.json({ title: "#{user.user_name} - #{user.email}"  })
+    end
   end
   def show
     @category = Category.find(params[:id])

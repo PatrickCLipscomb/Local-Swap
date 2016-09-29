@@ -1,3 +1,14 @@
+
+
+
+<h1>Google Maps</h1>
+<div style='width: 1000px;' align="middle">
+  <div id="multi-markers" style='width: 1000px; height: 600px;'></div>
+</div>
+<script type="text/javascript">
+buildMap(<%=raw @hash.to_json %>);
+</script>
+
 <% if current_user && current_user.user_name == 'Admin' %>
 <h1>Admin Landing Page</h1>
 <hr>
@@ -84,9 +95,3 @@
 <% end %>
 <% end %>
 <hr>
-<h1>Google Maps</h1>
-<div id="map-container">
-  <div id="map-canvas">
-
-  </div>
-</div>
