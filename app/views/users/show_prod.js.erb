@@ -1,0 +1,1 @@
+$('#<%=@user.id.to_s%>_user_prod').append('<%@user.products.each do |prod|%><li><%=prod.name%></li><%end%>');
