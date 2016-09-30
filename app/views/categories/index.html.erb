@@ -7,7 +7,7 @@ Change it so Reviews are of Users, and Make Votes be Commendations or Defamation
         map = new google.maps.Map(document.getElementById('multi-markers'), {
           center: {lat: <%=@users.first.latitude%>, lng: <%=@users.first.longitude%>},
           zoom: 11,
-          styles: [{"featureType":"all","stylers":[{"saturation":0},{"hue":"#e7ecf0"}]},{"featureType":"road","stylers":[{"saturation":-70}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]},{"featureType":"water","stylers":[{"visibility":"simplified"},{"saturation":-60}]}]
+          styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
         });
         <% @users.each do |user| %>
         var contentString<%=user.id%> = '<div id="content">'+
@@ -44,28 +44,17 @@ Change it so Reviews are of Users, and Make Votes be Commendations or Defamation
 
 
 <div style='width: 1200px;' class="row">
-  <div id="multi-markers" style='width: 700px; height: 400px;' class="col-sm-8"></div>
+  <div id="multi-markers" style='width: 1000px; height: 600px;' class="col-sm-10"></div>
   <div class="col-sm-2">
-    <ul class="list-group" id="users_list">
-      <% @users.order('id asc').limit(3).each do |user| %>
-      <li class="list-item-group">
-        <p><%= link_to user.user_name, show_prod_path(user), :method => "post", :class => "btn btn-info", remote: true%></p>
-        <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
-        <h4 id="<%=user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h4>
-      </li>
+    <h5>List of most recent Users</h5>
+    <hr>
+    <div class="btn-group-vertical" id="users_list">
+      <% @users.order('id desc').limit(10).each do |user| %>
+          <button class="btn btn-success"><%= link_to user.user_name, show_prod_path(user), :method => "post", remote: true%></button>
+          <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+          <h5 id="<%=user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
       <% end %>
-    </ul>
-  </div>
-  <div class="col-sm-2">
-    <ul class="list-group" id="users_list">
-      <% @users.order('id desc').limit(3).each do |user| %>
-      <li class="list-item-group">
-        <p><%= link_to user.user_name, show_prod_path(user), :method => "post", :class => "btn btn-info", remote: true%></p>
-        <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
-        <h4 id="<%=user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h4>
-      </li>
-      <% end %>
-    </ul>
+    </div>
   </div>
 </div>
 
