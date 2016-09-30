@@ -1,5 +1,7 @@
 # README
 
+IMPORTANT: PLEASE MAKE ACCOUNT WITH USER NAME 'Admin'
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
