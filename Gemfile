@@ -14,6 +14,9 @@ gem 'record_tag_helper', '~> 1.0'
 gem 'devise'
 gem 'paperclip', '~> 4.1'
 gem 'remotipart', '~> 1.2'
+gem 'mailboxer'
+gem 'will_paginate', '~> 3.1.0'
+gem 'gravatar_image_tag'
 
 
 group :development, :test do

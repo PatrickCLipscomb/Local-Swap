@@ -14,11 +14,18 @@ class User < ApplicationRecord
   validates :user_name, :presence => true
   has_many :products
   has_many :reviews
-  def recent_prods
-    users = []
-    Products.all.order('id desc').each do |product|
-      users.push(product.user)
-    end
-    users
+  # def recent_prods
+  #   users = []
+  #   Products.all.order('id desc').each do |product|
+  #     users.push(product.user)
+  #   end
+  #   users
+  # end
+  acts_as_messageable
+  def name
+    return user_name
+  end
+  def mailboxer_email(object)
+    return email
   end
 end

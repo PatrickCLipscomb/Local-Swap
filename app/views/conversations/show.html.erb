@@ -1,0 +1,32 @@
+<h2>Your Conversations</h2>
+hello there conversation show page
+
+<p>Chatting with
+  <%= render 'conversations/participants', conversation: @conversation %>
+</p>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><%= @conversation.subject %></div>
+
+  <div class="panel-body">
+    <div class="messages">
+      <% @conversation.receipts_for(current_user).each do |receipt| %>
+        <% message = receipt.message %>
+        <div class="media-left">
+
+
+
+          <% if 1 == 0 %>
+          <%= gravatar_for message.sender, 45, message.sender.name %>
+          <%end%>
+
+        </div>
+        <div class="media-body">
+        <%= message.sender.name %>
+          says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %>
+        <%= message.body %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

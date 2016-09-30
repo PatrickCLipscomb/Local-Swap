@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   match "/downvote/:id" => "reviews#downvote", :via => :post, :as => :downvote
   match "/show_prod/:id" => "users#show_prod", :via => :post, :as => :show_prod
   resources :users, only: :show
+  resources :messages, only: [:new, :create]
+  resources :conversations, only: [:index, :show, :destroy]
 end
