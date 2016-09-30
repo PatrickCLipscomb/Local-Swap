@@ -1,6 +1,48 @@
 Implement Vanilla JS Google Maps. Make it so Users can Message One Another, and It will send an Email to Other User.
 Change it so Reviews are of Users, and Make Votes be Commendations or Defamations on Users. Change Review so it is like would you rather comment. Maybe add a comment type feed in the app. Make it so all the above listed items are automatically assigned to the current user.
 <h1>Google Maps</h1>
+<script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('multi-markers'), {
+          center: {lat: <%=@users.first.latitude%>, lng: <%=@users.first.longitude%>},
+          zoom: 11,
+          styles: [{"featureType":"all","stylers":[{"saturation":0},{"hue":"#e7ecf0"}]},{"featureType":"road","stylers":[{"saturation":-70}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]},{"featureType":"water","stylers":[{"visibility":"simplified"},{"saturation":-60}]}]
+        });
+        <% @users.each do |user| %>
+        var contentString<%=user.id%> = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"><%=user.user_name%></h1>'+
+            '<div id="bodyContent"><p><b>Products Available:</b></p><ol>'+
+            <% user.products.each do |product| %>
+            '<li><%=link_to product.name, product_path(product), :class => "btn btn-sm"%></li>'+
+            <% end %>
+            '</ol><p>Email: <%=user.email.capitalize%></p> <p>Go to: <%=link_to user.user_name + "'s Page", user_path(user) %></p>'+
+            '</div>'+
+            '</div>';
+
+        var infowindow<%=user.id%> = new google.maps.InfoWindow({
+          content: contentString<%=user.id%>
+        });
+        var marker<%=user.id%> = new google.maps.Marker({
+          position: {lat: <%=user.latitude%>, lng: <%=user.longitude%>},
+          map: map,
+          title: 'Hello World!'
+        });
+        marker<%=user.id%>.addListener('click', function() {
+          infowindow<%=user.id%>.open(map, marker<%=user.id%>);
+        });
+        <% end %>
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsrciFSZIHPIokQFpVQo6i4boOCSu33w8&callback=initMap"
+    async defer></script>
+
+
+
+
+
 <div style='width: 1200px;' class="row">
   <div id="multi-markers" style='width: 700px; height: 400px;' class="col-sm-8"></div>
   <div class="col-sm-2">
@@ -27,9 +69,11 @@ Change it so Reviews are of Users, and Make Votes be Commendations or Defamation
   </div>
 </div>
 
+<% if 1 == 0 %>
 <script type="text/javascript">
 buildMap(<%=raw @hash.to_json %>);
 </script>
+<% end %>
 
 <% if current_user && current_user.user_name == 'Admin' %>
 <h1>Admin Landing Page</h1>
