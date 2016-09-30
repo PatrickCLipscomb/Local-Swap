@@ -1,1 +1,5 @@
+<% if @user.products.any? %>
 $('#<%=@user.id.to_s%>_user_prod').toggle();
+<% else %>
+$('#<%=@user.id.to_s%>_user_no_prod').toggle();
+<% end %>

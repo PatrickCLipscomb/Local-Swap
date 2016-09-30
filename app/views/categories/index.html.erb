@@ -1,13 +1,26 @@
-
+Implement Vanilla JS Google Maps. Make it so Users can Message One Another, and It will send an Email to Other User.
+Change it so Reviews are of Users, and Make Votes be Commendations or Defamations on Users. Change Review so it is like would you rather comment. Maybe add a comment type feed in the app. Make it so all the above listed items are automatically assigned to the current user.
 <h1>Google Maps</h1>
 <div style='width: 1200px;' class="row">
   <div id="multi-markers" style='width: 700px; height: 400px;' class="col-sm-8"></div>
-  <div class="col-sm-4">
+  <div class="col-sm-2">
     <ul class="list-group" id="users_list">
-      <% @users.each do |user| %>
+      <% @users.order('id asc').limit(3).each do |user| %>
       <li class="list-item-group">
         <p><%= link_to user.user_name, show_prod_path(user), :method => "post", :class => "btn btn-info", remote: true%></p>
         <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+        <h4 id="<%=user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h4>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-sm-2">
+    <ul class="list-group" id="users_list">
+      <% @users.order('id desc').limit(3).each do |user| %>
+      <li class="list-item-group">
+        <p><%= link_to user.user_name, show_prod_path(user), :method => "post", :class => "btn btn-info", remote: true%></p>
+        <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+        <h4 id="<%=user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h4>
       </li>
       <% end %>
     </ul>
