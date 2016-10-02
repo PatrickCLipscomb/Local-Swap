@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "the add a category process" do
+describe "the add a category process", js: true do
   it "adds a new category" do
     user = FactoryGirl.create(:user)
     visit '/categories'

@@ -6,16 +6,18 @@
     <h3><%= current_user.user_name.capitalize %>'s Registered Location</h3>
     <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{current_user.latitude},#{current_user.longitude}&zoom=12&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:#{current_user.user_name}%7C#{current_user.latitude},#{current_user.longitude}" %>
   </span>
-  
+
   <br><br><hr>
     <h4>Post a product you would like to trade</h4>
     <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link", remote: true %></h4>
 
   <div class="col-sm-6">
     <h4>Products posted by <%= current_user.user_name.capitalize %></h4>
-    <ul class="list-group well">
+    <ul class="list-group well" id="products">
         <%= content_tag_for(:li, current_user.products.each, class: "list-group-item") do |product| %>
-        <%= link_to product.name, category_product_path(product.category, product)%><br>
+        <%= link_to product.name.capitalize, category_product_path(product.category, product)%>
+        <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category)%></span>
+        <br>
         <%= image_tag(product.image.url(:thumb)) %>
         <% end %>
     </ul>
