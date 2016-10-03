@@ -6,7 +6,7 @@ describe "the add a user process" do
     click_on 'Sign Up'
     fill_in 'User name', :with => 'Chips'
     fill_in 'Email', :with => 'well@hello.gud'
-    fill_in 'Address', :with => '100 N Blandena, Portland, OR'
+    fill_in 'Address', :with => '100 N Blandena, Portland'
     fill_in 'Password', :with => 'password'
     fill_in 'Password confirmation', :with => 'password'
     click_on 'Sign up'
