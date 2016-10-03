@@ -2,8 +2,15 @@
 hello there conversation show page
 
 <p>Chatting with
-  <%= render 'conversations/participants', conversation: @conversation %>
+  <% @conversation.participants.each do |participant| %>
+    <% unless participant == current_user %>
+      <p><%=participant.name%>
+      <%=participant.email%></p>
+      <%= image_tag(participant.avatar.url(:thumb), :class => "image-thumbnail") %>
+    <% end %>
+  <% end %>
 </p>
+
 
 <div class="panel panel-default">
   <div class="panel-heading"><%= @conversation.subject %></div>
@@ -12,20 +19,10 @@ hello there conversation show page
     <div class="messages">
       <% @conversation.receipts_for(current_user).each do |receipt| %>
         <% message = receipt.message %>
-        <div class="media-left">
 
-
-
-          <% if 1 == 0 %>
-          <%= gravatar_for message.sender, 45, message.sender.name %>
-          <%end%>
-
-        </div>
-        <div class="media-body">
         <%= message.sender.name %>
           says at <%= message.created_at.strftime("%-d %B %Y, %H:%M:%S") %>
         <%= message.body %>
-        </div>
       <% end %>
     </div>
   </div>

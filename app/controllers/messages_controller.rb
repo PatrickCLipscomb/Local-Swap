@@ -4,6 +4,11 @@ class MessagesController < ApplicationController
   def new
   end
 
+  def direct_message
+  end
+  def direct_message_create
+  end
+
   def create
     recipients = User.where(id: params['recipients'])
     conversation = current_user.send_message(recipients, params[:message][:body], params[:message][:subject]).conversation
