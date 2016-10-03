@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20160930200756) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "user_name"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -123,17 +124,8 @@ ActiveRecord::Schema.define(version: 20160930200756) do
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "user_name"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  end
-
-  create_table "votes", force: :cascade do |t|
-    t.integer  "value"
-    t.integer  "user_id"
-    t.integer  "review_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"

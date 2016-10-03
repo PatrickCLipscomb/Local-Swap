@@ -11,10 +11,9 @@ describe "the add a product process", js: true do
     click_on 'Log in'
     visit user_path(user)
     click_on 'Post'
-    save_and_open_screenshot
     fill_in 'Name', :with => 'Chips'
     fill_in 'Price', :with => '5'
-    choose 'Bratwurst'
+    choose 'category_id_' + category.id.to_s
     click_on 'Create Product'
     expect(page).to have_content 'Chips'
   end
@@ -33,14 +32,13 @@ describe "the edit product process", js: true do
     click_on 'Post'
     fill_in 'Name', :with => 'Chips'
     fill_in 'Price', :with => '5'
-    choose 'Bratwurst'
+    choose 'category_id_' + category.id.to_s
     click_on 'Create Product'
     click_link 'Chips'
     click_on 'Edit Product'
-    save_and_open_screenshot
     fill_in 'Name', :with => 'Chipers'
     fill_in 'Price', :with => '4'
-    page.choose('Bratwurst')
+    choose 'category_id_' + category.id.to_s
     click_on 'Update Product'
     expect(page).to have_content 'Chipers'
   end
@@ -59,7 +57,7 @@ describe "the delete a product process", js: true do
     click_on 'Post'
     fill_in 'Name', :with => 'Chips'
     fill_in 'Price', :with => '5'
-    choose 'Bratwurst'
+    choose 'category_id_' + category.id.to_s
     click_on 'Create Product'
     click_link 'Chips'
     click_on 'Delete'
