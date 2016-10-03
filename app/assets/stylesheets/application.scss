@@ -1,7 +1,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
+body {
+  background-color: #ff862f;
+}
 
 .image-thumbnail {
   border-radius: 50%;
@@ -62,6 +64,7 @@
  .user_products {
    display: none;
    list-style-type: none;
+   margin-left: -25px;
  }
 
  .user_no_products {

@@ -17,6 +17,7 @@ gem 'remotipart', '~> 1.2'
 gem 'mailboxer'
 gem 'will_paginate', '~> 3.1.0'
 gem 'gravatar_image_tag'
+gem 'faker'
 
 
 group :development, :test do

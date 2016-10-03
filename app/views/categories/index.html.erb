@@ -1,12 +1,14 @@
 Implement Vanilla JS Google Maps. Make it so Users can Message One Another, and It will send an Email to Other User.
 Change it so Reviews are of Users, and Make Votes be Commendations or Defamations on Users. Change Review so it is like would you rather comment. Maybe add a comment type feed in the app. Make it so all the above listed items are automatically assigned to the current user.
 <h1>Google Maps</h1>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initMap"
+async defer></script>
 <script>
       var map;
       function initMap() {
         map = new google.maps.Map(document.getElementById('multi-markers'), {
           center: {lat: 45.5231, lng: -122.6765},
-          zoom: 11,
+          zoom: 4,
           styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
         });
         <% if @users %>
@@ -38,8 +40,7 @@ Change it so Reviews are of Users, and Make Votes be Commendations or Defamation
         <%end%>
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initMap"
-    async defer></script>
+
 
 
 
@@ -48,23 +49,23 @@ Change it so Reviews are of Users, and Make Votes be Commendations or Defamation
 <div style='width: 1200px;' class="row">
   <div id="multi-markers" style='width: 1000px; height: 600px;' class="col-sm-10"></div>
   <div class="col-sm-2">
-    <h5>List of most recent Users</h5>
+    <h5>Last User to Add a Product!</h5>
     <hr>
-    <div class="btn-group-vertical" id="users_list">
-      <% @users.order('id desc').limit(10).each do |user| %>
-          <button class="btn btn-success"><%= link_to user.user_name, show_prod_path(user), :method => "post", remote: true%></button>
-          <ol id="<%=user.id.to_s%>_user_prod" class="user_products"><h5>Products</h5><%user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
-          <h5 id="<%=user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
+    <ol class="btn-group-vertical" id="users_list">
+      <% holder = [] %>
+      <% @products.order('id desc').each do |product| %>
+        <% if !holder.include?(product.user) %>
+          <li>
+            <button class="btn btn-success"><%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", remote: true%></button>
+            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5>Products:</h5><%product.user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+            <h5 id="<%=product.user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
+          </li>
+          <% holder.push(product.user) %>
+        <% end %>
       <% end %>
-    </div>
+    </ol>
   </div>
 </div>
-
-<% if 1 == 0 %>
-<script type="text/javascript">
-buildMap(<%=raw @hash.to_json %>);
-</script>
-<% end %>
 
 <% if current_user && current_user.user_name == 'Admin' %>
 <h1>Admin Landing Page</h1>
@@ -97,11 +98,11 @@ buildMap(<%=raw @hash.to_json %>);
 <h1>A list of our products by Category</h1>
 <% @categories.each do |category| %>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <h4><%= category.name %></h4>
-      <h4><%= link_to "View All Products for " + category.name, category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-primary" %></h4>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-8">
       <% category.products.limit(5).each do |product| %>
       <span class="well product-homepage">
         <%= link_to product.name, category_product_path(category, product)%><br>
@@ -116,9 +117,9 @@ buildMap(<%=raw @hash.to_json %>);
 <h1>A list of our products by Category</h1>
 <% @categories.each do |category| %>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <h4><%= category.name %></h4>
-      <h4><%= link_to "View All Products for " + category.name, category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-sm btn-primary" %></h4>
     </div>
     <div class="col-sm-9">
       <% category.products.limit(5).each do |product| %>
@@ -135,12 +136,12 @@ buildMap(<%=raw @hash.to_json %>);
 <h1>A list of our products by Category</h1>
 <% @categories.each do |category| %>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <h4><%= category.name %></h4>
-      <h4><%= link_to "View All Products for " + category.name, category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+      <p><%= link_to "View Products", category_path(category), :class => "btn btn-sm btn-primary" %></p>
     </div>
-    <div class="col-sm-9">
-      <% category.products.limit(5).each do |product| %>
+    <div class="col-sm-8">
+      <% category.products.limit(4).each do |product| %>
       <span class="well product-homepage">
         <%= link_to product.name, category_product_path(category, product)%><br>
         <%= image_tag(product.image.url(:thumb), :class => "products-homepage") %>

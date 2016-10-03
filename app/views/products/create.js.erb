@@ -1,3 +1,6 @@
 $('#new_product').remove();
 $('#new_product_link').show();
 $('#products').prepend('<li class="list-group-item"><%= link_to @product.name, product_path(@product) %><span class="pull-right"><strong>Category: </strong><%= link_to @product.category.name, category_path(@product.category) %></span><br><%= image_tag(@product.image.url(:thumb)) %></li>');
+<% if current_user.user_name == 'Admin' %>
+  location.reload();
+<% end %>
