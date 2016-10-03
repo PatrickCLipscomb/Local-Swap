@@ -19,7 +19,10 @@ end
 User.where(latitude: nil).each {|a| a.destroy}
 
 50.times do
-  Product.create(name: Faker::Commerce.product_name, price: rand(50), category_id: rand(10), user_id: User.all.first.id + rand(8))
+  cat_id = Category.all.first.id + rand(10)
+  prod = Product.create(name: Faker::Commerce.product_name, price: rand(50), category_id: cat_id, user_id: User.all.first.id + rand(8))
+  cat = Category.find(cat_id)
+  cat.update(products: cat.products.push(prod))
 end
 #
 # 100.times do

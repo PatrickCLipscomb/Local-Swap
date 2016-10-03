@@ -57,7 +57,7 @@ async defer></script>
         <% if !holder.include?(product.user) %>
           <li>
             <button class="btn btn-success"><%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", remote: true%></button>
-            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5>Products:</h5><%product.user.products.each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5>Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
             <h5 id="<%=product.user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
           </li>
           <% holder.push(product.user) %>
