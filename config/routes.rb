@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   match "/upvote/:id" => "reviews#upvote", :via => :post, :as => :upvote
   match "/downvote/:id" => "reviews#downvote", :via => :post, :as => :downvote
   match "/show_prod/:id" => "users#show_prod", :via => :post, :as => :show_prod
+  match "/about/" => "categories#about", :via => :get, :as => :about
   resources :users, only: :show
   resources :messages, only: [:new, :create]
   resources :conversations, only: [:index, :show, :destroy]

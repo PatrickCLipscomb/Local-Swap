@@ -13,6 +13,7 @@ class CategoriesController < ApplicationController
     end
   end
   def show
+    @users = User.all
     @category = Category.find(params[:id])
     @first_product = @category.products.first
   end
@@ -49,6 +50,12 @@ class CategoriesController < ApplicationController
     else
       flash[:alert] = "Category failed to delete"
     end
+
+  end
+  def contact
+
+  end
+  def about
 
   end
   private
