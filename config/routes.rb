@@ -22,8 +22,10 @@ Rails.application.routes.draw do
     member do
       post :reply
       post :restore
-      delete :empty_trash
       post :mark_as_read
+    end
+    collection do
+      delete :empty_trash
     end
   end
 end
