@@ -13,8 +13,17 @@ Rails.application.routes.draw do
   match "/about/" => "categories#about", :via => :get, :as => :about
 
   match "/direct_message/:id" => "messages#direct_message", :via => :post, :as => :direct_message
-  
+
   resources :users, only: :show
   resources :messages, only: [:new, :create]
-  resources :conversations, only: [:index, :show, :destroy]
+
+  # Great to remember for future routing
+  resources :conversations, only: [:index, :show, :destroy] do
+    member do
+      post :reply
+      post :restore
+      delete :empty_trash
+      post :mark_as_read
+    end
+  end
 end

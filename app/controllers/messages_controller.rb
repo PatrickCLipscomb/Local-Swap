@@ -2,13 +2,10 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def new
+    @chosen_recipient = User.find_by(id: params[:to].to_i) if params[:to]
   end
 
-  def direct_message
-  end
-  def direct_message_create
-  end
-
+  # In the create action, find an array of users (stored in the params['recipients']) and utilize Mailboxer’s send_message method, passing in the recipients, body, and the subject.
   def create
     recipients = User.where(id: params['recipients'])
     conversation = current_user.send_message(recipients, params[:message][:body], params[:message][:subject]).conversation

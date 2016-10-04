@@ -17,4 +17,9 @@
 //= require bootstrap-sprockets
 //= require underscore
 //= require gmaps/google
+
+//= require jquery.turbolinks
+//= require chosen-jquery
+//= require messages
+
 //= require_tree .

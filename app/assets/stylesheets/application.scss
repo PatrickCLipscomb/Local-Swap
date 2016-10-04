@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'chosen';
 
 body {
   background-color: #ff862f;
@@ -8,7 +9,8 @@ body {
 .image-thumbnail {
   border-radius: 50%;
   display: block;
-  margin: 0 auto;
+  margin-left: 10px;
+  max-width: 70px;
 }
 
 .cat-radio {

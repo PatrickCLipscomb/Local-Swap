@@ -18,6 +18,9 @@ gem 'mailboxer'
 gem 'will_paginate', '~> 3.1.0'
 gem 'gravatar_image_tag'
 gem 'faker'
+# to make message recipient select more convinient
+gem 'chosen-rails'
+gem 'jquery-turbolinks'
 
 
 group :development, :test do
