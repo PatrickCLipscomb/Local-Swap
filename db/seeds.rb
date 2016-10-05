@@ -18,7 +18,7 @@ def range (min, max)
   rand * (max-min) + min
 end
 
-User.all.each {|a| a.update(latitude: range(45.4, 45.6), longitude: range(-122.5, -122.7))}
+User.all.each {|a| a.update(bio: Faker::Hipster.paragraph, latitude: range(45.4, 45.6), longitude: range(-122.5, -122.7))}
 User.where(latitude: nil).each {|a| a.destroy}
 
 50.times do

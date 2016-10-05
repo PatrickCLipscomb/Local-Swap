@@ -1,20 +1,65 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initMap"
+async defer></script>
+<script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('multi-markers'), {
+          center: {lat: <%= @user.latitude %>, lng: <%= @user.longitude %>},
+          zoom: 11,
+          styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
+        });
 
+        <% if @user %>
+        var contentString<%=@user.id%> = '<div id="content">' +
+            '<div id="siteNotice"><% unless current_user == @user %>' +
+              '<%= link_to "Send message", new_message_path(to: @user.id), :class =>' + '"btn' + 'btn-default btn-sm" %>' +
+            '<% end %>' +
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"><%=@user.user_name%></h1>'+
+            '<div id="bodyContent"><p><b>Products Available:</b></p><ol>'+
+            <% @user.products.each do |product| %>
+            '<li><%=link_to product.name, product_path(product), :class => "btn btn-sm"%></li>'+
+            <% end %>
+            '</ol><p>Email: <%=@user.email.capitalize%></p> <p>Go to: <%=link_to @user.user_name, user_path(@user) %></p>'+
+            '</div>'+
+            '</div>';
+
+        var infowindow<%=@user.id%> = new google.maps.InfoWindow({
+          content: contentString<%=@user.id%>
+        });
+        var marker<%=@user.id%> = new google.maps.Marker({
+          position: {lat: <%=@user.latitude%>, lng: <%=@user.longitude%>},
+          map: map,
+          title: 'Hello World!'
+        });
+        marker<%=@user.id%>.addListener('click', function() {
+          infowindow<%=@user.id%>.open(map, marker<%=@user.id%>);
+        });
+        <% end %>
+      }
+</script>
 
 <div class="row container">
-  <h1>Welcome to the User page for <%= current_user.user_name.capitalize %></h1>
-  <span class="product-homepage">
-    <h3><%= current_user.user_name.capitalize %>'s Registered Location</h3>
-    <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{current_user.latitude},#{current_user.longitude}&zoom=12&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:#{current_user.user_name}%7C#{current_user.latitude},#{current_user.longitude}" %>
-  </span>
+  <div class="col-sm-7">
+    <h1 class="field">Welcome to the User page for <%= @user.user_name.capitalize %></h1>
+    <span class="product-homepage">
+      <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
+      <div id="multi-markers" style='width: 600px; height: 400px;'></div>
+    </span>
+  </div>
+  <div class="col-sm-">
+    <h3><%= @user.user_name %>'s Bio</h3>
+    <h5><%= @user.bio %></h5>
+  </div>
 
-  <br><br><hr>
+</div>
+<div class="row container"><hr>
     <h4>Post a product you would like to trade</h4>
     <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link", remote: true %></h4>
-
   <div class="col-sm-6">
-    <h4>Products posted by <%= current_user.user_name.capitalize %></h4>
+    <h4>Products posted by <%= @user.user_name.capitalize %></h4>
     <ul class="list-group well" id="products">
-        <%= content_tag_for(:li, current_user.products.each, class: "list-group-item") do |product| %>
+        <%= content_tag_for(:li, @user.products.each, class: "list-group-item") do |product| %>
         <%= link_to product.name.capitalize, category_product_path(product.category, product)%>
         <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category)%></span>
         <br>
@@ -23,9 +68,9 @@
     </ul>
   </div>
   <div class="col-sm-6">
-    <h4>Reviews written by <%= current_user.user_name.capitalize %></h4>
+    <h4>Reviews written by <%= @user.user_name.capitalize %></h4>
     <ul class="list-group well">
-        <%= content_tag_for(:li, current_user.reviews.each, class: "list-group-item") do |review| %>
+        <%= content_tag_for(:li, @user.reviews.each, class: "list-group-item") do |review| %>
         <%= link_to review.name, product_review_path(review.product, review)%><br>
         <p><%= review.content %></p>
         <% end %>

@@ -4,7 +4,7 @@ async defer></script>
 <script type="text/javascript">
 var map;
 function initMap() {
-  map = new google.maps.Map(document.getElementById('multi-markers2'), {
+  map = new google.maps.Map(document.getElementById('multi-markers'), {
     <% if prod = @category.products.first %>
       center: {lat: <%= prod.user.latitude %>, lng: <%= prod.user.longitude %>},
     <% else %>
@@ -43,7 +43,16 @@ function initMap() {
   <div class="col-sm-8">
     <h1><%= @category.name.titleize %> Page</h1>
     <%= image_tag(@category.image.url(:medium), :class => "category-page-image") %>
-    <div id="multi-markers2" style='width: 700px; height: 500px;'></div>
+    <div id="multi-markers" style='width: 700px; height: 500px;'></div>
+    <div>
+      <%= link_to "Add a product", new_category_product_path(@category), :class => "btn btn-success btn-lg" %>
+    </div>
+    <div class="btn-group">
+      <% if current_user && current_user.user_name == "Admin" %>
+        <%= link_to "Edit Category", edit_category_path(@category), :class => "btn btn-primary" %>
+        <%= link_to "Delete Category", category_path(@category), :class => "btn btn-danger", :data => {:confirm => "You Sure?", :method => 'delete'} %>
+      <% end %>
+    </div>
   </div>
   <div class="col-sm-4">
     <h4>Products for the <%= @category.name.capitalize %> Category</h4>
@@ -59,12 +68,6 @@ function initMap() {
   </div>
 </div>
 
-
-<div class="btn-group">
-  <%= link_to "Edit Category", edit_category_path(@category), :class => "btn btn-primary" %>
-  <%= link_to "Delete Category", category_path(@category), :class => "btn btn-danger", :data => {:confirm => "You Sure?", :method => 'delete'} %>
-  <%= link_to "Add a product", new_category_product_path(@category), :class => "btn btn-primary" %>
-</div>
 
 
 <hr>
