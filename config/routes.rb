@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   resources :categories do
     resources :products
   end
-  resources :products do
-    resources :reviews
-  end
+  resources :products
   match "/upvote/:id" => "reviews#upvote", :via => :post, :as => :upvote
   match "/downvote/:id" => "reviews#downvote", :via => :post, :as => :downvote
   match "/show_prod/:id" => "users#show_prod", :via => :post, :as => :show_prod
@@ -14,7 +12,9 @@ Rails.application.routes.draw do
 
   match "/direct_message/:id" => "messages#direct_message", :via => :post, :as => :direct_message
 
-  resources :users, only: :show
+  resources :users, only: :show do
+    resources :reviews
+  end
   resources :messages, only: [:new, :create]
 
   # Great to remember for future routing

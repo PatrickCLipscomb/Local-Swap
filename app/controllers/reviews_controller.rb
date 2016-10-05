@@ -39,17 +39,15 @@ class ReviewsController < ApplicationController
     @product = @review.product
   end
   def new
-    @product = Product.find(params[:product_id])
-    @review = @product.reviews.new
+    @user = User.find(params[:user_id])
+    @review = @user.reviews.new
   end
   def create
-    @product = Product.find(params[:product_id])
-    @review = @product.reviews.new(review_params)
-    if @review.update(user_id: current_user.id)
-      respond_to do |format|
-        format.html {redirect_to product_path(@product)}
-        format.js
-      end
+    @user = User.find(params[:user_id])
+    @review = @user.reviews.new(review_params)
+    binding.pry
+    if @review.update(author_id: current_user.id)
+      redirect_to user_path(@user)
       flash[:notice] = "Review saved successfully"
     else
       flash[:alert] = "Review failed to save"
@@ -75,6 +73,6 @@ class ReviewsController < ApplicationController
   end
   private
   def review_params
-    params.require(:review).permit(:name, :content, :rating, :product_id)
+    params.require(:review).permit(:content, :rating)
   end
 end
