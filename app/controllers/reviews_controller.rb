@@ -45,7 +45,7 @@ class ReviewsController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     @review = @user.reviews.new(review_params)
-    binding.pry
+    @review.update(rating: params[:rating].to_i) 
     if @review.update(author_id: current_user.id)
       redirect_to user_path(@user)
       flash[:notice] = "Review saved successfully"

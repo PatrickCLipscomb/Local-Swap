@@ -75,11 +75,16 @@ async defer></script>
     </ul>
   </div>
   <div class="col-sm-6">
-    <h4>Reviews written by <%= @user.user_name.capitalize %></h4>
+    <h4>Reviews of <%= @user.user_name.capitalize %></h4>
     <ul class="list-group well">
         <%= content_tag_for(:li, @user.reviews.each, class: "list-group-item") do |review| %>
-        <%= link_to review.name, product_review_path(review.product, review)%><br>
-        <p><%= review.content %></p>
+        <span>
+        <%= link_to User.find(review.author_id).user_name.capitalize, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name.capitalize %></strong> a <%= review.rating.to_s %>
+        </span>
+        <span class="pull-right">
+        <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
+        </span><br>
+        <p><em>Rating Description:</em> <%= review.content %></p>
         <% end %>
     </ul>
   </div>

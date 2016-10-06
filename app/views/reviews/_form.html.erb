@@ -6,24 +6,24 @@
 <div class="field">
   <h5>Please rate your experience trading with <%= @user.user_name.capitalize %></h5>
   <span class="cat-radio">
-    <%= radio_button_tag(:rating, "1") %>
-    <%= label_tag(:rating, "Terrible") %>
+    <%= radio_button_tag(:rating, 1) %>
+    <%= label_tag(:rating_user, "Terrible") %>
   </span>
   <span class="cat-radio">
-    <%= radio_button_tag(:rating, "2") %>
-    <%= label_tag(:rating, "Bad") %>
+    <%= radio_button_tag(:rating, 2) %>
+    <%= label_tag(:rating_user, "Bad") %>
   </span>
   <span class="cat-radio">
-    <%= radio_button_tag(:rating, "3") %>
-    <%= label_tag(:rating, "Okay") %>
+    <%= radio_button_tag(:rating, 3) %>
+    <%= label_tag(:rating_user, "Okay") %>
   </span>
   <span class="cat-radio">
-    <%= radio_button_tag(:rating, "4") %>
-    <%= label_tag(:rating, "Good") %>
+    <%= radio_button_tag(:rating, 4) %>
+    <%= label_tag(:rating_user, "Good") %>
   </span>
   <span class="cat-radio">
-    <%= radio_button_tag(:rating, "5") %>
-    <%= label_tag(:rating, "Stellar") %>
+    <%= radio_button_tag(:rating, 5) %>
+    <%= label_tag(:rating_user, "Stellar") %>
   </span>
 </div>
 <br>
