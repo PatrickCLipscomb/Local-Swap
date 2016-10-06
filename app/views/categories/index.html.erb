@@ -50,7 +50,7 @@ async defer></script>
 
 <div style='width: 1200px;' class="row">
   <div id="multi-markers" style='width: 1000px; height: 600px;' class="col-sm-10"></div>
-  <div class="col-sm-2">
+  <div class="col-lg-2">
     <h5>Last User to Add a Product!</h5>
     <hr>
     <ol class="btn-group-vertical" id="users_list">
@@ -75,7 +75,7 @@ async defer></script>
 <hr>
 <br>
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-lg-6">
     <%= link_to "Add a category", new_category_path, :class => "btn btn-success btn-lg",  :id => 'new_category_link', remote: true %>
     <h5>View All Categories</h5>
     <ul class="list-group well" id="categories">
@@ -84,7 +84,7 @@ async defer></script>
       <% end %>
     </ul>
   </div>
-  <div class="col-sm-6">
+  <div class="col-lg-6">
     <%= link_to "Add a product", new_product_path, :class => "btn btn-success btn-lg",  :id => 'new_product_link', remote: true %>
     <h5>View All Products</h5>
     <ul class="list-group well" id="products">
@@ -101,11 +101,11 @@ async defer></script>
 <h1>A list of our products by Category</h1><hr>
 <% @categories.each do |category| %>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <h4><%= category.name %></h4>
       <h4><%= link_to "View Products", category_path(category), :class => "btn btn-primary" %></h4>
     </div>
-    <div class="col-sm-8">
+    <div class="col-md-8">
       <% category.products.limit(5).each do |product| %>
       <span class="well product-homepage">
         <%= link_to product.name, category_product_path(category, product)%><br>
@@ -120,11 +120,11 @@ async defer></script>
 <h1>A list of our products by Category</h1><hr>
 <% @categories.each do |category| %>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <h4><%= category.name %></h4>
       <h4><%= link_to "View Products", category_path(category), :class => "btn btn-sm btn-primary" %></h4>
     </div>
-    <div class="col-sm-9">
+    <div class="col-md-9">
       <% category.products.limit(5).each do |product| %>
       <span class="well product-homepage">
         <%= link_to product.name, category_product_path(category, product)%><br>
@@ -139,11 +139,11 @@ async defer></script>
 <h1>A list of our products by Category</h1><hr>
 <% @categories.each do |category| %>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <h4><%= category.name %></h4>
       <p><%= link_to "View Products", category_path(category), :class => "btn btn-sm btn-primary" %></p>
     </div>
-    <div class="col-sm-8">
+    <div class="col-md-8">
       <% category.products.limit(4).each do |product| %>
       <span class="well product-homepage">
         <%= link_to product.name, category_product_path(category, product)%><br>

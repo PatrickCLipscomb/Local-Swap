@@ -23,10 +23,16 @@ User.where(latitude: nil).each {|a| a.destroy}
 
 50.times do
   cat_id = Category.all.first.id + rand(10)
-  prod = Product.create(name: Faker::Commerce.product_name, price: rand(50), category_id: cat_id, user_id: User.all.first.id + rand(8))
+  prod = Product.create(name: Faker::Commerce.product_name, price: rand(50), category_id: cat_id, user_id: User.all.first.id + 1 + rand(8))
   cat = Category.find(cat_id)
   cat.update(products: cat.products.push(prod))
 end
+
+30.times do
+  Review.create(content: Faker::Hipster.sentence, user_id: range(User.all.first.id, User.all.last.id), author_id: range(User.all.first.id, User.all.last.id), rating: 1 + rand(5), votes: rand(10))
+end
+
+User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena, Portland, OR', password: 'password')
 #
 # 100.times do
 #   Review.create(name: Faker::Commerce.color, content: Faker::Company.catch_phrase, rating: rand(5), product_id: rand(50))
