@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, :excpet => [:show]
   def upvote
     @review = Review.find(params[:id])
-    # if !(review.has_voted.include?(user.id))
+    if !(review.has_voted.include?(user.id))
       if @review.update(votes: @review.votes.to_i + 1, has_voted: @review.has_voted.push(@review.user.id))
         respond_to do |format|
           format.html {redirect_to category_product_path(@review.product.category, @review.product)}
@@ -10,10 +10,10 @@ class ReviewsController < ApplicationController
         end
       end
       # for when user should only vote once
-    # else
-    #   flash[:notice] = user.user_name + "has already voted"
-    #   redirect_to category_product_path(review.product.category, review.product)
-    # end
+    else
+      flash[:notice] = user.user_name + "has already voted"
+      redirect_to category_product_path(review.product.category, review.product)
+    end
   end
   def downvote
     @review = Review.find(params[:id])
