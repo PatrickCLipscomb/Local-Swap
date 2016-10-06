@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:index]
   def index
     @categories = Category.all
-    @products = Product.all
+    @products = Product.all.paginate(page: params[:page], per_page: 10)
     @users = User.all
     @hash = Gmaps4rails.build_markers(@users) do |user, marker|
       marker.lat user.latitude
