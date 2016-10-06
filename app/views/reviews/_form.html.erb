@@ -4,7 +4,7 @@
   <%= f.text_area :content, cols: "60", rows: "4" %>
 </div>
 <div class="field">
-  <h5>Please rate your experience trading with <%= @user.user_name.capitalize %></h5>
+  <h5>Please rate your experience trading with <%= @user.user_name %></h5>
   <span class="cat-radio">
     <%= radio_button_tag(:rating, 1) %>
     <%= label_tag(:rating_user, "Terrible") %>

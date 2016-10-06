@@ -1,4 +1,4 @@
-<h4>An app designed to allow Users to share goods through a geographically enabled social website. When signing in, Users enter their address and are located on the map where other users can know the general area that user is on. Users can post products they would like to trade, write reviews on other products, and message other users.</h4>
+<h4>An app designed to allow users to share goods through a geographically enabled social website. When signing in, users enter their address and are located on the map where other users can know the general area that user is on. Users can post products they would like to trade, write reviews of other users, and message other users.</h4>
 <h1>Local Swap Map</h1>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initMap"
 async defer></script>
@@ -8,7 +8,7 @@ async defer></script>
         map = new google.maps.Map(document.getElementById('multi-markers'), {
           center: {lat: 45.5231, lng: -122.4965},
           zoom: 11,
-          styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
+          styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#ff862f"},{"visibility":"on"}]}]
         });
 
         <% if @users %>
@@ -23,7 +23,7 @@ async defer></script>
             <% user.products.each do |product| %>
             '<li><%=link_to product.name, product_path(product), :class => "btn btn-sm"%></li>'+
             <% end %>
-            '</ol><p>Email: <%=user.email.capitalize%></p> <p>Go to: <%=link_to user.user_name, user_path(user) %></p>'+
+            '</ol><p>Email: <%=user.email%></p> <p>Go to: <%=link_to user.user_name, user_path(user) %></p>'+
             '</div>'+
             '</div>';
 
@@ -94,11 +94,12 @@ async defer></script>
         </li>
       <% end %>
     </ul>
+    <%= will_paginate @products %>
   </div>
 
 </div>
 <hr>
-<h1>A list of our products by Category</h1><hr>
+<h1>A list of products by category</h1><hr>
 <% @categories.each do |category| %>
   <div class="row">
     <div class="col-md-4">
@@ -117,7 +118,7 @@ async defer></script>
   <hr>
 <% end %>
 <% elsif current_user %>
-<h1>A list of our products by Category</h1><hr>
+<h1>A list of products by category</h1><hr>
 <% @categories.each do |category| %>
   <div class="row">
     <div class="col-md-4">
@@ -136,7 +137,7 @@ async defer></script>
   <hr>
 <% end %>
 <% else %>
-<h1>A list of our products by Category</h1><hr>
+<h1>A list of products by category</h1><hr>
 <% @categories.each do |category| %>
   <div class="row">
     <div class="col-md-4">

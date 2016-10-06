@@ -11,13 +11,13 @@ function initMap() {
       center: {lat: 45.5231, lng: -122.6765},
     <% end %>
     zoom: 11,
-    styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
+    styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#ff862f"},{"visibility":"on"}]}]
   });
     var contentString<%=prod.id%> = '<div id="content">'+
         '<div id="siteNotice">'+
-        '$<%= prod.price %> Dollars</div>'+
-        '<h1 id="firstHeading" class="firstHeading"><%= prod.name %></h1>'+
-        '<div id="bodyContent"><p><%= prod.name %> User Information:</p><p>Email: <%=prod.user.email.capitalize%></p> <p>Go to: <%=link_to prod.user.user_name, user_path(prod.user) %></p>'+
+        '$<%= prod.price %> Dollars</div><% unless current_user == @user %>' +
+          '<%= link_to "Send message", new_message_path(to: prod.user.id), :class =>' + '"btn' + 'btn-default btn-sm" %>' + '<% end %><h1 id="firstHeading" class="firstHeading"><%= prod.name %></h1>' +
+        '<div id="bodyContent"><p><%= prod.name %> User Information:</p><p>Email: <%=prod.user.email%></p> <p>Go to: <%=link_to prod.user.user_name, user_path(prod.user) %></p>'+
         '</div>'+
         '</div>';
 
@@ -37,23 +37,23 @@ function initMap() {
 
 
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-md-6">
 
     <% content_for(:navbar) do %>
       <% unless @product.id == @product.category.products.first.id %>
-        <%= link_to 'Previous Product in ' + @product.category.name.capitalize, @product.previous, :class => "btn btn-primary" %>
+        <%= link_to 'Previous Product in ' + @product.category.name, @product.previous, :class => "btn btn-primary" %>
       <% end %>
       <% unless @product.id == @product.category.products.last.id %>
-        <%= link_to 'Next Product in ' + @product.category.name.capitalize, @product.next, :class => "btn btn-primary" %>
+        <%= link_to 'Next Product in ' + @product.category.name, @product.next, :class => "btn btn-primary" %>
       <% end %>
     <% end %>
     <h1><%= @product.name.titleize %> Page</h1>
     <br>
     <%= image_tag(@product.image.url(:medium)) %>
   </div>
-  <div class="col-sm-6">
-    <%= link_to "Message " + @product.user.user_name.capitalize, new_message_path(to: @product.user.id), :class => "btn btn-success" %>
-    <div id="multi-markers" style='width: 500px; height: 400px;'></div>
+  <div class="col-md-6">
+    <%= link_to "Message " + @product.user.user_name, new_message_path(to: @product.user.id), :class => "btn btn-success" %>
+    <div id="multi-markers" style='width: 600px; height: 400px;'></div>
   </div>
 </div>
 

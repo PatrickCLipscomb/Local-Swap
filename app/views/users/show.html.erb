@@ -6,7 +6,7 @@ async defer></script>
         map = new google.maps.Map(document.getElementById('multi-markers'), {
           center: {lat: <%= @user.latitude %>, lng: <%= @user.longitude %>},
           zoom: 11,
-          styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
+          styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#ff862f"},{"visibility":"on"}]}]
         });
 
         <% if @user %>
@@ -20,7 +20,7 @@ async defer></script>
             <% @user.products.each do |product| %>
             '<li><%=link_to product.name, product_path(product), :class => "btn btn-sm"%></li>'+
             <% end %>
-            '</ol><p>Email: <%=@user.email.capitalize%></p> <p>Go to: <%=link_to @user.user_name, user_path(@user) %></p>'+
+            '</ol><p>Email: <%=@user.email%></p> <p>Go to: <%=link_to @user.user_name, user_path(@user) %></p>'+
             '</div>'+
             '</div>';
 
@@ -40,7 +40,7 @@ async defer></script>
 </script>
 
 <div class="row container">
-  <h1 class="field"><%= @user.user_name.capitalize %>'s User Page
+  <h1 class="field"><%= @user.user_name %>'s User Page
     <span class="pull-right">Average Rating:
       <%= @avg_rating.times do %>
       <span class="stars">
@@ -51,7 +51,7 @@ async defer></script>
   </h1>
   <div class="col-md-7">
     <span class="product-homepage">
-      <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
+      <h3><%= @user.user_name %>'s Registered Location</h3>
       <div id="multi-markers" style='width: 600px; height: 400px;'></div>
     </span>
   </div>
@@ -67,10 +67,10 @@ async defer></script>
     <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link", remote: true %></h4>
   <% end %>
   <div class="col-sm-6">
-    <h4>Products posted by <%= @user.user_name.capitalize %></h4>
+    <h4>Products posted by <%= @user.user_name %></h4>
     <ul class="list-group well" id="products">
         <%= content_tag_for(:li, @user.products.each, class: "list-group-item") do |product| %>
-        <%= link_to product.name.capitalize, category_product_path(product.category, product)%>
+        <%= link_to product.name, category_product_path(product.category, product)%>
         <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category)%></span>
         <br>
         <%= image_tag(product.image.url(:thumb)) %>
@@ -78,11 +78,11 @@ async defer></script>
     </ul>
   </div>
   <div class="col-sm-6">
-    <h4>Reviews of <%= @user.user_name.capitalize %></h4>
+    <h5>Reviews of <%= @user.user_name %></h5>
     <ul class="list-group well">
       <% @user.reviews.order('votes desc').each do |review| %>
         <li class="list-group-item">
-          <span class="pull-right">
+          <span class="pull-right voter">
             <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
               <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
             <% end %>
@@ -91,8 +91,9 @@ async defer></script>
               <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
             <% end %>
           </span>
-          <h4>
-            <%= link_to User.find(review.author_id).user_name.capitalize, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name.capitalize %></strong>
+          <h5>
+            <span class="field">
+            <%= link_to User.find(review.author_id).user_name, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name %></strong>
             <%= review.rating.times do %>
               <span class="stars">
                 <span class="glyphicon glyphicon-star"></span>
@@ -105,16 +106,17 @@ async defer></script>
               </span>
             <% end %>
             <% end %>
-            <hr>
+            </span>
           </h4>
           <p><em>Rating Description:</em> <%= review.content %></p>
           <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
         </li>
+        <br>
       <% end %>
     </ul>
     <% if current_user && @user != current_user %>
       <span>
-        <%= link_to "Write a Review for " + @user.user_name.capitalize, new_user_review_path(@user), :class => "btn btn-lg btn-success" %>
+        <%= link_to "Write a Review for " + @user.user_name, new_user_review_path(@user), :class => "btn btn-lg btn-success" %>
       </span>
     <% end %>
   </div>

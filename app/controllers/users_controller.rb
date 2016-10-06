@@ -20,6 +20,9 @@ class UsersController < ApplicationController
         counter += 1
       end
       @avg_rating = @avg_rating / counter
+      if @avg_rating < 4
+        @avg_rating += 1
+      end
     end
   end
 
