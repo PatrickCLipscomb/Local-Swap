@@ -2,32 +2,30 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, :excpet => [:show]
   def upvote
     @review = Review.find(params[:id])
-    if !(review.has_voted.include?(user.id))
-      if @review.update(votes: @review.votes.to_i + 1, has_voted: @review.has_voted.push(@review.user.id))
+    # binding.pry
+    # if (@review.has_voted.include?(current_user.id))
+      if @review.update(votes: @review.votes.to_i + 1, has_voted: @review.has_voted.push(current_user.id))
+
         respond_to do |format|
-          format.html {redirect_to category_product_path(@review.product.category, @review.product)}
+          format.html {redirect_to user_path(@review.user)}
           format.js
         end
       end
-      # for when user should only vote once
-    else
-      flash[:notice] = user.user_name + "has already voted"
-      redirect_to category_product_path(review.product.category, review.product)
-    end
+    # else
+    #   flash[:notice] = current_user.user_name + "has already voted"
+    # end
   end
   def downvote
     @review = Review.find(params[:id])
-    # if !(review.has_voted.include?(user.id))
-      if @review.update(votes: @review.votes.to_i - 1, has_voted: @review.has_voted.push(@review.user.id))
+    # if (@review.has_voted.include?(current_user.id))
+      if @review.update(votes: @review.votes.to_i - 1, has_voted: @review.has_voted.push(current_user.id))
         respond_to do |format|
-          format.html {redirect_to category_product_path(@review.product.category, @review.product)}
+          format.html {redirect_to user_path(@review.user)}
           format.js
         end
       end
-        # for when user should only vote once
     # else
-      # flash[:alert] = user.user_name + "has already voted"
-      # redirect_to category_product_path(review.product.category, review.product)
+    #   flash[:alert] = current_user.user_name + "has already voted"
     # end
   end
   def show
@@ -45,7 +43,7 @@ class ReviewsController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     @review = @user.reviews.new(review_params)
-    @review.update(rating: params[:rating].to_i) 
+    @review.update(rating: params[:rating].to_i)
     if @review.update(author_id: current_user.id)
       redirect_to user_path(@user)
       flash[:notice] = "Review saved successfully"

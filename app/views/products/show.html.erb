@@ -1,12 +1,50 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initMap"
+async defer></script>
+
+<script type="text/javascript">
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('multi-markers'), {
+    <% if prod = @product %>
+      center: {lat: <%= prod.user.latitude %>, lng: <%= prod.user.longitude %>},
+    <% else %>
+      center: {lat: 45.5231, lng: -122.6765},
+    <% end %>
+    zoom: 11,
+    styles: [{"featureType":"water","stylers":[{"color":"#19a0d8"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":6}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#e85113"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-40}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#efe9e4"},{"lightness":-20}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"road.highway","elementType":"labels.icon"},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","stylers":[{"lightness":20},{"color":"#efe9e4"}]},{"featureType":"landscape.man_made","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":-100}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"hue":"#11ff00"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"lightness":100}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"hue":"#4cff00"},{"saturation":58}]},{"featureType":"poi","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#f0e4d3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#efe9e4"},{"lightness":-10}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"simplified"}]}]
+  });
+    var contentString<%=prod.id%> = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '$<%= prod.price %> Dollars</div>'+
+        '<h1 id="firstHeading" class="firstHeading"><%= prod.name %></h1>'+
+        '<div id="bodyContent"><p><%= prod.name %> User Information:</p><p>Email: <%=prod.user.email.capitalize%></p> <p>Go to: <%=link_to prod.user.user_name, user_path(prod.user) %></p>'+
+        '</div>'+
+        '</div>';
+
+    var infowindow<%=prod.id%> = new google.maps.InfoWindow({
+      content: contentString<%=prod.id%>
+    });
+    var marker<%=prod.id%> = new google.maps.Marker({
+      position: {lat: <%=prod.user.latitude%>, lng: <%=prod.user.longitude%>},
+      map: map,
+      title: 'Hello World!'
+    });
+    marker<%=prod.id%>.addListener('click', function() {
+      infowindow<%=prod.id%>.open(map, marker<%=prod.id%>);
+    });
+}
+</script>
+
+
 <div class="row">
   <div class="col-sm-6">
 
     <% content_for(:navbar) do %>
       <% unless @product.id == @product.category.products.first.id %>
-        <%= link_to 'Previous Product', @product.previous, :class => "btn btn-primary" %>
+        <%= link_to 'Previous Product in ' + @product.category.name.capitalize, @product.previous, :class => "btn btn-primary" %>
       <% end %>
       <% unless @product.id == @product.category.products.last.id %>
-        <%= link_to 'Next Product', @product.next, :class => "btn btn-primary" %>
+        <%= link_to 'Next Product in ' + @product.category.name.capitalize, @product.next, :class => "btn btn-primary" %>
       <% end %>
     <% end %>
     <h1><%= @product.name.titleize %> Page</h1>
@@ -14,34 +52,12 @@
     <%= image_tag(@product.image.url(:medium)) %>
   </div>
   <div class="col-sm-6">
-    <%= link_to "Write a review", new_product_review_path(@product), :class => "btn btn-success", :id => "add_review_link", remote: true %>
+    <%= link_to "Message " + @product.user.user_name.capitalize, new_message_path(to: @product.user.id), :class => "btn btn-success" %>
+    <div id="multi-markers" style='width: 500px; height: 400px;'></div>
   </div>
 </div>
 
 <br><br>
-<ul class="list-group well" id="review-list">
-  <% @product.reviews.order('id desc').each do |review| %>
-      <li class="list-group-item clearfix">
-        <em>Review: </em><strong><%= review.content %></strong>
-        <span class="pull-right">
-          <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
-            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-          <% end %>
-          <h4 id="<%=review.id.to_s%>-votes"><%= review.votes %></h4>
-          <%= link_to downvote_path(review), :method => "post", remote: true, :class => "btn btn-danger" do %>
-            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-          <% end %>
-        </span>
-        <br><br><br><br>
-        <span align="pull-left li-bottom">
-          <%= link_to review.name.capitalize + " Page", product_review_path(@product, review), :class => "btn btn-info btn-sm"%>
-          <% if @current_user.user_name == "Admin" || review.user.id == @current_user.id %>
-            <%= link_to "Delete Review", product_review_path(@product, review), remote: true, :method => "delete", :class => "btn btn-danger btn-sm" %>
-          <% end %>
-        </span>
-      </li>
-  <% end %>
-</ul>
 
 <% if @current_user %>
   <% if @product.user == @current_user || @current_user.user_name == "Admin" %>

@@ -40,8 +40,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @category = @product.category
     if @product.delete
-      @product.reviews.each { |review| review.destroy }
-      flash[:notice] = "Product and associated reviews deleted"
+      flash[:notice] = "Product deleted"
       redirect_to category_path(@category)
     else
       flash[:alert] = "Product failed to delete"
