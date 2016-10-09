@@ -108,8 +108,10 @@ async defer></script>
             <% end %>
             </span>
           </h4>
+          <br>
           <p><em>Rating Description:</em> <%= review.content %></p>
           <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
+          <br>
         </li>
         <br>
       <% end %>
