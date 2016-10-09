@@ -54,10 +54,9 @@ class ReviewsController < ApplicationController
   end
   def update
     @review = Review.find(params[:id])
-    @product = @review.product
     @review.update(review_params)
     flash[:notice] = "review updated successfully"
-    redirect_to product_path(@product)
+    redirect_to user_path(@review.user)
   end
   def destroy
     @review = Review.find(params[:id])

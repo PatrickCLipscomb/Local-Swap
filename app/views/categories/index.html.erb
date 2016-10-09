@@ -8,7 +8,7 @@ async defer></script>
         map = new google.maps.Map(document.getElementById('multi-markers'), {
           center: {lat: 45.5231, lng: -122.4965},
           zoom: 11,
-          styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#ff862f"},{"visibility":"on"}]}]
+          styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#558C89"},{"visibility":"on"}]}]
         });
 
         <% if @users %>
@@ -21,7 +21,7 @@ async defer></script>
             '<h1 id="firstHeading" class="firstHeading"><%=user.user_name%></h1>'+
             '<div id="bodyContent"><p><b>Products Available:</b></p><ol>'+
             <% user.products.each do |product| %>
-            '<li><%=link_to product.name, product_path(product), :class => "btn btn-sm"%></li>'+
+            '<li><%=link_to product.name, product_path(product), :class => ""%></li>'+
             <% end %>
             '</ol><p>Email: <%=user.email%></p> <p>Go to: <%=link_to user.user_name, user_path(user) %></p>'+
             '</div>'+
@@ -59,7 +59,7 @@ async defer></script>
         <% if !holder.include?(product.user) %>
           <li>
             <button class="btn btn-success"><%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", remote: true%></button>
-            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5>Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod) %></li><%end%></ol>
+            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5>Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod), :class => "white-link" %></li><%end%></ol>
             <h5 id="<%=product.user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
           </li>
           <% holder.push(product.user) %>
@@ -123,7 +123,7 @@ async defer></script>
   <div class="row">
     <div class="col-md-4">
       <h4><%= category.name %></h4>
-      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-sm btn-primary" %></h4>
+      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-lg btn-primary" %></h4>
     </div>
     <div class="col-md-9">
       <% category.products.limit(5).each do |product| %>
@@ -142,7 +142,7 @@ async defer></script>
   <div class="row">
     <div class="col-md-4">
       <h4><%= category.name %></h4>
-      <p><%= link_to "View Products", category_path(category), :class => "btn btn-sm btn-primary" %></p>
+      <p><%= link_to "View Products", category_path(category), :class => "btn btn-lg btn-primary" %></p>
     </div>
     <div class="col-md-8">
       <% category.products.limit(4).each do |product| %>

@@ -11,7 +11,7 @@ function initMap() {
       center: {lat: 45.5231, lng: -122.6765},
     <% end %>
     zoom: 11,
-    styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#ff862f"},{"visibility":"on"}]}]
+    styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#558C89"},{"visibility":"on"}]}]
   });
     var contentString<%=prod.id%> = '<div id="content">'+
         '<div id="siteNotice">'+
@@ -50,9 +50,17 @@ function initMap() {
     <h1><%= @product.name.titleize %> Page</h1>
     <br>
     <%= image_tag(@product.image.url(:medium)) %>
+    <br>
+    product information paragraph
   </div>
   <div class="col-md-6">
-    <%= link_to "Message " + @product.user.user_name, new_message_path(to: @product.user.id), :class => "btn btn-success" %>
+    <div class="btn-group pull-right">
+      <%= link_to "Message " + @product.user.user_name, new_message_path(to: @product.user.id), :class => "btn btn-lg btn-primary" %>
+      <%= link_to @product.category.name, category_path(@category), :class => "btn btn-lg btn-primary" %>
+    </div>
+    <br>
+    <br>
+    <h3><%= @product.name %> Map</h3>
     <div id="multi-markers" style='width: 600px; height: 400px;'></div>
   </div>
 </div>
@@ -70,5 +78,3 @@ function initMap() {
 
 
 <hr>
-
-<%= link_to "Back to category", category_path(@category) %>

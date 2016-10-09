@@ -3,7 +3,7 @@
 @import 'chosen';
 
 body {
-  background-color: #ff862f;
+  background-color: #558C89;
 }
 
 a {
@@ -87,6 +87,16 @@ a {
 #multi-markers {
   margin-top: 30px;
   margin-bottom: 30px;
+  border: 10px solid #0b0;
+  padding-left: 0px;
+}
+
+.btn {
+  background-color: #D9853B;
+}
+
+.btn a {
+  color: #ECECEA;
 }
 
 .stars {
@@ -95,4 +105,32 @@ a {
 
 .voter {
   margin-left: 20px;
+}
+
+.white-link {
+  color: white;
+}
+
+.firstHeading {
+  color: #558C89;
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  color: white;
+}
+
+h4 {
+  color: white;
+}
+
+h5 {
+  color: white;
 }
