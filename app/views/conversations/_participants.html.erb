@@ -1,5 +1,8 @@
 <% conversation.participants.each do |participant| %>
   <% unless participant == current_user %>
+    <p>
+      <%= participant.user_name %>
+    </p>
     <%= image_tag(participant.avatar.url(:thumb), :class => "image-thumbnail") %>
   <% end %>
 <% end %>

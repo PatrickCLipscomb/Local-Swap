@@ -86,13 +86,13 @@ async defer></script>
             <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
               <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
             <% end %>
-            <h4 id="<%=review.id.to_s%>-votes"><%= review.votes %></h4>
+            <h4 id="<%=review.id.to_s%>-votes" class="be-grey"><%= review.votes %></h4>
             <%= link_to downvote_path(review), :method => "post", remote: true, :class => "btn btn-danger" do %>
               <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
             <% end %>
           </span>
-          <h5>
-            <span class="field">
+          <h5 class="be-grey">
+            <span class="field pull-left">
             <%= link_to User.find(review.author_id).user_name, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name %></strong>
             <%= review.rating.times do %>
               <span class="stars">
@@ -108,6 +108,7 @@ async defer></script>
             <% end %>
             </span>
           </h4>
+          <br>
           <br>
           <p><em>Rating Description:</em> <%= review.content %></p>
           <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
