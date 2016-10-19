@@ -2,7 +2,6 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, :excpet => [:show]
   def upvote
     @review = Review.find(params[:id])
-    # binding.pry
     # if (@review.has_voted.include?(current_user.id))
       if @review.update(votes: @review.votes.to_i + 1, has_voted: @review.has_voted.push(current_user.id))
 

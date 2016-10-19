@@ -2,15 +2,13 @@ class CategoriesController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
   skip_before_filter :verify_authenticity_token, :only => [:index]
   def index
-    @categories = Category.all
-    @products = Product.all.paginate(page: params[:page], per_page: 10)
-    @users = User.all
-    @hash = Gmaps4rails.build_markers(@users) do |user, marker|
-      marker.lat user.latitude
-      marker.lng user.longitude
-      marker.infowindow user.user_name
-      marker.json({ title: "Name :#{user.user_name} Email: #{user.email}"  })
+    @categories = Category.all.limit(12)
+    @products = Product.all.paginate(page: params[:page], per_page: 12)
+    @total_products_number = 0
+    Product.all.each do
+      @total_products_number += 1
     end
+    @users = User.all
   end
   def show
     @users = User.all

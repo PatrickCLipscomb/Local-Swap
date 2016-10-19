@@ -94,7 +94,7 @@ async defer></script>
         </li>
       <% end %>
     </ul>
-    <%= will_paginate @products %>
+    <span class="pagination-helper"><%= @total_products_number %> Total Products </span><%= will_paginate @products %>
   </div>
 
 </div>

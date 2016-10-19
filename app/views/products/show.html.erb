@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API'] %>&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsrciFSZIHPIokQFpVQo6i4boOCSu33w8&callback=initMap"
 async defer></script>
 
 <script type="text/javascript">
@@ -38,7 +38,6 @@ function initMap() {
 
 <div class="row">
   <div class="col-md-6">
-
     <% content_for(:navbar) do %>
       <% unless @product.id == @product.category.products.first.id %>
         <%= link_to 'Previous Product in ' + @product.category.name, @product.previous, :class => "btn btn-primary" %>
