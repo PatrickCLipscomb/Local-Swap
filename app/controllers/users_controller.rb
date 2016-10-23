@@ -10,6 +10,7 @@ class UsersController < ApplicationController
       format.js
     end
   end
+
   def show
     @user = User.find(params[:id])
     @avg_rating = 0

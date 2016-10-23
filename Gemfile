@@ -21,6 +21,7 @@ gem 'faker'
 # to make message recipient select more convinient
 gem 'chosen-rails'
 gem 'jquery-turbolinks'
+gem 'react-rails'
 
 
 group :development, :test do

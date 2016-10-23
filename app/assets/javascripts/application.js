@@ -22,4 +22,7 @@
 //= require chosen-jquery
 //= require messages
 
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
