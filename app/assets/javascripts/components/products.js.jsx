@@ -5,7 +5,9 @@ class Products extends BaseComponent {
         super();
         this._bind('addProduct', 'deleteProduct', 'handleEditProduct');
         this.state = {
-            products: props.data
+            products: props.data[0],
+            users: props.data[1],
+            categories: props.data[2]
         };
     }
 
@@ -28,15 +30,13 @@ class Products extends BaseComponent {
 
     render() {
         var products = this.state.products.map((product, index) => {
-            return <Product key={product.id} product={product}
-                           handleDeleteProduct={this.deleteProduct} handleEditProduct={this.handleEditProduct} />
+            return <Product key={product.id} product={product} users={this.state.users} categories={this.state.categories} handleDeleteProduct={this.deleteProduct} handleEditProduct={this.handleEditProduct} />
         });
         return (
             <div className="products">
-                <h2 className="title"> Products </h2>
+                <h2 className="title"> Products Admin Edit Board </h2>
                 <h5 className="title">Add a product</h5>
-                
-                <hr />
+
                 <table className="table table-bordered">
                     <thead>
                         <tr>

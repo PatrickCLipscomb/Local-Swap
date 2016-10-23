@@ -2,6 +2,8 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, :except => [:show]
   def index
     @products = Product.all
+    @users = User.all
+    @categories = Category.all
   end
   def show
     @product = Product.find(params[:id])

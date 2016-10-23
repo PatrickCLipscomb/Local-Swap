@@ -1,3 +1,5 @@
 <div class="">
-  <%= react_component 'Products', {data: @products} %>
+  <% if current_user.user_name == 'Admin' %>
+    <%= react_component 'Products', {data: [@products, @users, @categories]} %>
+  <% end %>
 </div>

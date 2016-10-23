@@ -9,6 +9,26 @@ class Product extends BaseComponent {
         };
     }
 
+    userFunc(users, product_user_id) {
+      var userName;
+      users.forEach(function(userObj) {
+        if (userObj.id === product_user_id) {
+          userName = userObj.user_name;
+        }
+      })
+      return userName
+    }
+
+    catFunc(cat, product_cat_id) {
+      var catName;
+      cat.forEach(function(catObj) {
+        if (catObj.id === product_cat_id) {
+          catName = catObj.name;
+        }
+      })
+      return catName
+    }
+
     handleDelete(event) {
         var id = "products/" + this.props.product.id;
         event.preventDefault();
@@ -47,12 +67,14 @@ class Product extends BaseComponent {
     }
 
     productRow() {
+        var userName = this.userFunc(this.props.users, this.props.product.user_id)
+        var catName = this.catFunc(this.props.categories, this.props.product.category_id)
         return (
             <tr>
                 <td>{this.props.product.name}</td>
                 <td>{this.props.product.price}</td>
-                <td>{this.props.product.category_id}</td>
-                <td>{this.props.product.user_id}</td>
+                <td>{catName}</td>
+                <td>{userName}</td>
                 <td>
                     <a className="btn btn-default" onClick={this.handleToggle}>Edit</a>
                     <a className="btn btn-danger" onClick={this.handleDelete}>Delete</a>
@@ -62,6 +84,8 @@ class Product extends BaseComponent {
     }
 
     productForm() {
+        var userName = this.userFunc(this.props.users, this.props.product.user_id)
+        var catName = this.catFunc(this.props.categories, this.props.product.category_id)
         return (
             <tr>
                 <td>
@@ -71,10 +95,10 @@ class Product extends BaseComponent {
                     <input className="form-control" type="number" defaultValue={this.props.product.price} ref="price"/>
                 </td>
                 <td>
-                    {this.props.product.category_id}
+                    {catName}
                 </td>
                 <td>
-                    {this.props.product.user_id}
+                    {userName}
                 </td>
                 <td>
                     <a className="btn btn-default" onClick={this.handleEdit}>Update</a>
