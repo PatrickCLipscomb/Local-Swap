@@ -36,7 +36,8 @@ class Products extends BaseComponent {
             <div className="products">
                 <h2 className="title"> Products Admin Edit Board </h2>
                 <h5 className="title">Add a product</h5>
-
+                <hr />
+                
                 <table className="table table-bordered">
                     <thead>
                         <tr>
