@@ -22,6 +22,7 @@ gem 'faker'
 gem 'chosen-rails'
 gem 'jquery-turbolinks'
 gem 'react-rails'
+gem 'geocoder'
 
 
 group :development, :test do
