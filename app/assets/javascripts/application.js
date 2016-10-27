@@ -16,7 +16,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require underscore
-//= require gmaps/google
 
 //= require jquery.turbolinks
 //= require chosen-jquery
