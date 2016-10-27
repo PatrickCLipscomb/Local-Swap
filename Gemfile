@@ -23,6 +23,7 @@ gem 'chosen-rails'
 gem 'jquery-turbolinks'
 gem 'react-rails'
 gem 'geocoder'
+gem 'underscore-rails'
 
 
 group :development, :test do
@@ -37,9 +38,6 @@ group :development, :test do
   gem 'simplecov', require: false
   gem "letter_opener", :group => :development
   gem 'database_cleaner'
-  gem 'geocoder'
-  gem 'gmaps4rails'
-  gem 'underscore-rails'
 end
 
 group :development do
