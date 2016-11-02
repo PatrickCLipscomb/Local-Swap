@@ -6,10 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Category.all.each {|c| c.destroy}
+Product.all.each {|p| p.destroy}
+User.all.each {|u| u.destroy}
+Review.all.each {|r| r.destroy}
+
 10.times do
   Category.create(name: Faker::Commerce.department)
 end
-#
+
 8.times do
   User.create(user_name: Faker::Name.name, email: Faker::Internet.email, address: Faker::Address.street_address, password: 'password')
 end
@@ -23,7 +28,7 @@ User.where(latitude: nil).each {|a| a.destroy}
 
 50.times do
   cat_id = Category.all.first.id + rand(10)
-  prod = Product.create(name: Faker::Commerce.product_name, price: rand(50), description: Faker::Hipster.paragraph(2, true, 4), category_id: cat_id, user_id: User.all.first.id + rand(8))
+  prod = Product.create(name: Faker::Commerce.product_name, price: rand(50), description: Faker::Hipster.paragraph(2, true, 4), category_id: cat_id, user_id: User.all.first.id + rand(8), image: Faker::Avatar.image)
   cat = Category.find(cat_id)
   cat.update(products: cat.products.push(prod))
 end
@@ -33,7 +38,3 @@ end
 end
 
 User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena, Portland, OR', password: 'password')
-#
-# 100.times do
-#   Review.create(name: Faker::Commerce.color, content: Faker::Company.catch_phrase, rating: rand(5), product_id: rand(50))
-# end

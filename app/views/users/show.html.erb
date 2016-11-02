@@ -40,7 +40,7 @@ async defer></script>
 </script>
 
 <div class="row container">
-  <h1 class="field"><%= @user.user_name %>'s User Page
+  <h1 class="field"><%= @user.user_name.capitalize %>'s User Page
     <span class="pull-right">Average Rating:
       <%= @avg_rating.times do %>
       <span class="stars">
@@ -51,12 +51,12 @@ async defer></script>
   </h1>
   <div class="col-md-7">
     <span class="product-homepage">
-      <h3><%= @user.user_name %>'s Registered Location</h3>
+      <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
       <div id="multi-markers" style='width: 600px; height: 400px;'></div>
     </span>
   </div>
   <div class="col-md-5">
-    <h3><%= @user.user_name %>'s Bio</h3>
+    <h3><%= @user.user_name.capitalize %>'s Bio</h3>
     <h5><%= @user.bio %></h5>
   </div>
 

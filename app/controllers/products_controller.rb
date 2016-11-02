@@ -15,19 +15,29 @@ class ProductsController < ApplicationController
     @category = @product.category
   end
   def new
-    # @category = Category.find(params[:category_id])
-    # @product = @category.products.new
     @product = Product.new
   end
+
+  def crop
+    @product = Product.find(params[:id])
+    @product.update_attributes(crop_params)
+    @template.reprocess_image
+    redirect_to user_path(@product.user)
+  end
+
   def create
     @category = Category.find(params[:category_id])
     @product = @category.products.new(product_params)
     @product.update(user_id: current_user.id)
     if @product.save
       flash[:notice] = "Product saved successfully"
-      respond_to do |format|
-        format.html {redirect_to category_path(@category)}
-        format.js
+      if params[:product][:image].blank?
+        respond_to do |format|
+          format.html {redirect_to category_path(@category)}
+          format.js
+        end
+      else
+        render :crop
       end
     else
       flash[:alert] = "Product failed to save"
@@ -40,10 +50,14 @@ class ProductsController < ApplicationController
     @category = @product.category
     if @product.update(product_params)
       flash[:notice] = "product updated successfully"
-      respond_to do |format|
-        format.html {redirect_to category_path(@category)}
-        format.json {render json: @product}
-        format.js
+      if params[:product][:image].blank?
+        respond_to do |format|
+          format.html {redirect_to user_path(@product.user)}
+          format.json {render json: @product}
+          format.js
+        end
+      else
+        render :crop
       end
     else
       flash[:alert] = "Product failed to update"

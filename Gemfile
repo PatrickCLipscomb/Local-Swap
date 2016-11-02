@@ -18,12 +18,12 @@ gem 'mailboxer'
 gem 'will_paginate', '~> 3.1.0'
 gem 'gravatar_image_tag'
 gem 'faker'
-# to make message recipient select more convinient
 gem 'chosen-rails'
 gem 'jquery-turbolinks'
 gem 'react-rails'
 gem 'geocoder'
 gem 'underscore-rails'
+gem 'jcrop-rails-v2'
 
 
 group :development, :test do

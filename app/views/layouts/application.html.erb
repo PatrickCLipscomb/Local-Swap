@@ -50,7 +50,7 @@
               <li><%= link_to "Login", new_user_session_path %></li>
             <% end %>
             <% if user_signed_in? %>
-              <li><%= link_to "Logged in as " + current_user.user_name, user_path(current_user) %>
+              <li><%= link_to current_user.user_name.capitalize + "'s User Page", user_path(current_user) %>
               <li><%= link_to 'Your Conversations', conversations_path %></li> </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Options <span class="caret"></span></a>
