@@ -1,5 +1,45 @@
 <h1>New Product</h1>
 <hr>
-<%= render 'form' %>
+<%= form_for @product do |f| %>
+<% @categories = Category.all %>
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<br>
+<div class="field">
+  <h5>Please select the Product's Category</h5>
+  <% @categories.each do |category| %>
+    <span class="cat-radio">
+      <% if category.id == @product.category_id %>
+        <%= radio_button_tag(:category_id, category.id, :checked => true) %>
+        <%= label_tag(:category, category.name) %>
+      <% else %>
+        <%= radio_button_tag(:category_id, category.id) %>
+        <%= label_tag(:category, category.name) %>
+      <% end %>
+    </span>
+  <% end %>
+</div>
+<br>
+<div class="field">
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+</div>
+<br>
+<div class="field">
+  <%= f.label :price %>
+  <%= f.number_field :price %>
+</div>
+<br>
+<div class="field">
+  <%= f.label :image %>
+  <%= f.file_field :image %>
+</div>
+<br>
+<div class="actions">
+  <%= f.submit %>
+</div>
+<% end %>
 <hr>
 <%= link_to 'Back to category', categories_path %>

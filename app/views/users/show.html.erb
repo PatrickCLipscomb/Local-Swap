@@ -64,7 +64,7 @@ async defer></script>
 <div class="row container"><hr>
   <% if current_user && current_user == @user %>
     <h4>Post a product you would like to trade</h4>
-    <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link", remote: true %></h4>
+    <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link" %></h4>
   <% end %>
   <div class="col-sm-6">
     <h4>Products posted by <%= @user.user_name %></h4>

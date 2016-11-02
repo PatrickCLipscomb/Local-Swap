@@ -37,4 +37,4 @@ end
   Review.create(content: Faker::Hipster.sentence, user_id: range(User.all.first.id, User.all.last.id), author_id: range(User.all.first.id, User.all.last.id), rating: 1 + rand(5), votes: rand(10))
 end
 
-User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena, Portland, OR', password: 'password')
+User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena Portland', password: 'password')

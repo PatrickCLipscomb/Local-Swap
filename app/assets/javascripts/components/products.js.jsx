@@ -9,7 +9,22 @@ class Products extends BaseComponent {
             users: props.data[1],
             categories: props.data[2]
         };
+        console.log(this.countUp(10))
     }
+
+    countUp(int) {
+       var answer = ""
+       for (var i = 1; i < 11; i++ ) {
+           var numero = int + i
+           answer += numero.toString()
+           if (i < 10) {
+            answer += " then "
+           }
+       }
+          answer = answer.split(" ")
+          answer = answer.join(" ")
+          return answer
+      }
 
     addProduct(product) {
         var products = React.addons.update(this.state.products, {$push: [product]});
@@ -37,7 +52,7 @@ class Products extends BaseComponent {
                 <h2 className="title"> Products Admin Edit Board </h2>
                 <h5 className="title">Add a product</h5>
                 <hr />
-                
+
                 <table className="table table-bordered">
                     <thead>
                         <tr>

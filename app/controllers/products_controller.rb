@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
   def crop
     @product = Product.find(params[:id])
     @product.update_attributes(crop_params)
-    @template.reprocess_image
+    @product.reprocess_image
     redirect_to user_path(@product.user)
   end
 
@@ -81,5 +81,8 @@ class ProductsController < ApplicationController
   private
   def product_params
     params.require(:product).permit(:name, :description, :price, :image, :category_id)
+  end
+  def crop_params
+    params.require(:product).permit(:crop_x, :crop_y, :crop_w, :crop_h)
   end
 end
