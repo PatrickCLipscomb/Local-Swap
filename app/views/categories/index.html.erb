@@ -57,7 +57,7 @@ async defer></script>
 <div style='width: 1200px;' class="row">
   <div id="multi-markers" style='width: 1000px; height: 600px;' class="col-sm-10"></div>
   <div class="col-lg-2">
-    <h5>Last User to Add a Product!</h5>
+    <h5>Way to go <%= @products.order('id desc').first.user.user_name %>! You are the last user to add a Product!</h5>
     <hr>
     <ol class="btn-group-vertical" id="users_list">
       <% holder = [] %>
@@ -65,9 +65,10 @@ async defer></script>
         <% if !holder.include?(product.user) %>
           <li>
             <button class="btn btn-success"><%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", remote: true%></button>
-            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5>Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod), :class => "white-link" %></li><%end%></ol>
+            <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5 class="head-last-product">Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod), :class => "white-link" %></li><%end%></ol>
             <h5 id="<%=product.user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
           </li>
+          <br>
           <% holder.push(product.user) %>
         <% end %>
       <% end %>

@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, :except => [:show]
   def index
-    @products = Product.all
+    @products = Product.all.order('category_id desc')
     @users = User.all
     @categories = Category.all
   end
