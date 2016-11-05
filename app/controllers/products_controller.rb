@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, :except => [:show]
   def index
-    @products = Product.all.order('category_id desc')
+    @products = Product.all.order('category_id desc').order('name asc')
     @users = User.all
     @categories = Category.all
   end
@@ -48,6 +48,7 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     @category = @product.category
+    binding.pry
     if @product.update(product_params)
       flash[:notice] = "product updated successfully"
       if params[:product][:image].blank?
@@ -80,7 +81,7 @@ class ProductsController < ApplicationController
   end
   private
   def product_params
-    params.require(:product).permit(:name, :description, :price, :image, :category_id)
+    params.require(:product).permit(:name, :description, :price, :image, :category_id, :user_id)
   end
   def crop_params
     params.require(:product).permit(:crop_x, :crop_y, :crop_w, :crop_h)

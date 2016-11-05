@@ -1,5 +1,7 @@
 <h4>An app designed to allow users to share goods through a geographically enabled social website. When signing in, users enter their address and are located on the map where other users can know the general area that user is on. Users can post products they would like to trade, write reviews of other users, and message other users.</h4>
 <hr>
+Make it so reviews are created properly by the seed files and make them prolific. Only let a given user vote once on a review, give each review a random number of votes, cause review with highest number of votes to rise to the top.
+
 Need to customize User Devise Controller to delete all associated products and such when the user removes their account. Also it will be nice to allow for User to crop their avatar, something that will need to be done in the controller.
 
 Cropping needs fixing, not picking up Jcrop and the route doesn't work correctly.
@@ -79,6 +81,8 @@ async defer></script>
 
 <% if current_user && current_user.user_name == 'Admin' %>
 <h1>Admin Landing Page</h1>
+<br>
+<%= link_to "Admin Product Management Dashboard", products_path, :class => "btn btn-success btn-lg" %>
 <hr>
 <br>
 <div class="row">
