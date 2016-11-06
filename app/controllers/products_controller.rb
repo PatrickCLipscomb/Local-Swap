@@ -48,7 +48,6 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     @category = @product.category
-    binding.pry
     if @product.update(product_params)
       flash[:notice] = "product updated successfully"
       if params[:product][:image].blank?

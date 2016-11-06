@@ -6,8 +6,8 @@ class Product extends BaseComponent {
         this._bind('handleDelete', 'handleToggle', 'productRow', 'productForm', 'handleEdit', 'categoryChange', 'userChange', 'catFunc', 'userFunc');
         this.state = {
             edit: false,
-            categoryID: this.catFunc(this.props.categories, this.props.product.category_id),
-            userID: this.userFunc(this.props.users, this.props.product.user_id)
+            categoryID: this.props.category_id,
+            userID: this.props.user_id
         };
     }
 
@@ -46,7 +46,6 @@ class Product extends BaseComponent {
 
     handleEdit(event) {
         event.preventDefault();
-        console.log(this.state.userID)
         var category_id = this.state.categoryID
         var user_id = this.state.userID
         var id = "products/" + this.props.product.id;

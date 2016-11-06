@@ -69,7 +69,7 @@ class Products extends BaseComponent {
 
     render() {
         var products = this.filterFunction().map((product, index) => {
-            return <Product key={product.id} product={product} users={this.state.users} categories={this.state.categories} handleDeleteProduct={this.deleteProduct} handleEditProduct={this.handleEditProduct} />
+            return <Product key={index} product={product} users={this.state.users} categories={this.state.categories} handleDeleteProduct={this.deleteProduct} handleEditProduct={this.handleEditProduct} />
         });
         var categories = this.state.categories.map((category) => {
           return <option value={category.id}>{category.name}</option>
