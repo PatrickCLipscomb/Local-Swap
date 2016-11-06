@@ -41,8 +41,8 @@ class CategoriesController < ApplicationController
   end
   def destroy
     @category = Category.find(params[:id])
+    @category.products.each { |product| product.destroy }
     if @category.destroy
-      @category.products.each { |product| product.destroy }
       flash[:notice] = "Category and associated products deleted"
       redirect_to categories_path
     else

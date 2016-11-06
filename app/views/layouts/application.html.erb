@@ -72,10 +72,12 @@
       <%= yield(:navbar) %>
     </div>
     <% if flash[:notice] || flash[:alert] %>
-      <div class="container" align="middle">
-        <p class="notice"><%= flash[:notice] %></p>
-        <p class="alert"><%= flash[:alert] %></p>
+    <div class="panel panel-warning flash-message">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= flash[:alert] %></h3>
+        <h3 class="panel-title"><%= flash[:notice] %></h3>
       </div>
+    </div>
     <% end %>
     <div class="container">
       <%= yield %>
