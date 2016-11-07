@@ -11,6 +11,10 @@ body {
   background-color: #558C89;
 }
 
+#directions-panel {
+  background: white;
+}
+
 a {
   font-weight: bolder;
 }
@@ -18,7 +22,6 @@ a {
 .flash-message {
   max-width: 50%;
   border: 1px white solid;
-  margin-left: auto;
   text-align: center;
 }
 
