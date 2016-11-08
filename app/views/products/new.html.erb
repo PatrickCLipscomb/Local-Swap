@@ -28,13 +28,32 @@
 </div>
 <br>
 <div class="field">
-  <%= f.label :price %>
-  <%= f.number_field :price %>
+  <h5>Please rate your product's condition</h5>
+  <span class="cat-radio">
+    <%= radio_button_tag(:condition, 0) %>
+    <%= label_tag(:condition_0, "Basically Broken") %>
+  </span>
+  <span class="cat-radio">
+    <%= radio_button_tag(:condition, 1) %>
+    <%= label_tag(:condition_1, "Worn") %>
+  </span>
+  <span class="cat-radio">
+    <%= radio_button_tag(:condition, 2) %>
+    <%= label_tag(:condition_2, "Lightly Used") %>
+  </span>
+  <span class="cat-radio">
+    <%= radio_button_tag(:condition, 3) %>
+    <%= label_tag(:condition_3, "Great") %>
+  </span>
+  <span class="cat-radio">
+    <%= radio_button_tag(:condition, 4) %>
+    <%= label_tag(:condition_4, "Like New") %>
+  </span>
 </div>
 <br>
 <div class="field">
   <%= f.label :image %>
-  <%= f.file_field :image %>
+  <%= f.file_field :image, :class => "white-inputs" %>
 </div>
 <br>
 <div class="actions">

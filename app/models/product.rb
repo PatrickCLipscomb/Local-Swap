@@ -5,7 +5,7 @@ class Product < ActiveRecord::Base
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates :name, :presence => true
   validates :category_id, :presence => true
-  validates :price, :presence => true
+  validates :condition, :presence => true
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
@@ -28,6 +28,11 @@ class Product < ActiveRecord::Base
 
   def next
     self.category.products.where("products.id > ?", self.id).order('created_at asc').first
+  end
+
+  def condition_text(int)
+    condition_text_array = ["Basically Broken", "Worn", "Lightly Used", "Great", "Like New"]
+    return condition_text_array[int]
   end
 
   def zig_zag(array)

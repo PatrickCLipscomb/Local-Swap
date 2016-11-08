@@ -17,7 +17,7 @@ function initMap() {
     <% @category.products.each do |product| %>
       var contentString<%=product.id%> = '<div id="content">'+
           '<div id="siteNotice">'+
-          '$<%= product.price %> Dollars</div>'+
+          '$<%= @prod_condition %> Condition</div>'+
           '<h1 id="firstHeading" class="firstHeading"><%= product.name %></h1>'+
           '<div id="bodyContent"><p><%= product.name %> User Information:</p><p>Email: <%=product.user.email%></p> <p>Go to: <%=link_to product.user.user_name, user_path(product.user) %></p>'+
           '</div>'+

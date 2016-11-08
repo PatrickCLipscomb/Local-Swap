@@ -25,13 +25,13 @@
 
   <div class="field">
     <%= f.label :avatar %><br />
-    <%= f.file_field :avatar %>
+    <%= f.file_field :avatar, :class => "white-inputs" %>
   </div>
 
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em class="white-inputs">(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>

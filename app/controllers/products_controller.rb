@@ -29,6 +29,7 @@ class ProductsController < ApplicationController
     @category = Category.find(params[:category_id])
     @product = @category.products.new(product_params)
     @product.update(user_id: current_user.id)
+    @product.update(condition: params[:condition].to_i)
     if @product.save
       flash[:notice] = "Product saved successfully"
       if params[:product][:image].blank? && current_user.user_name != 'Admin'
@@ -82,7 +83,7 @@ class ProductsController < ApplicationController
   end
   private
   def product_params
-    params.require(:product).permit(:name, :description, :price, :image, :category_id, :user_id)
+    params.require(:product).permit(:name, :description, :condition, :image, :category_id, :user_id)
   end
   def crop_params
     params.require(:product).permit(:crop_x, :crop_y, :crop_w, :crop_h)

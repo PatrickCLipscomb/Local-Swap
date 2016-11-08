@@ -15,7 +15,7 @@ function initMap() {
   });
     var contentString<%=prod.id%> = '<div id="content">'+
         '<div id="siteNotice">'+
-        '$<%= prod.price %> Dollars</div><% unless current_user == @user %>' +
+        'Condition: <%= prod.condition_text(prod.condition) %></div><% unless current_user == @user %>' +
           '<%= link_to "Send message", new_message_path(to: prod.user.id), :class =>' + '"btn' + 'btn-default btn-sm" %>' + '<% end %><h1 id="firstHeading" class="firstHeading"><%= prod.name %></h1>' +
         '<div id="bodyContent"><p><%= prod.name %> User Information:</p><p>Email: <%=prod.user.email%></p> <p>Go to: <%=link_to prod.user.user_name, user_path(prod.user) %></p>'+
         '</div>'+
@@ -64,6 +64,7 @@ function initMap() {
       })
     <% end %>
 }
+  <% if current_user %>
   function calcRoute(directionsService, directionsDisplay) {
     var request = {
       origin: {lat: <%= current_user.latitude%>, lng: <%= current_user.longitude %>},
@@ -76,6 +77,7 @@ function initMap() {
       }
     });
   }
+  <% end %>
 </script>
 <% content_for(:navbar) do %>
   <% unless @product.id == @product.category.products.first.id %>
@@ -98,11 +100,19 @@ function initMap() {
     <%= link_to "Message " + @product.user.user_name, new_message_path(to: @product.user.id), :class => "btn btn-primary" %>
   </div>
   <div class="col-md-6">
-    <br>
-    <br>
-    <h3><%= @product.name %> Map</h3>
+    <div><h4><%= @product.name.titleize %>'s Condition':
+        <%= @product.condition.times do %>
+        <span class="stars">
+          <span class="glyphicon glyphicon-star"></span>
+        </span>
+        <% end %>
+        <%= @product.condition_text(@product.condition) %>
+        </h4>
+    </div>
+<hr>
+    <h3>Route to <%= @product.name %></h3>
     <div id="multi-markers" style='width: 600px; height: 400px;'></div>
-    <% if current_user.id != @product.user_id %>
+    <% if current_user && current_user.id != @product.user_id %>
     <div>
       <button id="toggle-directions">Show/Hide Directions</button>
       <div id="directions-panel"></div>
