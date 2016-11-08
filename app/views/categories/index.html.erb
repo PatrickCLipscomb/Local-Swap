@@ -118,10 +118,7 @@ async defer></script>
   <% category.products.each {|p| @product_holder.push(p)} %>
   <% while @product_holder.length > 0 %>
     <% @grouper = [] %>
-    <% if @product_holder.length >= 3 %>
-      <% @grouper = [@product_holder[0], @product_holder[1], @product_holder[2]] %>
-      <% 3.times { @product_holder.shift() } %>
-    <% elsif @product_holder.length >= 2 %>
+    <% if @product_holder.length >= 2 %>
       <% @grouper = [@product_holder[0], @product_holder[1]] %>
       <% 2.times { @product_holder.shift() } %>
     <% else %>
@@ -132,10 +129,13 @@ async defer></script>
   <% end %>
   <div class="row">
     <div class="col-md-4">
-      <h4><%= category.name %></h4>
-      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-success" %></h4>
+      <div class="cater-link">
+        <h4><%= category.name %></h4>
+        <h4><%= link_to "View Products", category_path(category), :class => "btn btn-success" %></h4>
+      </div>
     </div>
     <div class="col-md-8">
+      <% if category.products.any? %>
 <div class="container-fluid carasold">
 <div class="row-fluid">
 <div id="carousel-example-generic<%= category.id %>" class="carousel slide" data-ride="carousel">
@@ -152,19 +152,26 @@ async defer></script>
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <% @product_groups.each do  |prod_group|%>
-      <% if prod_group.first.id == category.products.first.id %>
+      <% if prod_group.first.id == category.products.first.id && prod_group.length > 1 %>
         <div class="item active">
-          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;"><%= link_to prod_group.first.name, category_product_path(category, prod_group.first)%><br><%= image_tag(prod_group.first.image.url(:thumb), :class => "products-homepage") %></div>
-          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;"><%= link_to prod_group.last.name, category_product_path(category, prod_group.last)%><br><%= image_tag(prod_group.last.image.url(:thumb), :class => "products-homepage") %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 60px;width:140px;height:170px; position:relative;"><%= link_to prod_group.first.name, category_product_path(category, prod_group.first)%><br><%= image_tag(prod_group.first.image.url(:thumb), :class => "products-homepage") %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 60px;width:140px;height:170px; position:relative;"><%= link_to prod_group.last.name, category_product_path(category, prod_group.last)%><br><%= image_tag(prod_group.last.image.url(:thumb), :class => "products-homepage") %></div>
         </div>
-      <% else %>
+      <% elsif prod_group.length > 1 %>
         <div class="item">
-          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;">
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 60px;width:140px;height:170px; position:relative;">
             <%= link_to prod_group.first.name, category_product_path(category, prod_group.first)%><br>
             <%= image_tag(prod_group.first.image.url(:thumb), :class => "products-homepage") %>
           </div>
-          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;"><%= link_to prod_group.last.name, category_product_path(category, prod_group.last)%><br><%= image_tag(prod_group.last.image.url(:thumb), :class => "products-homepage") %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 60px;width:140px;height:170px; position:relative;"><%= link_to prod_group.last.name, category_product_path(category, prod_group.last)%><br><%= image_tag(prod_group.last.image.url(:thumb), :class => "products-homepage") %></div>
         </div>
+      <% else %>
+      <div class="item">
+        <div class="thumbnail" style="float:left;margin:10px 15px 10px 60px;width:140px;height:170px; position:relative;">
+          <%= link_to prod_group.first.name, category_product_path(category, prod_group.first)%><br>
+          <%= image_tag(prod_group.first.image.url(:thumb), :class => "products-homepage") %>
+        </div>
+      </div>
       <% end %>
     <% end %>
   </div>
@@ -181,6 +188,9 @@ async defer></script>
 </div>
 </div>
 </div>
+<% else %>
+<h4>No Products for <%= category.name %> have been added yet</h4>
+<% end %>
 </div>
 </div>
   <hr>
