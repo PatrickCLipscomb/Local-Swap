@@ -99,8 +99,8 @@ async defer></script>
   <div class="col-lg-6">
     <%= link_to "Add a product", new_product_path, :class => "btn btn-success btn-lg",  :id => 'new_product_link', remote: true %>
     <h5>View All Products</h5>
-    <ul class="list-group well" id="products">
-      <% @productsLimited.order('id desc').each do |product| %>
+    <ul class="list-group well overflow" id="products">
+      <% @products.order('id desc').each do |product| %>
         <li class="list-group-item"><%= link_to product.name, product_path(product) %>
           <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category) %></span>
         </li>

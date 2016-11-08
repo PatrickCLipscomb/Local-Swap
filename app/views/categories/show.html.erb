@@ -56,7 +56,7 @@ function initMap() {
   </div>
   <div class="col-sm-4">
     <h4>Products for the <%= @category.name %> Category</h4>
-    <ul class="list-group well">
+    <ul class="list-group well overflow-catergory-show">
       <% @category.products.each do |product| %>
       <li class="list-group-item" align="middle">
         <%= link_to product.name, category_product_path(@category, product)%><br>

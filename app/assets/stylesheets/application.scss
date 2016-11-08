@@ -8,11 +8,29 @@
 @import 'chosen';
 
 body {
-  background-color: #558C89;
+  background-image: url("/assets/Black-white-world-map-wallpaper-HD.png");
+}
+
+.overflow {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.overflow-catergory-show {
+  max-height : 750px;
+  overflow-y: auto;
+}
+
+.list-group-item:hover {
+  background-color: rgba(241, 89, 42, .3)
 }
 
 .back-to-category {
   margin-top: -50px;
+}
+
+label {
+  color: white;
 }
 
 .crop-preview {
@@ -50,7 +68,7 @@ a {
 }
 
 .head-last-product {
-  color: black;
+  color: green;
   font-weight: bolder;
 }
 
@@ -112,6 +130,7 @@ a {
  }
 
  .user_products {
+   color: white;
    display: none;
    list-style-type: upper-roman;
    margin-left: -25px;
