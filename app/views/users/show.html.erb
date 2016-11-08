@@ -94,22 +94,19 @@ async defer></script>
       <% end %>
     </span>
   </h1>
-  <div class="col-md-7">
+  <div class="col-md-8 col-md-offset-2">
     <span class="product-homepage">
       <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
-      <div id="multi-markers" style='width: 600px; height: 400px;'></div>
+      <div id="multi-markers" style='width: 730px; height: 550px;'></div>
+      <% if current_user.id != @user.id %>
+        <button id="toggle-directions">Show/Hide Directions</button>
+        <div id="directions-panel" style="width:500px;"></div>
+      <% end %>
       <hr>
       <h3><%= @user.user_name.capitalize %>'s Bio</h3>
       <h5><%= @user.bio %></h5>
     </span>
   </div>
-  <div class="col-md-5">
-    <% if current_user.id != @user.id %>
-      <button id="toggle-directions">Show/Hide Directions</button>
-      <div id="directions-panel"></div>
-    <% end %>
-  </div>
-
 </div>
 <div class="row container"><hr>
   <% if current_user && current_user == @user %>

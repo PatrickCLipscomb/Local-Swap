@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to :category
   belongs_to :user
-  has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100#", :large => "500x500>" }, :default_url => "/images/:style/missing_product.png", :processors => [:cropper]
+  has_attached_file :image, :styles => { :medium => "300x300#", :thumb => "100x100#", :large => "500x500>" }, :default_url => "/images/:style/missing_product.png", :processors => [:cropper]
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates :name, :presence => true
   validates :category_id, :presence => true

@@ -55,7 +55,7 @@ function initMap() {
     </div>
   </div>
   <div class="col-sm-4">
-    <h4>Products for the <%= @category.name %> Category</h4>
+    <h4 style="margin-top:50px;margin-bottom:20px;">Products for the <%= @category.name %> Category</h4>
     <ul class="list-group well overflow-catergory-show">
       <% @category.products.each do |product| %>
       <li class="list-group-item" align="middle">
@@ -71,5 +71,3 @@ function initMap() {
 
 
 <hr>
-
-<%= link_to "Back to Homepage", categories_path %>
