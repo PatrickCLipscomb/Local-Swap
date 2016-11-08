@@ -130,17 +130,21 @@ async defer></script>
     <% end %>
     <% @product_groups.push(@grouper) %>
   <% end %>
-
-
-<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <h4><%= category.name %></h4>
+      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-success" %></h4>
+    </div>
+    <div class="col-md-8">
+<div class="container-fluid carasold">
 <div class="row-fluid">
 <div id="carousel-example-generic<%= category.id %>" class="carousel slide" data-ride="carousel">
 <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active darkblob"></li>
     <% @indicator_counter = 1 %>
     <% (@product_groups.length - 1).times do %>
-      <li data-target="#carousel-example-generic" data-slide-to="<%= @indicator_counter %>"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="<%= @indicator_counter %>" class="darkblob"></li>
       <% @indicator_counter += 1 %>
     <% end %>
   </ol>
@@ -150,13 +154,16 @@ async defer></script>
     <% @product_groups.each do  |prod_group|%>
       <% if prod_group.first.id == category.products.first.id %>
         <div class="item active">
-          <div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.first.name %></div>
-          <div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.last.name %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;"><%= link_to prod_group.first.name, category_product_path(category, prod_group.first)%><br><%= image_tag(prod_group.first.image.url(:thumb), :class => "products-homepage") %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;"><%= link_to prod_group.last.name, category_product_path(category, prod_group.last)%><br><%= image_tag(prod_group.last.image.url(:thumb), :class => "products-homepage") %></div>
         </div>
       <% else %>
         <div class="item">
-          <<div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.first.name %></div>
-          <div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.last.name %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;">
+            <%= link_to prod_group.first.name, category_product_path(category, prod_group.first)%><br>
+            <%= image_tag(prod_group.first.image.url(:thumb), :class => "products-homepage") %>
+          </div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 10px 70px;width:140px;height:170px; position:relative;"><%= link_to prod_group.last.name, category_product_path(category, prod_group.last)%><br><%= image_tag(prod_group.last.image.url(:thumb), :class => "products-homepage") %></div>
         </div>
       <% end %>
     <% end %>
@@ -174,23 +181,8 @@ async defer></script>
 </div>
 </div>
 </div>
-
-
-
-  <div class="row">
-    <div class="col-md-4">
-      <h4><%= category.name %></h4>
-      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-success" %></h4>
-    </div>
-    <div class="col-md-8">
-      <% category.products.limit(5).each do |product| %>
-      <span class="well product-homepage">
-        <%= link_to product.name, category_product_path(category, product)%><br>
-        <%= image_tag(product.image.url(:thumb), :class => "products-homepage") %>
-      </span>
-      <% end %>
-    </div>
-  </div>
+</div>
+</div>
   <hr>
 <% end %>
 <% elsif current_user %>
