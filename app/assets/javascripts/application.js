@@ -11,9 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.Jcrop
+
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require underscore

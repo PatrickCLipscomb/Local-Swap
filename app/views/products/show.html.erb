@@ -32,7 +32,50 @@ function initMap() {
     marker<%=prod.id%>.addListener('click', function() {
       infowindow<%=prod.id%>.open(map, marker<%=prod.id%>);
     });
+    <% if current_user && current_user.id != prod.user_id %>
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay = new google.maps.DirectionsRenderer({
+        suppressMarkers: true
+      });
+      directionsDisplay.setMap(map)
+      directionsDisplay.setPanel(document.getElementById('directions-panel'));
+      calcRoute(directionsService, directionsDisplay)
+      var current_userContentString<%=current_user.id%> = '<div id="content">' +
+          '<div id="siteNotice">' +
+            '</div>'+
+              '<h2 id="firstHeading" class="firstHeading"><%=current_user.user_name%> Location</h2>' +
+            '</div>' +
+          '</div>';
+      var current_userInfowindow<%=current_user.id%> = new google.maps.InfoWindow({
+        content: current_userContentString<%=current_user.id%>
+      });
+      var current_userMarker<%=current_user.id%> = new google.maps.Marker({
+        position: {lat: <%=current_user.latitude%>, lng: <%=current_user.longitude%>},
+        map: map,
+        label: "<%= current_user.user_name[0] + current_user.user_name[1] %>",
+        title: 'Hello World!'
+      });
+      current_userMarker<%=current_user.id%>.addListener('click', function() {
+        current_userInfowindow<%=current_user.id%>.open(map, current_userMarker<%=current_user.id%>);
+      });
+      $('#directions-panel').hide()
+      $('#toggle-directions').on('click', function() {
+        $('#directions-panel').toggle()
+      })
+    <% end %>
 }
+  function calcRoute(directionsService, directionsDisplay) {
+    var request = {
+      origin: {lat: <%= current_user.latitude%>, lng: <%= current_user.longitude %>},
+      destination: {lat: <%=@product.user.latitude%>, lng: <%=@product.user.longitude%>},
+      travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function(result, status) {
+      if (status == 'OK') {
+        directionsDisplay.setDirections(result);
+      }
+    });
+  }
 </script>
 
 
@@ -52,16 +95,22 @@ function initMap() {
     <br><br>
     <h3><%= @product.name %> Description</h3>
     <h5><%= @product.description %></h5>
+    <hr>
+    <%= link_to "Message " + @product.user.user_name, new_message_path(to: @product.user.id), :class => "btn btn-primary" %>
   </div>
   <div class="col-md-6">
-    <div class="btn-group pull-right">
-      <%= link_to "Message " + @product.user.user_name, new_message_path(to: @product.user.id), :class => "btn btn-lg btn-primary" %>
-      <%= link_to @product.category.name, category_path(@category), :class => "btn btn-lg btn-primary" %>
-    </div>
+    <span class="pull-right back-to-category">
+      <h6>Category for <%= @product.name %></h6>
+      <%= link_to @product.category.name, category_path(@category), :class => "btn btn-primary" %>
+    </span>
     <br>
     <br>
     <h3><%= @product.name %> Map</h3>
     <div id="multi-markers" style='width: 600px; height: 400px;'></div>
+    <% if current_user.id != @product.user_id %>
+      <button id="toggle-directions">Show/Hide Directions</button>
+      <div id="directions-panel"></div>
+    <% end %>
   </div>
 </div>
 

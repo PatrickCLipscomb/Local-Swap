@@ -24,6 +24,7 @@ gem 'react-rails'
 gem 'geocoder'
 gem 'underscore-rails'
 gem 'jcrop-rails-v2'
+gem 'parallax-rails'
 
 
 group :development, :test do

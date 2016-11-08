@@ -67,7 +67,7 @@ async defer></script>
       <% @products.order('id desc').each do |product| %>
         <% if !holder.include?(product.user) %>
           <li>
-            <button class="btn btn-success"><%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", remote: true%></button>
+            <%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", :class => "btn btn-success", remote: true%>
             <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5 class="head-last-product">Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod), :class => "white-link" %></li><%end%></ol>
             <h5 id="<%=product.user.id.to_s%>_user_no_prod" class="user_no_products">No Products for this User have been added yet</h5>
           </li>
@@ -100,23 +100,87 @@ async defer></script>
     <%= link_to "Add a product", new_product_path, :class => "btn btn-success btn-lg",  :id => 'new_product_link', remote: true %>
     <h5>View All Products</h5>
     <ul class="list-group well" id="products">
-      <% @products.order('id desc').each do |product| %>
+      <% @productsLimited.order('id desc').each do |product| %>
         <li class="list-group-item"><%= link_to product.name, product_path(product) %>
           <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category) %></span>
         </li>
       <% end %>
     </ul>
-    <span class="pagination-helper"><%= @total_products_number %> Total Products </span><%= will_paginate @products %>
+    <span class="pagination-helper"><%= @total_products_number %> Total Products </span><%= will_paginate @productsLimited %>
   </div>
 
 </div>
 <hr>
 <h1>A list of products by category</h1><hr>
 <% @categories.each do |category| %>
+  <% @product_groups = [] %>
+  <% @product_holder = []%>
+  <% category.products.each {|p| @product_holder.push(p)} %>
+  <% while @product_holder.length > 0 %>
+    <% @grouper = [] %>
+    <% if @product_holder.length >= 3 %>
+      <% @grouper = [@product_holder[0], @product_holder[1], @product_holder[2]] %>
+      <% 3.times { @product_holder.shift() } %>
+    <% elsif @product_holder.length >= 2 %>
+      <% @grouper = [@product_holder[0], @product_holder[1]] %>
+      <% 2.times { @product_holder.shift() } %>
+    <% else %>
+      <% @grouper.push(@product_holder[0]) %>
+      <% @product_holder.shift() %>
+    <% end %>
+    <% @product_groups.push(@grouper) %>
+  <% end %>
+
+
+<div class="container-fluid">
+<div class="row-fluid">
+<div id="carousel-example-generic<%= category.id %>" class="carousel slide" data-ride="carousel">
+<!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <% @indicator_counter = 1 %>
+    <% (@product_groups.length - 1).times do %>
+      <li data-target="#carousel-example-generic" data-slide-to="<%= @indicator_counter %>"></li>
+      <% @indicator_counter += 1 %>
+    <% end %>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <% @product_groups.each do  |prod_group|%>
+      <% if prod_group.first.id == category.products.first.id %>
+        <div class="item active">
+          <div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.first.name %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.last.name %></div>
+        </div>
+      <% else %>
+        <div class="item">
+          <<div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.first.name %></div>
+          <div class="thumbnail" style="float:left;margin:10px 15px 0 0;width:70px;height:70px; position:relative;"><%= prod_group.last.name %></div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic<%= category.id %>" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic<%= category.id %>" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
+</div>
+
+
+
   <div class="row">
     <div class="col-md-4">
       <h4><%= category.name %></h4>
-      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-primary" %></h4>
+      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-success" %></h4>
     </div>
     <div class="col-md-8">
       <% category.products.limit(5).each do |product| %>
@@ -135,7 +199,7 @@ async defer></script>
   <div class="row">
     <div class="col-md-4">
       <h4><%= category.name %></h4>
-      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-lg btn-primary" %></h4>
+      <h4><%= link_to "View Products", category_path(category), :class => "btn btn-lg btn-success" %></h4>
     </div>
     <div class="col-md-9">
       <% category.products.limit(5).each do |product| %>
@@ -154,7 +218,7 @@ async defer></script>
   <div class="row">
     <div class="col-md-4">
       <h4><%= category.name %></h4>
-      <p><%= link_to "View Products", category_path(category), :class => "btn btn-lg btn-primary" %></p>
+      <p><%= link_to "View Products", category_path(category), :class => "btn btn-lg btn-success" %></p>
     </div>
     <div class="col-md-8">
       <% category.products.limit(4).each do |product| %>

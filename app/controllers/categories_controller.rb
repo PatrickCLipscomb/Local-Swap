@@ -3,7 +3,8 @@ class CategoriesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:index]
   def index
     @categories = Category.all.limit(12)
-    @products = Product.all.paginate(page: params[:page], per_page: 12)
+    @products = Product.all
+    @productsLimited = Product.all.paginate(page: params[:page], per_page: 12)
     @total_products_number = 0
     Product.all.each do
       @total_products_number += 1

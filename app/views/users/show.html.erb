@@ -104,8 +104,10 @@ async defer></script>
     </span>
   </div>
   <div class="col-md-5">
-    <button id="toggle-directions">Show/Hide Directions</button>
-    <div id="directions-panel"></div>
+    <% if current_user.id != @user.id %>
+      <button id="toggle-directions">Show/Hide Directions</button>
+      <div id="directions-panel"></div>
+    <% end %>
   </div>
 
 </div>
