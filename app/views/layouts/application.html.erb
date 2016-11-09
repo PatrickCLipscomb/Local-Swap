@@ -82,15 +82,17 @@
     <div class="container">
       <%= yield %>
     </div>
-    <footer>
-      <div class="well" align="center">
-        <p>
-          <%= link_to "About", about_path %>
-        </p>
-        <p>
+    <footer style="background-color:#B1B1B1;height:100px;" align="center">
 
-        </p>
-      </div>
+      <span style="margin-top:20px;">
+        <h3 style="padding:20px;display:inline">
+          <%= link_to "About", about_path %>
+        </h3>
+        <h3 style="padding:20px;display:inline">
+          <%= link_to "Contact", about_path %>
+        </h3>
+      </span>
+
     </footer>
   </body>
 </html>

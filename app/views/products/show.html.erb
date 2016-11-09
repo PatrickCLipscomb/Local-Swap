@@ -59,8 +59,16 @@ function initMap() {
         current_userInfowindow<%=current_user.id%>.open(map, current_userMarker<%=current_user.id%>);
       });
       $('#directions-panel').hide()
-      $('#toggle-directions').on('click', function() {
-        $('#directions-panel').toggle()
+      $('#hide-directions').hide()
+      $('#show-directions').on('click', function() {
+        $('#directions-panel').show()
+        $('#hide-directions').show()
+        $('#show-directions').hide()
+      })
+      $('#hide-directions').on('click', function() {
+        $('#directions-panel').hide()
+        $('#hide-directions').hide()
+        $('#show-directions').show()
       })
     <% end %>
 }
@@ -114,14 +122,15 @@ function initMap() {
     <div id="multi-markers" style='width: 600px; height: 400px;'></div>
     <% if current_user && current_user.id != @product.user_id %>
     <div>
-      <button id="toggle-directions">Show/Hide Directions</button>
-      <div id="directions-panel"></div>
+      <button id="show-directions">Show Directions</button>
+      <button id="hide-directions">Hide Directions</button>
     </div>
     <% end %>
     <span class="back-to-category" align="middle">
       <h5 style="color:white;display:inline;">Category for <%= @product.name %></h5>
       <%= link_to @product.category.name, category_path(@category), :class => "btn btn-primary" %>
     </span>
+    <div id="directions-panel"></div>
   </div>
 </div>
 

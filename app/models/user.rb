@@ -15,19 +15,24 @@ class User < ApplicationRecord
   validates :address, :presence => true
   has_many :products
   has_many :reviews
-  # def recent_prods
-  #   users = []
-  #   Products.all.order('id desc').each do |product|
-  #     users.push(product.user)
-  #   end
-  #   users
-  # end
   acts_as_messageable
+
   def name
     return user_name
   end
   # Used for the automated email that mailboxer sends with each message that is created
   def mailboxer_email(object)
     return email
+  end
+
+  def ratings
+    if self.reviews.any?
+      avg_rating = 0
+      self.reviews.each do |review|
+        avg_rating += review.rating
+      end
+      avg_rating = (avg_rating/self.reviews.length).ceil
+      return avg_rating
+    end
   end
 end

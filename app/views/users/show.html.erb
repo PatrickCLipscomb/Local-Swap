@@ -64,8 +64,16 @@ async defer></script>
             current_userInfowindow<%=current_user.id%>.open(map, current_userMarker<%=current_user.id%>);
           });
           $('#directions-panel').hide()
-          $('#toggle-directions').on('click', function() {
-            $('#directions-panel').toggle()
+          $('#hide-directions').hide()
+          $('#show-directions').on('click', function() {
+            $('#directions-panel').show()
+            $('#hide-directions').show()
+            $('#show-directions').hide()
+          })
+          $('#hide-directions').on('click', function() {
+            $('#directions-panel').hide()
+            $('#hide-directions').hide()
+            $('#show-directions').show()
           })
         <% end %>
       }
@@ -86,11 +94,16 @@ async defer></script>
 
 <div class="row container">
   <h1 class="field"><%= @user.user_name.capitalize %>'s User Page
-    <span class="pull-right">Average Rating:
-      <%= @avg_rating.times do %>
-      <span class="stars">
-        <span class="glyphicon glyphicon-star"></span>
-      </span>
+    <span class="pull-right">
+      <% if @user.ratings %>
+        Average Rating:
+        <%= @user.ratings.times do %>
+        <span class="stars">
+          <span class="glyphicon glyphicon-star"></span>
+        </span>
+        <% end %>
+      <% else %>
+        <%= @user.user_name.capitalize %> has no ratings
       <% end %>
     </span>
   </h1>
@@ -99,7 +112,8 @@ async defer></script>
       <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
       <div id="multi-markers" style='width: 730px; height: 550px;'></div>
       <% if current_user.id != @user.id %>
-        <button id="toggle-directions">Show/Hide Directions</button>
+        <button id="show-directions">Show Directions</button>
+        <button id="hide-directions">Hide Directions</button>
         <div id="directions-panel" style="width:500px;"></div>
       <% end %>
       <hr>

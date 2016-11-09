@@ -13,18 +13,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @avg_rating = 0
-    counter = 0
-    if @user.reviews.any?
-      @user.reviews.each do |review|
-        @avg_rating += review.rating
-        counter += 1
-      end
-      @avg_rating = @avg_rating / counter
-      if @avg_rating < 4
-        @avg_rating += 1
-      end
-    end
+    @avg_rating = @user.ratings
   end
 
 end

@@ -86,7 +86,7 @@ class Products extends BaseComponent {
                     <thead>
                         <tr>
                             <th> Name </th>
-                            <th> Price </th>
+                            <th> Condition </th>
                             <th> Category
                               <br />
                               <select onChange={this.handleCategorySelect}>

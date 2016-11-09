@@ -65,7 +65,7 @@ async defer></script>
     <ol class="btn-group-vertical" id="users_list">
       <% holder = [] %>
       <% @products.order('id desc').each do |product| %>
-        <% if !holder.include?(product.user) %>
+        <% if !holder.include?(product.user) && holder.length < 10 %>
           <li>
             <%= link_to product.user.user_name, show_prod_path(product.user), :method => "post", :class => "btn btn-success", remote: true%>
             <ol id="<%=product.user.id.to_s%>_user_prod" class="user_products"><h5 class="head-last-product">Products:</h5><%product.user.products.order('id desc').each do |prod|%><li><%=link_to prod.name, product_path(prod), :class => "white-link" %></li><%end%></ol>

@@ -3,11 +3,12 @@
 class Product extends BaseComponent {
     constructor(props){
         super(props);
-        this._bind('handleDelete', 'handleToggle', 'productRow', 'productForm', 'handleEdit', 'categoryChange', 'userChange', 'catFunc', 'userFunc');
+        this._bind('handleDelete', 'handleToggle', 'productRow', 'productForm', 'handleEdit', 'categoryChange', 'userChange', 'catFunc', 'userFunc', 'conditionsArray', 'conditionChange');
         this.state = {
             edit: false,
             categoryID: this.props.category_id,
-            userID: this.props.user_id
+            userID: this.props.user_id,
+            condition: this.props.product.condition
         };
     }
 
@@ -48,12 +49,13 @@ class Product extends BaseComponent {
         event.preventDefault();
         var category_id = this.state.categoryID
         var user_id = this.state.userID
+        var condition = this.state.condition
         var id = "products/" + this.props.product.id;
         var data = {
             name: ReactDOM.findDOMNode(this.refs.name).value,
-            price: ReactDOM.findDOMNode(this.refs.price).value,
             category_id: category_id,
-            user_id: user_id
+            user_id: user_id,
+            condition: condition
         };
         $.ajax({
             method: 'PUT',
@@ -80,13 +82,22 @@ class Product extends BaseComponent {
       this.setState({userID: event.currentTarget.value})
     }
 
+    conditionChange(event) {
+      this.setState({condition: event.currentTarget.value})
+    }
+
+    conditionsArray() {
+      return ["Basically Broken", "Worn", "Lightly Used", "Great", "Like New"]
+    }
+
     productRow() {
         var userName = this.userFunc(this.props.users, this.props.product.user_id)
         var catName = this.catFunc(this.props.categories, this.props.product.category_id)
+        var condition_text_array = this.conditionsArray()
         return (
             <tr>
                 <td>{this.props.product.name}</td>
-                <td>{this.props.product.price}</td>
+                <td>{condition_text_array[this.props.product.condition]}</td>
                 <td>{catName}</td>
                 <td>{userName}</td>
                 <td>
@@ -100,16 +111,24 @@ class Product extends BaseComponent {
     productForm() {
         var userOptions = this.props.users.map((user) => {
           if (user.id === this.props.product.user_id) {
-            return <option key={user.id} value={user.id} selected="selected">{user.user_name}</option>
+            return <option key={user.id - 1000} value={user.id} selected="selected">{user.user_name}</option>
           } else {
             return <option key={user.id} value={user.id}>{user.user_name}</option>
           }
         })
         var categoryOptions = this.props.categories.map((category) => {
           if (category.id === this.props.product.category_id) {
-            return <option key={category.id} value={category.id} selected="selected">{category.name}</option>
+            return <option key={category.id + 1000} value={category.id} selected="selected">{category.name}</option>
           } else {
             return <option key={category.id} value={category.id}>{category.name}</option>
+          }
+        })
+        var conditionOptions = this.conditionsArray().map((condition) => {
+          var counter = this.conditionsArray().indexOf(condition)
+          if (counter == this.props.product.condition) {
+            return <option key={counter} value={counter} selected="selected">{condition}</option>
+          } else {
+            return <option key={counter} value={counter}>{condition}</option>
           }
         })
         return (
@@ -118,7 +137,9 @@ class Product extends BaseComponent {
                     <input className="form-control" type="text" defaultValue={this.props.product.name} ref="name"/>
                 </td>
                 <td>
-                    <input className="form-control" type="number" defaultValue={this.props.product.price} ref="price"/>
+                  <select onChange={this.conditionChange}>
+                    {conditionOptions}
+                  </select>
                 </td>
                 <td>
                   <select onChange={this.categoryChange}>

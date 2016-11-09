@@ -34,11 +34,11 @@ class ProductsController < ApplicationController
       flash[:notice] = "Product saved successfully"
       if params[:product][:image].blank? && current_user.user_name != 'Admin'
         respond_to do |format|
-          format.html {redirect_to category_path(@category)}
+          format.html {redirect_to user_path(@product.user)}
           format.js
         end
       elsif params[:product][:image].blank?
-        redirect_to categories_path
+        redirect_to user_path(@product.user)
       else
         render :crop
       end
