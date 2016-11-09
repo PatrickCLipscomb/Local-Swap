@@ -29,26 +29,21 @@
 <br>
 <div class="field">
   <h5>Please rate your product's condition</h5>
-  <span class="cat-radio">
-    <%= radio_button_tag(:condition, 0) %>
-    <%= label_tag(:condition_0, "Basically Broken") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:condition, 1) %>
-    <%= label_tag(:condition_1, "Worn") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:condition, 2) %>
-    <%= label_tag(:condition_2, "Lightly Used") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:condition, 3) %>
-    <%= label_tag(:condition_3, "Great") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:condition, 4) %>
-    <%= label_tag(:condition_4, "Like New") %>
-  </span>
+  <% index = 0 %>
+  <% ["Basically Broken", "Worn", "Lightly Used", "Great", "Like New"].each do |conditionStatus| %>
+    <% if index == @product.condition %>
+      <span class="cat-radio">
+        <%= radio_button_tag(:condition, index, :checked => true) %>
+        <%= label_tag(:index, conditionStatus) %>
+      </span>
+    <% else %>
+      <span class="cat-radio">
+        <%= radio_button_tag(:condition, index) %>
+        <%= label_tag(:index, conditionStatus) %>
+      </span>
+    <% end %>
+    <% index += 1 %>
+  <% end %>
 </div>
 <br>
 <div class="field">

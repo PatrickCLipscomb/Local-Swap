@@ -2,38 +2,37 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, :excpet => [:show]
   def upvote
     @review = Review.find(params[:id])
-    # if (@review.has_voted.include?(current_user.id))
+    if !(@review.has_voted.include?(current_user.id))
       if @review.update(votes: @review.votes.to_i + 1, has_voted: @review.has_voted.push(current_user.id))
-
         respond_to do |format|
           format.html {redirect_to user_path(@review.user)}
           format.js
         end
       end
-    # else
-    #   flash[:notice] = current_user.user_name + "has already voted"
-    # end
+    else
+      flash[:notice] = current_user.user_name + " has already voted"
+    end
   end
   def downvote
     @review = Review.find(params[:id])
-    # if (@review.has_voted.include?(current_user.id))
+    if !(@review.has_voted.include?(current_user.id))
       if @review.update(votes: @review.votes.to_i - 1, has_voted: @review.has_voted.push(current_user.id))
         respond_to do |format|
           format.html {redirect_to user_path(@review.user)}
           format.js
         end
       end
-    # else
-    #   flash[:alert] = current_user.user_name + "has already voted"
-    # end
+    else
+      flash[:alert] = current_user.user_name + " has already voted"
+    end
   end
   def show
     @review = Review.find(params[:id])
-    @product = @review.product
+    @author = User.find(@review.author_id)
   end
   def edit
     @review = Review.find(params[:id])
-    @product = @review.product
+    @user = @review.user
   end
   def new
     @user = User.find(params[:user_id])
@@ -53,6 +52,7 @@ class ReviewsController < ApplicationController
   end
   def update
     @review = Review.find(params[:id])
+    @review.update(rating: params[:rating])
     @review.update(review_params)
     flash[:notice] = "review updated successfully"
     redirect_to user_path(@review.user)

@@ -5,26 +5,21 @@
 </div>
 <div class="field">
   <h5>Please rate your experience trading with <%= @user.user_name %></h5>
-  <span class="cat-radio">
-    <%= radio_button_tag(:rating, 1) %>
-    <%= label_tag(:rating_user, "Terrible") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:rating, 2) %>
-    <%= label_tag(:rating_user, "Bad") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:rating, 3) %>
-    <%= label_tag(:rating_user, "Okay") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:rating, 4) %>
-    <%= label_tag(:rating_user, "Good") %>
-  </span>
-  <span class="cat-radio">
-    <%= radio_button_tag(:rating, 5) %>
-    <%= label_tag(:rating_user, "Stellar") %>
-  </span>
+  <% index = 1 %>
+  <% ["Terrible", "Bad", "Okay", "Good", "Stellar"].each do |ratingText| %>
+    <% if @review.rating && @review.rating == index %>
+      <span class="cat-radio">
+        <%= radio_button_tag(:rating, index, :checked => true) %>
+        <%= label_tag(:rating_user, ratingText) %>
+      </span>
+    <% else %>
+      <span class="cat-radio">
+        <%= radio_button_tag(:rating, index) %>
+        <%= label_tag(:rating_user, ratingText) %>
+      </span>
+    <% end %>
+    <% index += 1 %>
+  <% end %>
 </div>
 <br>
 <div class="actions">

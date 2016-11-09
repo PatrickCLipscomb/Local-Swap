@@ -1,0 +1,24 @@
+@font-face {
+font-family: 'Cooper Hewitt';
+font-style: normal;
+font-weight: 400;
+src: url(https://static.canva.com/static/webfonts/CooperHewitt-Book.otf) format('opentype');
+}
+@font-face {
+font-family: 'Cooper Hewitt';
+font-style: italic;
+font-weight: 400;
+src: url(https://static.canva.com/static/webfonts/CooperHewitt-BookItalic.otf) format('opentype');
+}
+@font-face {
+font-family: 'Cooper Hewitt';
+font-style: normal;
+font-weight: 700;
+src: url(https://static.canva.com/static/webfonts/CooperHewitt-Bold.otf) format('opentype');
+}
+@font-face {
+font-family: 'Cooper Hewitt';
+font-style: italic;
+font-weight: 700;
+src: url(https://static.canva.com/static/webfonts/CooperHewitt-BoldItalic.otf) format('opentype');
+}

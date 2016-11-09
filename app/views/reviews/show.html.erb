@@ -1,19 +1,19 @@
-<h1><%= @review.name %>'s Review</h1>
+<h1><%= @author.name %>'s Review</h1>
 
 <h4>Comment:</h4>
-<p>
+<h5 style="color:orange;">
   <%= @review.content %>
-</p>
+</h5>
 
 <h4>Rating:</h4>
-<p>
-  <%= @review.rating %>
-</p>
+<h5 style="color:orange;">
+  <%= @review.rating %> out of 5
+</h5>
 
-<%= link_to "Edit", edit_product_review_path(@review) %> |
+<%= link_to "Edit", edit_user_review_path(@review.user, @review) %> |
 
-<%= link_to "Delete", product_review_path(@review), :data => {:confirm => "You Sure?", :method => 'delete'} %> |
+<%= link_to "Delete", user_review_path(@review.user, @review), :data => {:confirm => "You Sure?", :method => 'delete'} %> |
 
 <hr>
 
-<%= link_to "Back to product", product_path(@product) %>
+<%= link_to "Back to " + @review.user.user_name + "'s Page", user_path(@review.user) %>
