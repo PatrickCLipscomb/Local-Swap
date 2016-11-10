@@ -64,4 +64,58 @@ class Product < ActiveRecord::Base
     puts oddBall
   end
 
+  def binary_counter(s)
+    s_array = s.split('')
+    o_count = 0
+    o_holder = 0
+    while s_array.length != 0
+        if s_array[0] == '0'
+            if s_array[1] == '1'
+                o_count += 1
+                s_array.shift
+                s_array.shift
+            else
+              counter = 1
+              while s_array[counter] == '0'
+                counter += 1
+              end
+              o_holder = counter
+              second_counter = counter + 1
+              to_add = 0
+              while counter != 0 && s_array[second_counter] == '1'
+                counter -= 1
+                second_counter += 1
+                o_count += 1
+              end
+              counter.times do
+                s_array.shift
+              end
+            end
+        elsif s_array[0] == '1'
+            if s_array[1] == '0'
+                o_count += 1
+                s_array.shift
+                s_array.shift
+            else
+              counter = 1
+              while s_array[counter] == '1'
+                counter += 1
+              end
+              o_holder = counter
+              second_counter = counter + 1
+              to_add = 0
+              while counter != 0 && s_array[second_counter] == '0'
+                counter -= 1
+                second_counter += 1
+                o_count += 1
+              end
+              counter.times do
+                s_array.shift
+              end
+            end
+        end
+    end
+    puts o_count
+  end
+
 end

@@ -59,10 +59,9 @@ class ReviewsController < ApplicationController
   end
   def destroy
     @review = Review.find(params[:id])
-    @product = @review.product
     if @review.delete
       flash[:notice] = "Review deleted"
-      redirect_to product_path(@product)
+      redirect_to user_path(@review.user)
     else
       flash[:alert] = "Review failed to delete"
     end

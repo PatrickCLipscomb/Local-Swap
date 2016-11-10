@@ -3,7 +3,7 @@
       $("#cropbox").Jcrop({
         onChange: update_crop,
         onSelect: update_crop,
-        setSelect: [0, 0, <%= @product.image_geometry(:original).width %>, <%= @product.image_geometry(:original).height %>],
+        setSelect: [0, 0, <%= @product.image_geometry(:large).width %>, <%= @product.image_geometry(:large).height %>],
         aspectRatio: 1
       });
   });
@@ -30,16 +30,16 @@
 <div align="middle">
 
 
-  <%= image_tag @product.image.url(:original), :id => "cropbox" %>
+  <%= image_tag @product.image.url(:large), :id => "cropbox" %>
 
-
+<% if 1 == 0 %>
 <h4>Preview:</h4>
 
 
-  <div class="crop-preview" style="width:300px;height:300px;overflow:hidden">
+  <div class="crop-preview" style="width:300px;height:300px;overflow:hidden;display:hidden;">
     <%= image_tag @product.image.url(:large), :id => "preview" %>
   </div>
-
+<% end %>
 
 <%= form_for @product, :html => { :multipart => true }, url: crop_product_path(@product) do |f| %>
     <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
