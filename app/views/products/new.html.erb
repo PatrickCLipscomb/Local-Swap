@@ -11,7 +11,7 @@
   <h5>Please select the Product's Category</h5>
   <% @categories.each do |category| %>
     <span class="cat-radio">
-      <% if category.id == @product.category_id %>
+      <% if category.id == @product.category_id || category.id.to_i == @category_ID.to_i %>
         <%= radio_button_tag(:category_id, category.id, :checked => true) %>
         <%= label_tag(:category, category.name) %>
       <% else %>

@@ -16,6 +16,9 @@ class ProductsController < ApplicationController
   end
   def new
     @product = Product.new
+    if params[:category_id]
+      @category_ID = params[:category_id]
+    end
   end
 
   def crop
