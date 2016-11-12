@@ -2,6 +2,7 @@ class CategoriesController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show, :about, :contact]
   skip_before_filter :verify_authenticity_token, :only => [:index]
   def index
+    User.all.each
     @categories = Category.all.limit(12)
     @products = Product.all
     @productsLimited = Product.all.paginate(page: params[:page], per_page: 12)

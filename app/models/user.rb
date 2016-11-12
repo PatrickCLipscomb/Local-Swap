@@ -3,7 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   geocoded_by :address
   before_create :geocode
+  after_create :scramble_location
   after_create :send_welcome_message
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   def send_welcome_message
@@ -34,5 +36,22 @@ class User < ApplicationRecord
       avg_rating = (avg_rating/self.reviews.length).ceil
       return avg_rating
     end
+  end
+
+  def scramble_location
+    winds = []
+    latRandomNum = rand(18) - 9
+    longRandomNum = rand(18) - 9
+    if latRandomNum == 0
+      latRandomNum = rand(18) - 9
+    end
+    if longRandomNum == 0
+      longRandomNum = rand(9)
+    end
+    latRandomNum = latRandomNum.to_f
+    longRandomNum = longRandomNum.to_f
+    lat = self.latitude.to_f
+    long = self.longitude.to_f
+    self.update(latitude: lat + (latRandomNum/10000), longitude: long + (longRandomNum/10000))
   end
 end
