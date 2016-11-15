@@ -19,8 +19,13 @@ end
   Category.create(name: Faker::Commerce.department(2, true))
 end
 
+interests_array = []
+4.times do
+  interests_array.push(Category.all.first.id + rand(10))
+end
+
 8.times do
-  User.create(user_name: Faker::Name.name, email: Faker::Internet.email, address: Faker::Address.street_address, password: 'password')
+  User.create(user_name: Faker::Name.name, email: Faker::Internet.email, address: Faker::Address.street_address, password: 'password', interests: interests_array)
 end
 
 User.all.each {|a| a.update(bio: Faker::Lorem.paragraph, latitude: range(45.4, 45.6), longitude: range(-122.5, -122.7))}
