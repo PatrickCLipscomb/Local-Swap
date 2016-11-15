@@ -25,9 +25,24 @@ function initMap() {
       content: contentString<%=prod.id%>
     });
     var marker<%=prod.id%> = new google.maps.Marker({
-      position: {lat: <%=prod.user.latitude%>, lng: <%=prod.user.longitude%>},
+      position: {lat: <%=prod.user.latitude.to_f + 0.003 %>, lng: <%=prod.user.longitude.to_f - 0.006 %>},
       map: map,
-      title: 'Hello World!'
+      label: "<%= prod.user.user_name[0] + prod.user.user_name[1] %>",
+
+    });
+    new google.maps.Rectangle({
+      strokeColor: '#D9853B',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#D9853B',
+      fillOpacity: 0.35,
+      map: map,
+      bounds: {
+        north: <%=prod.user.latitude.to_f + 0.003 %>,
+        south: <%=prod.user.latitude.to_f - 0.003 %>,
+        east: <%=prod.user.longitude.to_f + 0.006 %>,
+        west: <%=prod.user.longitude.to_f - 0.006 %>
+      }
     });
     marker<%=prod.id%>.addListener('click', function() {
       infowindow<%=prod.id%>.open(map, marker<%=prod.id%>);
@@ -53,7 +68,7 @@ function initMap() {
         position: {lat: <%=current_user.latitude%>, lng: <%=current_user.longitude%>},
         map: map,
         label: "<%= current_user.user_name[0] + current_user.user_name[1] %>",
-        title: 'Hello World!'
+
       });
       current_userMarker<%=current_user.id%>.addListener('click', function() {
         current_userInfowindow<%=current_user.id%>.open(map, current_userMarker<%=current_user.id%>);

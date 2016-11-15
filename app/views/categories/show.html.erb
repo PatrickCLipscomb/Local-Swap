@@ -29,7 +29,7 @@ function initMap() {
       var marker<%=product.id%> = new google.maps.Marker({
         position: {lat: <%=product.user.latitude%>, lng: <%=product.user.longitude%>},
         map: map,
-        title: 'Hello World!'
+
       });
       marker<%=product.id%>.addListener('click', function() {
         infowindow<%=product.id%>.open(map, marker<%=product.id%>);

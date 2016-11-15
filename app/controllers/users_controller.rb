@@ -16,4 +16,17 @@ class UsersController < ApplicationController
     @avg_rating = @user.ratings
   end
 
+  def update
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to :show
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(category_ids:[])
+  end
+
 end

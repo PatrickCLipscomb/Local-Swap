@@ -28,10 +28,24 @@ async defer></script>
             content: contentString<%=@user.id%>
           });
           var marker<%=@user.id%> = new google.maps.Marker({
-            position: {lat: <%=@user.latitude%>, lng: <%=@user.longitude%>},
+            position: {lat: <%=@user.latitude.to_f + 0.003 %>, lng: <%=@user.longitude.to_f - 0.006 %>},
             map: map,
             label: "<%= @user.user_name[0] + @user.user_name[1] %>",
-            title: 'Hello World!'
+
+          });
+          new google.maps.Rectangle({
+            strokeColor: '#D9853B',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#D9853B',
+            fillOpacity: 0.35,
+            map: map,
+            bounds: {
+              north: <%=@user.latitude.to_f + 0.003 %>,
+              south: <%=@user.latitude.to_f - 0.003 %>,
+              east: <%=@user.longitude.to_f + 0.006 %>,
+              west: <%=@user.longitude.to_f - 0.006 %>
+            }
           });
           marker<%=@user.id%>.addListener('click', function() {
             infowindow<%=@user.id%>.open(map, marker<%=@user.id%>);
@@ -58,7 +72,7 @@ async defer></script>
             position: {lat: <%=current_user.latitude%>, lng: <%=current_user.longitude%>},
             map: map,
             label: "<%= current_user.user_name[0] + current_user.user_name[1] %>",
-            title: 'Hello World!'
+
           });
           current_userMarker<%=current_user.id%>.addListener('click', function() {
             current_userInfowindow<%=current_user.id%>.open(map, current_userMarker<%=current_user.id%>);
@@ -107,9 +121,26 @@ async defer></script>
       <% end %>
     </span>
   </h1>
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-2">
+    <br><br><br><h3>Categories <%= @user.user_name %> is interested in:</h3><hr>
+    <% if @user.interests.any? %>
+    <ul>
+      <% @user.interests.each do |category_id| %>
+        <% if category_id != nil && category = Category.find(category_id) %>
+          <li>
+            <%= link_to category.name, category_path(category), :class => "btn btn-success user-info-list" %>
+          </li>
+          <br>
+        <% end %>
+      <% end %>
+    </ul>
+    <% else %>
+      <h5><%= @user.user_name %> has not declared any interests yet.</h5>
+    <% end %>
+  </div>
+  <div class="col-md-8">
     <span class="product-homepage">
-      <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
+      <h3 align="middle"><%= @user.user_name.capitalize %>'s Registered Location</h3>
       <div id="multi-markers" style='width: 730px; height: 550px;'></div>
       <% if current_user.id != @user.id %>
         <button id="show-directions">Show Directions</button>
@@ -121,18 +152,37 @@ async defer></script>
       <h5><%= @user.bio %></h5>
     </span>
   </div>
+  <div class="col-md-2">
+    <br><br><br><h3>Categories <%= @user.user_name %> has products for:</h3><hr>
+    <% holder = [] %>
+    <ul>
+      <% @user.products.each do |product| %>
+        <% if !holder.include?(product.category) %>
+          <li>
+            <%= link_to product.category.name, category_path(product.category), :class => "btn btn-success user-info-list" %>
+          </li>
+          <br>
+          <% holder.push(product.category) %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 </div>
 <div class="row container"><hr>
   <% if current_user && current_user == @user %>
-    <h4>Post a product you would like to trade</h4>
-    <h4><%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link" %></h4>
+    <h4>Post a product you would like to trade
+    </h4>
+    <h4>
+      <%= link_to "Post", new_product_path, :class => "btn btn-success", :id => "new_product_link" %>
+    </h4>
   <% end %>
   <div class="col-sm-6">
     <h4>Products posted by <%= @user.user_name %></h4>
-    <ul class="list-group well" id="products">
-        <%= content_tag_for(:li, @user.products.each, class: "list-group-item") do |product| %>
+    <ul class="flex-list" id="products">
+        <%= content_tag_for(:li, @user.products.each, class: "flex-product well") do |product| %>
         <%= link_to product.name, category_product_path(product.category, product)%>
-        <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category)%></span>
+        <br>
+        <strong style="color:green;">Category: </strong><%= link_to product.category.name, category_path(product.category)%>
         <br>
         <%= image_tag(product.image.url(:thumb)) %>
         <% end %>

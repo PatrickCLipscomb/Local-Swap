@@ -52,14 +52,20 @@ class CategoriesController < ApplicationController
     end
 
   end
+
+  def interests
+    @categories = Category.all
+  end
+
   def contact
-
   end
+
   def about
-
   end
+
+
   private
   def category_params
-    params.require(:category).permit(:name, :image)
+    params.require(:category).permit(:name, :image, user_ids:[])
   end
 end

@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+
   root :to => 'categories#index'
+
+  devise_for :users, controllers: { sessions: 'users/sessions'}
+  resources :users, only: :show do
+    resources :reviews
+  end
+
   resources :categories do
     resources :products
   end
@@ -10,20 +16,16 @@ Rails.application.routes.draw do
     end
   end
 
-
   match "/upvote/:id" => "reviews#upvote", :via => :post, :as => :upvote
   match "/downvote/:id" => "reviews#downvote", :via => :post, :as => :downvote
   match "/show_prod/:id" => "users#show_prod", :via => :post, :as => :show_prod
+  match "/update/:id" => "users#update", :via => :post, :as => :update
   match "/about/" => "categories#about", :via => :get, :as => :about
   match "/contact" => "categories#contact", :via => :get, :as => :contact
+  match "/interests" => "categories#interests", :via => :get, :as => :interests
   match "/direct_message/:id" => "messages#direct_message", :via => :post, :as => :direct_message
 
-  resources :users, only: :show do
-    resources :reviews
-  end
   resources :messages, only: [:new, :create]
-
-  # Great to remember for future routing
   resources :conversations, only: [:index, :show, :destroy] do
     member do
       post :reply

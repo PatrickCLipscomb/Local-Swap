@@ -89,14 +89,14 @@ class Products extends BaseComponent {
                             <th> Condition </th>
                             <th> Category
                               <br />
-                              <select onChange={this.handleCategorySelect}>
+                              <select className="orange-background" onChange={this.handleCategorySelect}>
                                 <option value="All">All Categories</option>
                                 {categories}
                               </select>
                             </th>
                             <th> User
                               <br />
-                              <select onChange={this.handleUserSelect}>
+                              <select className="orange-background" onChange={this.handleUserSelect}>
                                 <option value="All">All Users</option>
                                 {users}
                               </select>

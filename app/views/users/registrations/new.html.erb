@@ -24,6 +24,10 @@
   </div>
 
   <div class="field">
+    <%= collection_check_boxes(:user, :interests, Category.all, :id, :name) %>
+  </div>
+
+  <div class="field">
     <%= f.label :avatar %><br />
     <%= f.file_field :avatar, :class => "white-inputs" %>
   </div>

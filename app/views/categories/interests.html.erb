@@ -1,0 +1,8 @@
+Interest Page
+
+<%= form_for current_user, url: {action: "update", controller: "users", params: {id: current_user.id}} do |f| %>
+  <%= collection_check_boxes(:user, :category_ids, Category.all, :id, :name) %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

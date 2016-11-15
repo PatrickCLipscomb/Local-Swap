@@ -137,17 +137,17 @@ class Product extends BaseComponent {
                     <input className="form-control" type="text" defaultValue={this.props.product.name} ref="name"/>
                 </td>
                 <td>
-                  <select onChange={this.conditionChange}>
+                  <select className="orange-background" onChange={this.conditionChange}>
                     {conditionOptions}
                   </select>
                 </td>
                 <td>
-                  <select onChange={this.categoryChange}>
+                  <select className="orange-background" onChange={this.categoryChange}>
                     {categoryOptions}
                   </select>
                 </td>
                 <td>
-                  <select onChange={this.userChange}>
+                  <select className="orange-background" onChange={this.userChange}>
                     {userOptions}
                   </select>
                 </td>
