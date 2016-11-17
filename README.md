@@ -1,25 +1,59 @@
-# README
+#  Local Swap
+## *By Patrick Lipscomb*
 
-IMPORTANT: PLEASE MAKE ACCOUNT WITH USER NAME 'Admin'
+Local Swap is a complex application that allows users to create profiles and trade items with other users via a geographically and socially enabled environment. Users locations are hidden via a location scrambling function that offsets their given location by up to 500 ft. Directions are available for users to locate other users, but those directions will never point to a users true location. In this way users locations are used as an asset to the application but not made available for other users.
 
-# BookBard
+##  Important Notice
 
-## A app designed to allow Users to share goods through a geographically enabled social website
+When logging in for the first time, use *Email: local@swap.app*  *Password: password*  
+The database must first be seeded for this to work, and it will allow you to access all features, including the ReactJS Admin Dashboard.
 
-### Author: Patrick Lipscomb  
+## Technologies Used
 
-### Description
+* **Application**: *Ruby on Rails 5, ReactJS*<br>
+* **Testing**: *Rspec, Capybara, Simplecov, FactoryGirl, PhantomJS, Poltergeist*<br>
+* **Database**: *Postgres, ActiveRecord*
 
-When signing in, Users enter their address and are located on the map for all other users to see. Users can post products they would like to trade, write reviews on other products, and message other users.
+Installation
+------------
 
-### License
-#### The MIT License (MIT)
-Copyright (c) 2016 Patrick Lipscomb
+Install *Local Swap* by cloning the repository.  
+```
+$ git clone https://github.com/PatrickCLipscomb/Local-Swap.git
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Check to make sure ruby and rails are installed on your machine.  
+```
+$ ruby -v
+$ rails -v
+```
+If they are not installed, please follow instructions [here](http://guides.rubyonrails.org/getting_started.html#installing-rails) to install ruby on rails.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Install required gems:
+```
+$ bundle install
+```
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Run Postgres:
+```
+$ postgres
+```
 
-#### User Stories: Implement Vanilla JS Google Maps. Make it so Users can Message One Another, and It will send an Email to Other User. Change it so Reviews are of Users, and Make Votes be Commendations or Defamations on Users. Change Review so it is like would you rather comment. Maybe add a comment type feed in the app. Make it so all the above listed items are automatically assigned to the current user. Add a contact us modal pop up that will send an email. Make ratings a commendation aspect, each user gets three commendations max with one added each day. Add pagination ot lists through ajax. Add trade locations through Portland with ability to be routed to nearest station. Add table that shows all of the nearest users to a particular user and ability to see those users products. Give ability to have multiple pictures per product. Make it so users can see other users bio pages and their distance from your location if you are logged in. Have authentication based through facebook. Make it so user location is only an estimate of their address. Make editing for products possible only if that product belongs to the current user.
+Navigate to project file then create, migrate and seed database:
+```
+$ rake db: create
+$ rake db: migrate
+$ rake db: seed
+```
+
+Start the Rails webserver:
+```
+$ rails server
+```
+
+Navigate to `localhost:3000` in your browser of choice.
+
+License
+-------
+_This software is licensed under the MIT license._<br>
+Copyright (c) 2016 **Patrick Lipscomb**
