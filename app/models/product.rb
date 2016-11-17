@@ -32,7 +32,7 @@ class Product < ActiveRecord::Base
 
   def condition_text(int)
     condition_text_array = ["Basically Broken", "Worn", "Lightly Used", "Great", "Like New"]
-    return condition_text_array[int]
+    return condition_text_array[int.to_i]
   end
 
   def zig_zag(array)
