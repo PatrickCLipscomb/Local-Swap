@@ -28,10 +28,24 @@ async defer></script>
             content: contentString<%=@user.id%>
           });
           var marker<%=@user.id%> = new google.maps.Marker({
-            position: {lat: <%=@user.latitude%>, lng: <%=@user.longitude%>},
+            position: {lat: <%=@user.latitude.to_f + 0.003%>, lng: <%=@user.longitude.to_f - 0.006%>},
             map: map,
             label: "<%= @user.user_name[0] + @user.user_name[1] %>",
             title: 'Hello World!'
+          });
+          new google.maps.Rectangle({
+            strokeColor: '#D9853B',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#D9853B',
+            fillOpacity: 0.35,
+            map: map,
+            bounds: {
+              north: <%=@user.latitude.to_f + 0.003 %>,
+              south: <%=@user.latitude.to_f - 0.003 %>,
+              east: <%=@user.longitude.to_f + 0.006 %>,
+              west: <%=@user.longitude.to_f - 0.006 %>
+            }
           });
           marker<%=@user.id%>.addListener('click', function() {
             infowindow<%=@user.id%>.open(map, marker<%=@user.id%>);
@@ -107,9 +121,26 @@ async defer></script>
       <% end %>
     </span>
   </h1>
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-2">
+    <br><br><br><h3>Categories <%= @user.user_name %> is interested in:</h3><hr>
+    <% if @user.interests.any? %>
+    <ul>
+      <% @user.interests.each do |category_id| %>
+        <% if category_id != nil && category = Category.find(category_id) %>
+          <li>
+            <%= link_to category.name, category_path(category), :class => "btn btn-success user-info-list" %>
+          </li>
+          <br>
+        <% end %>
+      <% end %>
+    </ul>
+    <% else %>
+      <h5><%= @user.user_name %> has not declared any interests yet.</h5>
+    <% end %>
+  </div>
+  <div class="col-md-8">
     <span class="product-homepage">
-      <h3><%= @user.user_name.capitalize %>'s Registered Location</h3>
+      <h3 align="middle"><%= @user.user_name.capitalize %>'s Registered Location</h3>
       <div id="multi-markers" style='width: 730px; height: 550px;'></div>
       <% if current_user.id != @user.id %>
         <button id="show-directions">Show Directions</button>
@@ -121,6 +152,21 @@ async defer></script>
       <h5><%= @user.bio %></h5>
     </span>
   </div>
+  <div class="col-md-2">
+     <br><br><br><h3>Categories <%= @user.user_name %> has products for:</h3><hr>
+     <% holder = [] %>
+     <ul>
+       <% @user.products.each do |product| %>
+         <% if !holder.include?(product.category) %>
+           <li>
+             <%= link_to product.category.name, category_path(product.category), :class => "btn btn-success user-info-list" %>
+           </li>
+           <br>
+           <% holder.push(product.category) %>
+         <% end %>
+       <% end %>
+     </ul>
+   </div>
 </div>
 <div class="row container"><hr>
   <% if current_user && current_user == @user %>
@@ -129,10 +175,10 @@ async defer></script>
   <% end %>
   <div class="col-sm-6">
     <h4>Products posted by <%= @user.user_name %></h4>
-    <ul class="list-group well" id="products">
-        <%= content_tag_for(:li, @user.products.each, class: "list-group-item") do |product| %>
+    <ul class="flex-list" id="products">
+        <%= content_tag_for(:li, @user.products.each, class: "flex-product well") do |product| %>
         <%= link_to product.name, category_product_path(product.category, product)%>
-        <span class="pull-right"><strong>Category: </strong><%= link_to product.category.name, category_path(product.category)%></span>
+        <span class="pull-right"><strong style="color:green;">Category: </strong><%= link_to product.category.name, category_path(product.category)%></span>
         <br>
         <%= image_tag(product.image.url(:thumb)) %>
         <% end %>
@@ -142,40 +188,45 @@ async defer></script>
     <h5>Reviews of <%= @user.user_name %></h5>
     <ul class="list-group well">
       <% @user.reviews.order('votes desc').each do |review| %>
-        <li class="list-group-item">
-          <span class="pull-right voter">
-            <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
-              <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-            <% end %>
-            <h4 id="<%=review.id.to_s%>-votes" class="be-grey"><%= review.votes %></h4>
-            <%= link_to downvote_path(review), :method => "post", remote: true, :class => "btn btn-danger" do %>
-              <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-            <% end %>
-          </span>
-          <h5 class="be-grey">
-            <span class="field pull-left">
-            <%= link_to User.find(review.author_id).user_name, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name %></strong>
-            <%= review.rating.times do %>
-              <span class="stars">
-                <span class="glyphicon glyphicon-star"></span>
-              </span>
-            <% end %>
-            <% if 1 == 0 %>
-            <% (5 - review.rating).times do %>
-              <span class="stars">
-                <span class="glyphicon glyphicon-star-empty"></span>
-              </span>
-            <% end %>
-            <% end %>
+          <li class="list-group-item">
+            <span class="pull-right voter">
+              <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
+                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+              <% end %>
+              <h4 id="<%=review.id.to_s%>-votes" class="be-grey"><%= review.votes %></h4>
+              <%= link_to downvote_path(review), :method => "post", remote: true, :class => "btn btn-danger" do %>
+                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+              <% end %>
             </span>
-          </h4>
-          <br>
-          <br>
-          <p><em>Rating Description:</em> <%= review.content %></p>
-          <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
-          <br>
-        </li>
+            <h5 class="be-grey">
+              <span class="field pull-left">
+              <%= link_to User.find(review.author_id).user_name, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name %></strong>
+              <%= review.rating.times do %>
+                <span class="stars">
+                  <span class="glyphicon glyphicon-star"></span>
+                </span>
+              <% end %>
+              <% if 1 == 0 %>
+              <% (5 - review.rating).times do %>
+                <span class="stars">
+                  <span class="glyphicon glyphicon-star-empty"></span>
+                </span>
+              <% end %>
+              <% end %>
+              </span>
+            </h4>
+            <br>
+            <br>
+            <p><em>Rating Description:</em> <%= review.content %></p>
+            <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
+            <br>
+          </li>
         <br>
+      <% end %>
+      <% if @user.reviews.length == 0 %>
+        <li class="list-group-item">
+          <h4 style="color:black;"><%= @user.user_name %> doesn't have any reviews yet</h4>
+        </li>
       <% end %>
     </ul>
     <% if current_user && @user != current_user %>

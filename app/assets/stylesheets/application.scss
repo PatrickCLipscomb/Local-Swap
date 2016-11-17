@@ -11,8 +11,43 @@ body {
   background-image: url("/assets/Black-white-world-map-wallpaper-HD.png");
 }
 
+.flex-product {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   border-radius: 16px 16px;
+   border-color: rgba(241, 89, 42, .3);
+   border-style: solid;
+   border-width: 3px;
+   min-width: 220px;
+}
+
+.flex-product:hover {
+  background-color: rgba(241, 89, 42, .3)
+}
+
+.flex-list {
+ display: flex;
+ flex-wrap: wrap;
+ margin-left: -30px;
+ justify-content: space-around;
+ border: 1px solid green;
+ padding-top: 30px;
+}
+
+.user-info-list {
+   list-style-type: none;
+   margin-left: -30px;
+   max-height: 34px;
+}
+
 .white-inputs {
   color: white;
+}
+
+.orange-background {
+  background-color: orange;
 }
 
 .overflow {

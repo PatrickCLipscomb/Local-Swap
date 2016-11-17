@@ -24,6 +24,15 @@
   </div>
 
   <div class="field">
+    <h4 style="color:white;">Please select the categories your are interested in swapping your items for:</h4>
+    <%= collection_check_boxes(:user, :interests, Category.all, :id, :name) do |b| %>
+      <%= b.label %>
+      <%= b.check_box %>
+      <br>
+    <% end %>
+  </div>
+
+  <div class="field">
     <%= f.label :avatar %><br />
     <%= f.file_field :avatar, :class => "white-inputs" %>
   </div>

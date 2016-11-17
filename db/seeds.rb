@@ -16,7 +16,7 @@ def range (min, max)
 end
 
 10.times do
-  Category.create(name: Faker::Commerce.department)
+  Category.create(name: Faker::Commerce.department(2, true))
 end
 
 8.times do
