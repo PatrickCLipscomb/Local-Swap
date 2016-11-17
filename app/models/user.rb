@@ -5,7 +5,7 @@ class User < ApplicationRecord
   after_save :geocode, if: ->(obj){obj.address.present? and obj.address_changed?}
   before_create :geocode
   after_create :scramble_location
-  after_create :send_welcome_message
+  # after_create :send_welcome_message
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   def send_welcome_message
