@@ -1,12 +1,12 @@
 #  Local Swap
 ## *By Patrick Lipscomb*
 
-Local Swap is a complex application that allows users to create profiles and trade items with other users via a geographically and socially enabled environment. Users locations are hidden via a location scrambling function that offsets their given location by up to 500 ft. Directions are available for users to locate other users, but those directions will never point to a users true location. In this way users locations are used as an asset to the application but not made available for other users.
+Local Swap is a complex application that allows users to create profiles and trade items with other users via a geographically and socially enabled environment. User locations are hidden via a location scrambling function that offsets their given location by up to 500 ft. Directions are available for users to locate other users, but those directions will never point to a user's true location. In this way user locations are used as an asset to the application but not made available for other users.
 
 ##  Important Notice
 
-When logging in for the first time, use *Email: local@swap.app*  *Password: password*  
-The database must first be seeded for this to work, and it will allow you to access all features, including the ReactJS Admin Dashboard.
+When logging in for the first time, use **Email: local@swap.app**  **Password: password**  
+The database must first be seeded for this to work. It will allow you to access all features, including the ReactJS Admin Dashboard.
 
 ## Technologies Used
 
@@ -39,7 +39,7 @@ Run Postgres:
 $ postgres
 ```
 
-Navigate to project file then create, migrate and seed database:
+Navigate to project file and migrate database:
 ```
 $ rake db: create
 $ rake db: migrate
