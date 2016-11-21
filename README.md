@@ -34,6 +34,17 @@ Install required gems:
 $ bundle install
 ```
 
+Install ImageMagick which allows for file attachments and image cropping.
+
+If on Mac:
+```
+$ brew install imagemagick
+```
+If on Windows please follow this guide:
+```
+http://andystu.github.io/blog/2015/06/03/how-to-install-paperclip-for-rails-app-on-windows/
+```
+
 Run Postgres:
 ```
 $ postgres
