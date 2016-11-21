@@ -55,6 +55,11 @@ Navigate to project file and setup database:
 $ rake db: setup
 ```
 
+Create a .env file in the Root Directory:
+```
+GOOGLE_API=<google_maps_api_key>
+```
+
 Start the Rails webserver:
 ```
 $ rails server
