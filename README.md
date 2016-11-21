@@ -39,11 +39,9 @@ Run Postgres:
 $ postgres
 ```
 
-Navigate to project file and migrate database:
+Navigate to project file and setup database:
 ```
-$ rake db: create
-$ rake db: migrate
-$ rake db: seed
+$ rake db: setup
 ```
 
 Start the Rails webserver:
