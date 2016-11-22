@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
     @products = Product.all.order('category_id desc').order('name asc')
     @users = User.all
     @categories = Category.all
+    @reviews = Review.all
   end
   def show
     @product = Product.find(params[:id])

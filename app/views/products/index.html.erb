@@ -1,5 +1,5 @@
 <div class="white-inputs">
   <% if current_user.user_name == 'Admin' || current_user%>
-    <%= react_component 'Products', {data: [@products, @users, @categories]} %>
+    <%= react_component 'Products', {data: [@products, @users, @categories, @reviews]} %>
   <% end %>
 </div>

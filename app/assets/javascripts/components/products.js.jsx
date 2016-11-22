@@ -8,6 +8,7 @@ class Products extends BaseComponent {
             products: props.data[0],
             users: props.data[1],
             categories: props.data[2],
+            reviews: props.data[3],
             selectedCategoryID: 'All',
             selectedUserID: 'All'
         };
@@ -69,7 +70,8 @@ class Products extends BaseComponent {
 
     render() {
         var products = this.filterFunction().map((product, index) => {
-            return <Product key={index} product={product} users={this.state.users} categories={this.state.categories} handleDeleteProduct={this.deleteProduct} handleEditProduct={this.handleEditProduct} />
+            var swag_key = index + 55667;
+            return <Product key={swag_key} product={product} users={this.state.users} categories={this.state.categories} handleDeleteProduct={this.deleteProduct} handleEditProduct={this.handleEditProduct} />
         });
         var categories = this.state.categories.map((category) => {
           return <option value={category.id}>{category.name}</option>
@@ -79,8 +81,12 @@ class Products extends BaseComponent {
         })
         return (
             <div className="products">
-                <h2 className="title"> Admin Product Management Dashboard </h2>
-                <h5 className="title">Add a product</h5>
+              <div className="row">
+                <div className="col-md-offset-8 col-md-4">
+                  <InfoPanel productNumber={this.state.products.length} userNumber={this.state.users.length} categoryNumber={this.state.categories.length} reviewNumber={this.state.reviews.length} />
+                </div>
+              </div>
+                <h2 className="title"> Admin Product Management Dashboard</h2>
                 <hr />
                 <table className="table table-bordered">
                     <thead>
