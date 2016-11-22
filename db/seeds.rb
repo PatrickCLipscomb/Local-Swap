@@ -28,14 +28,13 @@ User.where(latitude: nil).each {|a| a.destroy}
 
 User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena Portland', password: 'password')
 
-['dune_book.jpeg', 'enders_book.jpg', 'lincoln_book.jpg', 'got_book.jpg', 'jobs_book.jpg', 'musk_book.jpg', 'ready-player-one.png', 'teddy_book.jpg', 'the-lord-of-the-rings-book-cover.jpg'].each do |book_name|
-  5.times do
-    cat_id = Category.all.first.id + rand(10)
-    prod = Product.create!(name: Faker::Commerce.product_name, condition: rand(5), description: Faker::Hipster.paragraph(2, true, 4), category_id: cat_id, user_id: User.all.first.id + rand(8), image: '/images/' + book_name)
-    cat = Category.find(cat_id)
-    cat.update(products: cat.products.push(prod))
-  end
+50.times do
+  cat_id = Category.all.first.id + rand(10)
+  prod = Product.create(name: Faker::Commerce.product_name, condition: rand(5), description: Faker::Hipster.paragraph(2, true, 4), category_id: cat_id, user_id: User.all.first.id + rand(8))
+  cat = Category.find(cat_id)
+  cat.update(products: cat.products.push(prod))
 end
+
 
 
 
