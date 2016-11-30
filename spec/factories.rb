@@ -1,4 +1,13 @@
 FactoryGirl.define do
+  factory :chat_message do
+    body "MyText"
+    chat_room nil
+    user nil
+  end
+  factory :chat_room do
+    title "MyString"
+    user nil
+  end
   factory(:user) do
     user_name('Admin')
     address('100 N Blandena, Portland, OR')

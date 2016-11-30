@@ -1,0 +1,18 @@
+<div class="row col-md-8 col-md-offset-2">
+  <h1><%= @chat_room.title %></h1>
+
+<div class="panel panel-default">
+  <% if @chat_room.chat_messages.any? %>
+    <div class="panel-body" id="chat_messages">
+      <% @chat_room.chat_messages.each do |chat_message| %>
+        <p> <b><%=chat_message.user.user_name%>: </b><%=chat_message.body%></p>
+      <% end %>
+    </div>
+  <%else%>
+    <div class="panel-body hidden" id="chat_messages">
+    </div>
+  <%end%>
+</div>
+
+  <%= render partial: 'chat_messages/chat_message_form', :style => "display:none;", locals: {chat_message: @chat_message, chat_room: @chat_room}%>
+</div>

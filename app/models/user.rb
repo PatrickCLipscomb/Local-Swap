@@ -15,8 +15,10 @@ class User < ApplicationRecord
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   validates :user_name, :presence => true
   validates :address, :presence => true
-  has_many :products
-  has_many :reviews
+  has_many :products, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :chat_messages, dependent: :destroy
+  has_many :chat_rooms, dependent: :destroy
   acts_as_messageable
 
   def name

@@ -205,6 +205,7 @@ GEM
       tilt
     record_tag_helper (1.0.0)
       actionview (~> 5.x)
+    redis (3.3.2)
     remotipart (1.3.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
@@ -308,6 +309,7 @@ DEPENDENCIES
   rails (~> 5.0.0, >= 5.0.0.1)
   react-rails
   record_tag_helper (~> 1.0)
+  redis (~> 3.0)
   remotipart (~> 1.2)
   rspec-rails
   sass-rails (~> 5.0)
@@ -323,4 +325,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.0)
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

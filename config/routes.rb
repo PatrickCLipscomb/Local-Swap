@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     end
   end
 
+  mount ActionCable.server => '/cable'
+  resources :chat_rooms, param: :slug
+  resources :chat_messages
 
   match "/upvote/:id" => "reviews#upvote", :via => :post, :as => :upvote
   match "/downvote/:id" => "reviews#downvote", :via => :post, :as => :downvote
