@@ -11,7 +11,10 @@ body {
   background-image: image-url("Black-white-world-map-wallpaper-HD.png");
 }
 
-
+#chat_messages {
+  overflow-y: auto;
+  max-height: 335px;
+}
 .flex-product {
    display: flex;
    flex-direction: column;
