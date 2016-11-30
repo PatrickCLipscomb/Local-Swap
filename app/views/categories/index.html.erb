@@ -92,6 +92,24 @@ async defer></script>
     <hr>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Live Chat for <%= @home_chat_room.title %></h1>
+    <div class="panel panel-default">
+      <% if @home_chat_room.chat_messages.any? %>
+        <div class="panel-body" id="chat_messages">
+          <% @home_chat_room.chat_messages.order('id desc').limit(10).reverse.each do |chat_message| %>
+            <p class="chatty"> <b><%=chat_message.user.user_name%>: </b><%=chat_message.body%> <span class="pull-right text-muted">Posted <%= time_ago_in_words(chat_message.created_at) %></span></p>
+          <% end %>
+        </div>
+      <%else%>
+        <div class="panel-body hidden" id="chat_messages">
+        </div>
+      <%end%>
+    </div>
+    <%= render partial: 'chat_messages/chat_message_form', :style => "display:none;", locals: {chat_message: @chat_message, chat_room: @home_chat_room}%>
+  </div>
+</div>
 
 
 <h1>Admin Landing Page</h1>

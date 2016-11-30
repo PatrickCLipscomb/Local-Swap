@@ -3,10 +3,13 @@ $(document).ready(function() {
     received: function(data) {
       $("#chat_message").removeClass('hidden')
       $('#chat_message_body').val('')
+      if ($('.chatty').length > 9) {
+        $('.chatty').first().remove()
+      }
       return $('#chat_messages').append(this.renderMessage(data));
     },
     renderMessage: function(data) {
-      return "<p> <b>" + data.user + ": </b>" + data.chat_message + "</p>";
+      return "<p class='chatty'> <b>" + data.user + ": </b>" + data.chat_message + "</p>";
     }
   });
 })

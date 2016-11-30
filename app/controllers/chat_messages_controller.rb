@@ -10,7 +10,8 @@ class ChatMessagesController < ApplicationController
         user: chat_message.user.user_name
       head :ok
     else
-      redirect_to chat_rooms_path
+      flash[:alert] = "You must be logged in to chat"
+      redirect_to categories_path
     end
   end
 

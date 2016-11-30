@@ -11,6 +11,8 @@ class CategoriesController < ApplicationController
       @total_products_number += 1
     end
     @users = User.all
+    @home_chat_room = ChatRoom.find_by(title: 'Portland Area')
+    @chat_message = ChatMessage.new
   end
   def show
     @users = User.all

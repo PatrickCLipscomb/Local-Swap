@@ -10,6 +10,7 @@ Category.all.each {|c| c.destroy}
 Product.all.each {|p| p.destroy}
 User.all.each {|u| u.destroy}
 Review.all.each {|r| r.destroy}
+ChatRoom.all.each {|c| c.destroy}
 
 def range (min, max)
   rand * (max-min) + min
@@ -28,15 +29,14 @@ User.where(latitude: nil).each {|a| a.destroy}
 
 User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena Portland', password: 'password')
 
+User.find_by(user_name: 'Admin').chat_rooms.create(title: 'Portland Area')
+
 50.times do
   cat_id = Category.all.first.id + rand(10)
   prod = Product.create(name: Faker::Commerce.product_name, condition: rand(5), description: Faker::Hipster.paragraph(2, true, 4), category_id: cat_id, user_id: User.all.first.id + rand(8))
   cat = Category.find(cat_id)
   cat.update(products: cat.products.push(prod))
 end
-
-
-
 
 30.times do
   Review.create(content: Faker::Hipster.sentence, user_id: range(User.all.first.id, User.all.last.id), author_id: range(User.all.first.id, User.all.last.id), rating: 1 + rand(5), votes: rand(10))
