@@ -3,7 +3,7 @@
 <h1>Local Swap Map</h1>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsrciFSZIHPIokQFpVQo6i4boOCSu33w8&callback=initMap"
 async defer></script>
-<script>
+<script type="text/javascript">
       var map;
       function initMap() {
         map = new google.maps.Map(document.getElementById('multi-markers'), {
@@ -103,13 +103,13 @@ async defer></script>
   <div class="col-md-8">
     <div class="panel panel-default">
       <% if @home_chat_room.chat_messages.any? %>
-        <div class="panel-body" id="chat_messages">
+        <div class="panel-body" id="<%= @home_chat_room.title.split(' ')[0] %>">
           <% @home_chat_room.chat_messages.order('id desc').reverse.each do |chat_message| %>
             <p class="chatty"> <b><%=chat_message.user.user_name%>: </b><%=chat_message.body%> <span class="pull-right text-muted">Posted <%= time_ago_in_words(chat_message.created_at) %> ago</span></p>
           <% end %>
         </div>
       <%else%>
-        <div class="panel-body hidden" id="chat_messages">
+        <div class="panel-body hidden" id="<%= @home_chat_room.title.split(' ')[0] %>">
         </div>
       <%end%>
     </div>

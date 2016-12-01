@@ -6,6 +6,7 @@ class ChatMessagesController < ApplicationController
     chat_message.user = current_user
     if chat_message.save
       ActionCable.server.broadcast 'chat_messages',
+        title: chat_message.chat_room.title.split(' ')[0],
         chat_message: chat_message.body,
         user: chat_message.user.user_name
       head :ok
