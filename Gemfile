@@ -38,7 +38,6 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'simplecov', require: false
-  gem "letter_opener", :group => :development
   gem 'database_cleaner'
 end
 
