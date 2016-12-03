@@ -1,0 +1,31 @@
+$(document).on('turbolinks:load', function() {
+  submitNewMessage();
+});
+$(document).ready(function() {
+  <% ChatRoom.all.each do |chat_room| %>
+    App['room' + <%=chat_room.id%>] = App.cable.subscriptions.create({channel: 'ChatMessagesChannel', room: <%=chat_room.id%>}, {
+    received: function(data) {
+      $("[data-chat_room='" + this.chat_roomId + "']").removeClass('hidden')
+      $("[data-chat_room='" + this.chat_roomId + "']").scrollTop($("[data-chat_room='" + this.chat_roomId + "']").prop("scrollHeight"))
+      return $("[data-chat_room='" + this.chat_roomId + "']").append(data.chat_message);
+    },
+    setChatroomId: function(chat_roomId) {
+      this.chat_roomId = chat_roomId
+    }
+  });
+  <% end %>
+})
+
+function submitNewMessage(){
+  $('textarea#chat_message_body').keydown(function(event) {
+    if (event.keyCode == 13) {
+        var msg = event.target.value
+        var chatroomId = $("[data-chat_room]").data().chat_room
+        console.log(chatroomId)
+        App['room' + chatroomId].setChatroomId(chatroomId)
+        App['room' + chatroomId].send({chat_message: msg, chat_room_id: chatroomId})
+        $('[data-textarea="chat_message"]').val(" ")
+        return false;
+     }
+  });
+}

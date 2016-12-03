@@ -3,5 +3,5 @@
   <%= f.text_area :body, class: "form-control", data: {textarea: "chat_message"}%>
 
   <%= f.hidden_field :chat_room_id, value: chat_room.id %>
-  <%= f.submit "send", class: "btn btn-primary", data: {send: "chat_message"}%>
+  <%= f.submit "send", class: "btn btn-primary", :style => "display:none;", data: {send: "chat_message"}%>
 <%end%>
