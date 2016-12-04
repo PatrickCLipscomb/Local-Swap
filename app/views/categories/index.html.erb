@@ -114,10 +114,14 @@ async defer></script>
     <%= render partial: 'chat_messages/chat_message_form', :style => "display:none;", locals: {chat_message: @chat_message, chat_room: @home_chat_room}%>
   </div>
   <div class="col-md-2">
-    <h5>Active Chat Rooms</h5>
+    <h5>Custom Chat Rooms</h5>
     <% ChatRoom.all.order('id desc').limit(10).each do |chat_room| %>
-      <%= link_to chat_room.title, chat_room_path(chat_room), :class => "btn-info" %>
-      <br>
+      <% category_names = [] %>
+      <% Category.all.each {|c| category_names.push(c.name)} %>
+      <% if !category_names.include?(chat_room.title) && chat_room.title != 'Portland Area' %>
+          <%= link_to chat_room.title, chat_room_path(chat_room), :class => "btn-info" %>
+        <br>
+      <% end %>
     <% end %>
   </div>
 </div>

@@ -18,6 +18,8 @@ class CategoriesController < ApplicationController
     @users = User.all
     @category = Category.find(params[:id])
     @first_product = @category.products.first
+    @category_chat_room = ChatRoom.find_by(title: @category.name)
+    @chat_message = ChatMessage.new
   end
   def edit
     @category = Category.find(params[:id])

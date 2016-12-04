@@ -67,4 +67,20 @@ function initMap() {
     </ul>
   </div>
 </div>
-<hr>
+<div class="row">
+  <h1 align="middle">Live Chat for <%= @category.name %></h1>
+  <hr>
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <% if @category_chat_room.chat_messages.any? %>
+        <div class="panel-body scrolly" id="<%= @category_chat_room.title.split(' ')[0] %>" data-chat_room="<%=@category_chat_room.id%>" >
+          <%= render partial: 'chat_messages/chat_message', collection: @category_chat_room.chat_messages %>
+        </div>
+      <%else%>
+        <div class="panel-body hidden" id="<%= @category_chat_room.title.split(' ')[0] %>" data-chat_room="<%=@category_chat_room.id%>">
+        </div>
+      <%end%>
+    </div>
+    <%= render partial: 'chat_messages/chat_message_form', :style => "display:none;", locals: {chat_message: @chat_message, chat_room: @category_chat_room}%>
+  </div>
+</div>
