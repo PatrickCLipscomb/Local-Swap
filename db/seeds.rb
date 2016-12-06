@@ -29,6 +29,8 @@ User.where(latitude: nil).each {|a| a.destroy}
 
 User.create(user_name: 'Admin', email: 'local@swap.app', address: '100 N Blandena Portland', password: 'password')
 
+User.find_by(user_name: 'Admin').chat_rooms.create(title: "Portland Area"
+
 Category.all.each do |category|
   User.find_by(user_name: 'Admin').chat_rooms.create(title: category.name)
 end
