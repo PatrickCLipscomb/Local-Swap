@@ -4,12 +4,7 @@
 
 $(document).on('turbolinks:load', function() {
   submitNewMessage();
-});
 
-<% if false %>
-// Here, I establish the subscription to the ChatMessages Channel, and define a received function. Received is a callback function, it will be automatically invoked every time Action Cable broadcasts data to the ChatMessages Channel. There is a different client side subscription for every chatroom in the ChatMessages Channel.
-<% end %>
-$(document).on('turbolinks:load', function() {
   <% ChatRoom.all.each do |chat_room| %>
     App['room' + <%=chat_room.id%>] = App.cable.subscriptions.create({channel: 'ChatMessagesChannel', room: <%=chat_room.id%>}, {
     received: function(data) {
@@ -24,11 +19,12 @@ $(document).on('turbolinks:load', function() {
   <% end %>
 })
 <% if false %>
+// Here, I establish the subscription to the ChatMessages Channel, and define a received function. Received is a callback function, it will be automatically invoked every time Action Cable broadcasts data to the ChatMessages Channel. There is a different client side subscription for every chatroom in the ChatMessages Channel.
+
 // The App.chat_messages subscription object responds to a function, send, that will send data to the ChatMessages Channel to be broadcast.
 //
 // So, this function that will fire when someone hits enter on the new chat_messages form, will send data to the the ChatMessages Channel to be broadcast through App.chat_messages. At that point in time, we'll tell App.chat_messages to send the new message content to the channel.
-<% end %>
-<% if false %>
+
 // The Subscription instance's send function (below) corresponds to the subscription's channel's receive function.
 <% end %>
 
@@ -40,6 +36,8 @@ function submitNewMessage(){
         App['room' + chatroomId].setChatroomId(chatroomId)
         App['room' + chatroomId].send({chat_message: msg, chat_room_id: chatroomId})
         $('[data-textarea="chat_message"]').val(" ")
+        console.log(msg)
+        console.log("Remember, you must login to use chat functionality")
         return false;
      }
   });
