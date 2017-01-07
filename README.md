@@ -1,7 +1,11 @@
 #  Local Swap
-## *By Patrick Lipscomb*
 
 Local Swap is a complex application that allows users to create profiles and trade items with other users via a geographically and socially enabled environment. User locations are hidden via a location scrambling function that offsets their given location by up to 500 ft. Directions are available for users to locate other users, but those directions will never point to a user's true location. In this way user locations are used as an asset to the application but not made available for other users.
+
+Find *Local Swap* Live on Heroku
+```
+https://localswap-by-patrick-lipscomb.herokuapp.com/
+```
 
 ##  Important Notice
 
