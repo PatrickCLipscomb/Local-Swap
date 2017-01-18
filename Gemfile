@@ -25,7 +25,7 @@ gem 'react-rails'
 gem 'geocoder'
 gem 'underscore-rails'
 gem 'jcrop-rails-v2'
-gem 'parallax-rails'
+gem 'jquery-turbolinks'
 
 
 group :development, :test do
