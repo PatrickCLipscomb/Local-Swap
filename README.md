@@ -4,7 +4,7 @@ Local Swap is a complex application that allows users to create profiles and tra
 
 Find *Local Swap* Live on Heroku
 ```
-https://localswap-by-patrick-lipscomb.herokuapp.com/
+https://local-swap.herokuapp.com/
 ```
 
 ##  Important Notice
