@@ -26,6 +26,7 @@ gem 'geocoder'
 gem 'underscore-rails'
 gem 'jcrop-rails-v2'
 gem 'jquery-turbolinks'
+gem 'aws-sdk', '~> 2.3'
 
 
 group :development, :test do
@@ -39,6 +40,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'simplecov', require: false
   gem 'database_cleaner'
+  gem 'dotenv-rails'
 end
 
 group :development do

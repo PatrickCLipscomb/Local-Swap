@@ -1,6 +1,11 @@
 #  Local Swap
 
-Local Swap is a complex application that allows users to create profiles and trade items with other users via a geographically and socially enabled environment. User locations are hidden via a location scrambling function that offsets their given location by up to 500 ft. Directions are available for users to locate other users, but those directions will never point to a user's true location. In this way user locations are used as an asset to the application but not made available for other users.
+Local Swap is a bartering app with a host of features:
+* Users can create profiles and trade items with other users via a geographically and socially enabled environment.
+* User locations are hidden via a location scrambling function that offsets their given location by up to 500 ft.
+* Users can directly message one another and manage their inbox of messages in the app.
+* Users can engage in real time chat enabled using web sockets.
+* Users can upload and crop photos that are uploaded to S3 in AWS and served up using CloudFront.
 
 Find *Local Swap* Live on Heroku
 ```
