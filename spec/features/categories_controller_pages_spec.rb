@@ -8,9 +8,8 @@ describe "the add a category process", js: true do
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    click_link 'Add a category'
+    click_link 'new_category_link'
     fill_in 'Name', :with => 'Chips'
-    screenshot
     click_on 'Create Category'
     expect(page).to have_content 'Chips'
   end
@@ -20,7 +19,7 @@ describe "the edit category process" do
   it "edits a category" do
     user = FactoryGirl.create(:user)
     category = FactoryGirl.create(:category)
-    visit categories_path
+    visit '/'
     click_on 'Login'
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
@@ -37,7 +36,7 @@ describe "the delete category process" do
   it "deletes a category" do
     user = FactoryGirl.create(:user)
     category = FactoryGirl.create(:category)
-    visit categories_path
+    visit '/'
     click_on 'Login'
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'

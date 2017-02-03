@@ -9,10 +9,9 @@ describe "the add a product process" do
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    visit '/categories/#{category.id}'
+    visit '/categories/' + category.id.to_s
     click_on 'Add a product'
     fill_in 'Name', :with => 'Chips'
-    fill_in 'Price', :with => '5'
     fill_in 'Description', :with => "Its fantastic"
     choose 'category_id_' + category.id.to_s
     choose 'condition_3'
@@ -21,7 +20,7 @@ describe "the add a product process" do
   end
 end
 
-describe "the edit product process", js: true do
+describe "the edit product process" do
   it "edits a product" do
     user = FactoryGirl.create(:user)
     category = FactoryGirl.create(:category)
@@ -30,10 +29,9 @@ describe "the edit product process", js: true do
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    visit '/categories/#{category.id}'
+    visit '/categories/' + category.id.to_s
     click_on 'Add a product'
     fill_in 'Name', :with => 'Chips'
-    fill_in 'Price', :with => '5'
     fill_in 'Description', :with => "Its fantastic"
     choose 'category_id_' + category.id.to_s
     choose 'condition_3'
@@ -41,14 +39,14 @@ describe "the edit product process", js: true do
     click_link 'Chips'
     click_on 'Edit Product'
     fill_in 'Name', :with => 'Chipers'
-    fill_in 'Price', :with => '4'
     choose 'category_id_' + category.id.to_s
+    choose 'condition_3'
     click_on 'Update Product'
     expect(page).to have_content 'Chipers'
   end
 end
 
-describe "the delete a product process", js: true do
+describe "the delete a product process" do
   it "deletes a product" do
     user = FactoryGirl.create(:user)
     category = FactoryGirl.create(:category)
@@ -60,11 +58,11 @@ describe "the delete a product process", js: true do
     visit user_path(user)
     click_on 'Post'
     fill_in 'Name', :with => 'Chips'
-    fill_in 'Price', :with => '5'
+    choose 'condition_3'
     choose 'category_id_' + category.id.to_s
     click_on 'Create Product'
     click_link 'Chips'
     click_on 'Delete'
-    expect(page).to have_content 'Product and associated reviews deleted'
+    expect(page).to have_content 'Product deleted'
   end
 end
