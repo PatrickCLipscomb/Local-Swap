@@ -1,19 +1,21 @@
 require 'rails_helper'
 
-describe "the add a product process", js: true do
+describe "the add a product process" do
   it "adds a new product" do
     user = FactoryGirl.create(:user)
     category = FactoryGirl.create(:category)
-    visit categories_path
+    visit '/'
     click_on 'Login'
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    visit user_path(user)
-    click_on 'Post'
+    visit '/categories/#{category.id}'
+    click_on 'Add a product'
     fill_in 'Name', :with => 'Chips'
     fill_in 'Price', :with => '5'
+    fill_in 'Description', :with => "Its fantastic"
     choose 'category_id_' + category.id.to_s
+    choose 'condition_3'
     click_on 'Create Product'
     expect(page).to have_content 'Chips'
   end
@@ -23,16 +25,18 @@ describe "the edit product process", js: true do
   it "edits a product" do
     user = FactoryGirl.create(:user)
     category = FactoryGirl.create(:category)
-    visit categories_path
+    visit '/'
     click_on 'Login'
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
-    visit user_path(user)
-    click_on 'Post'
+    visit '/categories/#{category.id}'
+    click_on 'Add a product'
     fill_in 'Name', :with => 'Chips'
     fill_in 'Price', :with => '5'
+    fill_in 'Description', :with => "Its fantastic"
     choose 'category_id_' + category.id.to_s
+    choose 'condition_3'
     click_on 'Create Product'
     click_link 'Chips'
     click_on 'Edit Product'

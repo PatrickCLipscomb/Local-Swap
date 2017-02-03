@@ -63,6 +63,7 @@
 
 <div style='width: 1200px;' class="row">
   <div id="multi-markers" style='width: 1000px; height: 600px;' class="col-sm-10"></div>
+  <% if @products.any? %>
   <div class="col-lg-2">
     <h5>Way to go <%= @products.order('id desc').first.user.user_name %>! You are the last user to add a Product!</h5>
     <hr>
@@ -87,7 +88,9 @@
     </ol>
     <hr>
   </div>
+  <% end %>
 </div>
+<% if @home_chat_room %>
 <div class="row">
   <h1 align="middle">Live Chat for <%= @home_chat_room.title %></h1>
   <hr>
@@ -121,6 +124,7 @@
     <% end %>
   </div>
 </div>
+<% end %>
 <hr>
 
 

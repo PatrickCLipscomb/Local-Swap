@@ -3,13 +3,14 @@ require 'rails_helper'
 describe "the add a category process", js: true do
   it "adds a new category" do
     user = FactoryGirl.create(:user)
-    visit '/categories'
+    visit '/'
     click_on 'Login'
     fill_in 'Email', :with => 'frank@frank.frank'
     fill_in 'Password', :with => 'password'
     click_on 'Log in'
     click_link 'Add a category'
     fill_in 'Name', :with => 'Chips'
+    screenshot
     click_on 'Create Category'
     expect(page).to have_content 'Chips'
   end
