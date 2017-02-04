@@ -43,8 +43,11 @@ class ReviewsController < ApplicationController
     @review = @user.reviews.new(review_params)
     @review.update(rating: params[:rating].to_i)
     if @review.update(author_id: current_user.id)
-      redirect_to user_path(@user)
       flash[:notice] = "Review saved successfully"
+      respond_to do |format|
+        format.html {redirect_to user_path(@user)}
+        format.js
+      end
     else
       flash[:alert] = "Review failed to save"
       render :new

@@ -184,41 +184,9 @@
   </div>
   <div class="col-sm-6">
     <h5>Reviews of <%= @user.user_name %></h5>
-    <ul class="list-group well">
+    <ul class="list-group well" id="review_list">
       <% @user.reviews.order('votes desc').each do |review| %>
-          <li class="list-group-item">
-            <span class="pull-right voter">
-              <%= link_to upvote_path(review), :method => "post", remote: true, :class => "btn btn-success" do %>
-                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-              <% end %>
-              <h4 id="<%=review.id.to_s%>-votes" class="be-grey"><%= review.votes %></h4>
-              <%= link_to downvote_path(review), :method => "post", remote: true, :class => "btn btn-danger" do %>
-                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-              <% end %>
-            </span>
-            <h5 class="be-grey">
-              <span class="field pull-left">
-              <%= link_to User.find(review.author_id).user_name, user_path(User.find(review.author_id)) %> rated <strong><%= @user.user_name %></strong>
-              <%= review.rating.times do %>
-                <span class="stars">
-                  <span class="glyphicon glyphicon-star"></span>
-                </span>
-              <% end %>
-              <% if 1 == 0 %>
-              <% (5 - review.rating).times do %>
-                <span class="stars">
-                  <span class="glyphicon glyphicon-star-empty"></span>
-                </span>
-              <% end %>
-              <% end %>
-              </span>
-            </h4>
-            <br>
-            <br>
-            <p><em>Rating Description:</em> <%= review.content %></p>
-            <%= link_to "Rating Page", user_review_path(User.find(review.author_id), review)%>
-            <br>
-          </li>
+          <%= render partial: 'reviews/review', locals: {review: review} %>
         <br>
       <% end %>
       <% if @user.reviews.length == 0 %>
@@ -229,7 +197,7 @@
     </ul>
     <% if current_user && @user != current_user %>
       <span>
-        <%= link_to "Write a Review for " + @user.user_name, new_user_review_path(@user), :class => "btn btn-lg btn-success" %>
+        <%= link_to "Write a Review for " + @user.user_name, new_user_review_path(@user), :id => 'add_review_link', :class => "btn btn-lg btn-success", remote: true %>
       </span>
     <% end %>
   </div>
