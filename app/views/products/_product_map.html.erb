@@ -1,0 +1,33 @@
+<script type="text/javascript">
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('multi-markers'), {
+    center: {lat: 45.5231, lng: -122.6765},
+    zoom: 11,
+    styles: [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"visibility":"simplified"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#558C89"},{"visibility":"on"}]}]
+  });
+  <% if products.any? %>
+    <% products.each do |product| %>
+      var contentString<%=product.id%> = '<div id="content">'+
+          '<div id="siteNotice">'+
+          '<%= product.condition_text(product.condition) %> Condition</div>'+
+          '<h1 id="firstHeading" class="firstHeading"><%= product.name %></h1>'+
+          '<div id="bodyContent"><p><%= product.name %> User Information:</p><p>Email: <%=product.user.email%></p> <p>Go to: <%=link_to product.user.user_name, user_path(product.user) %></p>'+
+          '</div>'+
+          '</div>';
+
+      var infowindow<%=product.id%> = new google.maps.InfoWindow({
+        content: contentString<%=product.id%>
+      });
+      var marker<%=product.id%> = new google.maps.Marker({
+        position: {lat: <%=product.user.latitude%>, lng: <%=product.user.longitude%>},
+        map: map,
+        title: 'Hello World!'
+      });
+      marker<%=product.id%>.addListener('click', function() {
+        infowindow<%=product.id%>.open(map, marker<%=product.id%>);
+      });
+    <% end %>
+  <% end %>
+}
+</script>

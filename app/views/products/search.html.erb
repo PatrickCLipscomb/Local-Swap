@@ -1,13 +1,25 @@
 <p>on the search page yo</p>
 
 <% if @products.any? %>
-  <% @products.each do |product| %>
-    <p><%= product.name %></p>
-  <% end %>
+  <div class="row container">
+    <h3 style="text-align: center";><%= @products.length %> products associated with the query "<%= @query %>"</h3>
+    <div class="col-md-8 col-md-offset-2" id="multi-markers" style='width:70%;height:500px;margin-left:15%;'>
+      <%= render partial: "product_map", locals: {products: @products} %>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+      <%= render partial: "product_flex_list", locals: {products: @products} %>
+    </div>
+  </div>
+<% elsif @category.present? %>
+  <div class="row container">
+    <h3 style="text-align: center";><%= @category.products.length %> products in the <%= @category.name %> category</h3>
+    <div class="col-md-10 col-md-offset-1" id="multi-markers" style='width:70%;height:500px;margin-left:15%;'>
+      <%= render partial: "product_map", locals: {products: @category.products} %>
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+      <%= render partial: "product_flex_list", locals: {products: @category.products} %>
+    </div>
+  </div>
 <% else %>
   <h1>No Search Results Found</h1>
-<% end %>
-
-<% if @category.present? %>
-  <h1><%= @category.name %></h1>
 <% end %>

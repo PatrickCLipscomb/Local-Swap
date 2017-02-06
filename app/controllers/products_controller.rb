@@ -90,6 +90,7 @@ class ProductsController < ApplicationController
   def search
     @result = Product.name_search(params[:query])
     @products = []
+    @query = params[:query]
     if @result.is_a?(Product::ActiveRecord_Relation)
       @products = @result
     elsif @result.is_a?(Category::ActiveRecord_Relation)
