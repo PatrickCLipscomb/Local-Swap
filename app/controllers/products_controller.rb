@@ -86,6 +86,17 @@ class ProductsController < ApplicationController
       flash[:alert] = "Product failed to delete"
     end
   end
+
+  def search
+    @result = Product.name_search(params[:query])
+    @products = []
+    if @result.is_a?(Product::ActiveRecord_Relation)
+      @products = @result
+    elsif @result.is_a?(Category::ActiveRecord_Relation)
+      @category = @result.first
+    end
+  end
+
   private
   def product_params
     params.require(:product).permit(:name, :description, :condition, :image, :category_id, :user_id)

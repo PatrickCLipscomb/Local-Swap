@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   match "/about/" => "categories#about", :via => :get, :as => :about
   match "/contact" => "categories#contact", :via => :get, :as => :contact
   match "/direct_message/:id" => "messages#direct_message", :via => :post, :as => :direct_message
+  match "/search/" => "products#search", :via => :get, :as => :search
 
   resources :users, only: :show do
     resources :reviews

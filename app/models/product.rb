@@ -22,6 +22,22 @@ class Product < ActiveRecord::Base
     image.reprocess!
   end
 
+  def self.name_search(query)
+    if query.present?
+      category_name = Category.where("name @@ :q", q: query)
+      if category_name.any?
+        category_name
+      else
+        rank = <<-RANK
+          ts_rank(to_tsvector(name), plainto_tsquery(#{sanitize(query)})) +
+          ts_rank(to_tsvector(description), plainto_tsquery(#{sanitize(query)}))
+        RANK
+        where("name @@ :q or description @@ :q", q: query).order(rank.to_s + ' desc')
+      end
+    end
+
+  end
+
   def previous
     self.category.products.where("products.id < ?", self.id).order('created_at asc').last
   end

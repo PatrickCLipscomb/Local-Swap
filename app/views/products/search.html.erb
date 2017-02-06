@@ -1,0 +1,13 @@
+<p>on the search page yo</p>
+
+<% if @products.any? %>
+  <% @products.each do |product| %>
+    <p><%= product.name %></p>
+  <% end %>
+<% else %>
+  <h1>No Search Results Found</h1>
+<% end %>
+
+<% if @category.present? %>
+  <h1><%= @category.name %></h1>
+<% end %>

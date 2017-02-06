@@ -54,13 +54,13 @@
               </ul>
             </li>
           </ul>
-          <% if 1 == 0 %>
-          <form class="navbar-form navbar-left">
+          <% if 1 == 1 %>
+          <%= form_tag search_path, :class => "navbar-form navbar-left", method: :get do %>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <%= text_field_tag :query, params[:query], :class => "form-control", :placeholder => "Search By Category or Keywords" %>
+              <%= submit_tag "Search", :class => "btn btn-default", name: nil %>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+          <% end %>
           <% end %>
           <ul class="nav navbar-nav navbar-right">
             <% if !user_signed_in? %>
