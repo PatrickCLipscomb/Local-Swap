@@ -66,3 +66,26 @@ describe "the delete a product process" do
     expect(page).to have_content 'Product deleted'
   end
 end
+
+describe "the search for product process" do
+  it "completes a search for a given product" do
+    user = FactoryGirl.create(:user)
+    category = FactoryGirl.create(:category)
+    visit '/'
+    click_on 'Login'
+    fill_in 'Email', :with => 'frank@frank.frank'
+    fill_in 'Password', :with => 'password'
+    click_on 'Log in'
+    visit '/categories/' + category.id.to_s
+    click_on 'Add a product'
+    fill_in 'Name', :with => 'Deez Nuts'
+    fill_in 'Description', :with => "Its fantastic"
+    choose 'category_id_' + category.id.to_s
+    choose 'condition_3'
+    click_on 'Create Product'
+    visit '/'
+    fill_in "query", :with => 'Deez Nuts'
+    click_on 'Search'
+    expect(page).to have_content 'Deez Nuts'
+  end
+end

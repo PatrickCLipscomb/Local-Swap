@@ -22,7 +22,7 @@ FactoryGirl.define do
   end
   factory(:product) do
     name('Prop')
-    price('3')
+    condition(3)
     association :category
     association :user
   end

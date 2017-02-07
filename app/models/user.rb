@@ -24,6 +24,7 @@ class User < ApplicationRecord
   def name
     return user_name
   end
+  
   # Used for the automated email that mailboxer sends with each message that is created
   # def mailboxer_email(object)
   #   return email

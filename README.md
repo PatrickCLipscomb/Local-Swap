@@ -6,6 +6,7 @@ Local Swap is a bartering app with a host of features:
 * Users can directly message one another and manage their inbox of messages in the app.
 * Users can engage in real time chat enabled using web sockets.
 * Users can upload and crop photos that are uploaded to S3 in AWS and served up using CloudFront.
+* Users can do full text search on products that includes result ranking or search for products by category name.
 
 Find *Local Swap* Live on Heroku
 ```
